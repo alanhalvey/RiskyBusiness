@@ -1,0 +1,33 @@
+2015-11-18 12:49:14,735 [  16918]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE STARTED ------------------------------------------------------ 
+2015-11-18 12:49:14,792 [  16975]   INFO -        #com.intellij.idea.Main - IDE: CLion (build #CL-143.382.39, 10 Nov 2015 00:00) 
+2015-11-18 12:49:14,792 [  16975]   INFO -        #com.intellij.idea.Main - OS: Windows 7 (6.1, amd64) 
+2015-11-18 12:49:14,792 [  16975]   INFO -        #com.intellij.idea.Main - JRE: 1.8.0_51-b16 (Oracle Corporation) 
+2015-11-18 12:49:14,792 [  16975]   INFO -        #com.intellij.idea.Main - JVM: 25.51-b03 (Java HotSpot(TM) 64-Bit Server VM) 
+2015-11-18 12:49:14,914 [  17097]   INFO -        #com.intellij.idea.Main - JVM Args: -Xss2m -Xms256m -Xmx2000m -XX:NewSize=128m -XX:MaxNewSize=128m -XX:MaxPermSize=350m -XX:ReservedCodeCacheSize=96m -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -ea -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Djb.vmOptions=C:\Program Files (x86)\JetBrains\CLion 1.2.1\bin\clion64.exe.vmoptions -Xbootclasspath/a:C:\Program Files (x86)\JetBrains\CLion 1.2.1\lib\boot.jar -Didea.platform.prefix=CLion -Didea.no.jre.check=true -Didea.paths.selector=CLion12 
+2015-11-18 12:49:15,229 [  17412]   INFO -        #com.intellij.idea.Main - JNA library loaded (64-bit) in 314 ms 
+2015-11-18 12:49:15,287 [  17470]   INFO - penapi.util.io.win32.IdeaWin32 - Native filesystem for Windows is operational 
+2015-11-18 12:49:15,332 [  17515]   INFO -        #com.intellij.idea.Main - Using "FocusKiller" library to prevent focus stealing. 
+2015-11-18 12:49:22,454 [  24637]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------ 
+2015-11-18 12:49:22,467 [  24650]   INFO - org.jetbrains.io.BuiltInServer - web server stopped 
+2015-11-18 14:05:18,527 [    488]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE STARTED ------------------------------------------------------ 
+2015-11-18 14:05:18,576 [    537]   INFO -        #com.intellij.idea.Main - IDE: CLion (build #CL-143.382.39, 10 Nov 2015 00:00) 
+2015-11-18 14:05:18,576 [    537]   INFO -        #com.intellij.idea.Main - OS: Windows 7 (6.1, amd64) 
+2015-11-18 14:05:18,576 [    537]   INFO -        #com.intellij.idea.Main - JRE: 1.8.0_51-b16 (Oracle Corporation) 
+2015-11-18 14:05:18,576 [    537]   INFO -        #com.intellij.idea.Main - JVM: 25.51-b03 (Java HotSpot(TM) 64-Bit Server VM) 
+2015-11-18 14:05:18,587 [    548]   INFO -        #com.intellij.idea.Main - JVM Args: -Xss2m -Xms256m -Xmx2000m -XX:NewSize=128m -XX:MaxNewSize=128m -XX:MaxPermSize=350m -XX:ReservedCodeCacheSize=96m -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -ea -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Djb.vmOptions=C:\Program Files (x86)\JetBrains\CLion 1.2.1\bin\clion64.exe.vmoptions -Xbootclasspath/a:C:\Program Files (x86)\JetBrains\CLion 1.2.1\lib\boot.jar -Didea.platform.prefix=CLion -Didea.no.jre.check=true -Didea.paths.selector=CLion12 
+2015-11-18 14:05:18,803 [    764]   INFO -        #com.intellij.idea.Main - JNA library loaded (64-bit) in 216 ms 
+2015-11-18 14:05:18,817 [    778]   INFO - penapi.util.io.win32.IdeaWin32 - Native filesystem for Windows is operational 
+2015-11-18 14:05:18,829 [    790]   INFO -        #com.intellij.idea.Main - Using "FocusKiller" library to prevent focus stealing. 
+2015-11-18 14:06:25,067 [  67028]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------ 
+2015-11-18 14:06:25,082 [  67043]   INFO - org.jetbrains.io.BuiltInServer - web server stopped 
+2015-11-18 14:08:06,731 [    493]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE STARTED ------------------------------------------------------ 
+2015-11-18 14:08:06,785 [    547]   INFO -        #com.intellij.idea.Main - IDE: CLion (build #CL-143.382.39, 10 Nov 2015 00:00) 
+2015-11-18 14:08:06,785 [    547]   INFO -        #com.intellij.idea.Main - OS: Windows 7 (6.1, amd64) 
+2015-11-18 14:08:06,785 [    547]   INFO -        #com.intellij.idea.Main - JRE: 1.8.0_51-b16 (Oracle Corporation) 
+2015-11-18 14:08:06,785 [    547]   INFO -        #com.intellij.idea.Main - JVM: 25.51-b03 (Java HotSpot(TM) 64-Bit Server VM) 
+2015-11-18 14:08:06,788 [    550]   INFO -        #com.intellij.idea.Main - JVM Args: -Xss2m -Xms256m -Xmx2000m -XX:NewSize=128m -XX:MaxNewSize=128m -XX:MaxPermSize=350m -XX:ReservedCodeCacheSize=96m -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -ea -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Djb.vmOptions=C:\Program Files (x86)\JetBrains\CLion 1.2.1\bin\clion64.exe.vmoptions -Xbootclasspath/a:C:\Program Files (x86)\JetBrains\CLion 1.2.1\lib\boot.jar -Didea.platform.prefix=CLion -Didea.no.jre.check=true -Didea.paths.selector=CLion12 
+2015-11-18 14:08:07,009 [    771]   INFO -        #com.intellij.idea.Main - JNA library loaded (64-bit) in 221 ms 
+2015-11-18 14:08:07,014 [    776]   INFO - penapi.util.io.win32.IdeaWin32 - Native filesystem for Windows is operational 
+2015-11-18 14:08:07,016 [    778]   INFO -        #com.intellij.idea.Main - Using "FocusKiller" library to prevent focus stealing. 
+2015-11-18 14:08:40,855 [  34617]   INFO -        #com.intellij.idea.Main - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------ 
+2015-11-18 14:08:40,858 [  34620]   INFO - org.jetbrains.io.BuiltInServer - web server stopped 
