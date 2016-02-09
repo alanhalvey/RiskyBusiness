@@ -1,0 +1,110 @@
+package core;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.*;
+ 
+public class TextBox extends JPanel implements ActionListener {
+    protected static JTextField textField;
+    protected static JTextArea textArea;
+    private final static String newline = "\n";
+ 
+    public TextBox() {
+        super(new GridBagLayout());
+ 
+        textField = new JTextField(" ");
+        textField.addActionListener(this);
+           	
+    	//Player1 = user_input.next();
+      
+        textArea = new JTextArea(20, 40);
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+    //	textArea.setText("Enter Username for player 1:");
+
+ 
+        //Add Components to this panel.
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+ 
+        c.fill = GridBagConstraints.HORIZONTAL;
+        add(textField, c);
+ 
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        add(scrollPane, c);
+    }
+    
+    public class Player extends JFrame { // start of the Player class
+    	private String name; //Player class definitions
+
+    	public Player(String name){ //Constructor
+    		this.name = name; //Pointer to name
+    	}
+    	//Getter
+    	public String getName() { //Method to return name
+    		return this.name;
+    	}
+    	//Setter
+    	public void setName(String name) {
+    	       this.name = name;
+    	    }
+    	
+    }
+ 
+    public void actionPerformed(ActionEvent evt) {
+        String Username = textField.getText();
+        textArea.append(Username + newline);
+        textField.selectAll();
+ 
+        //Make sure the new text is visible, even if there
+        //was a selection in the text area.
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+    }
+ 
+    /**
+     * Create the GUI and show it.  For thread safety,
+     * this method should be invoked from the
+     * event dispatch thread.
+     */
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("TextBox");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        String username = textField.getText(); 
+      //  textArea.setText(username);
+ 
+        //Add contents to the window.
+        frame.add(new TextBox());
+ 
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+ 
+    }
+    
+    public static void main(String[] args) {
+    	
+
+        //Schedule a job for the event dispatch thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+
+                createAndShowGUI();
+
+ /*           	String Player1 = "";
+            	Scanner user_input = new Scanner(System.in);
+            	                
+                while(Player1 == ""){
+            	textArea.setText("Enter Username for player 1:");
+                Player1 = user_input.nextLine();
+                } */             
+            }
+        });
+    }
+}

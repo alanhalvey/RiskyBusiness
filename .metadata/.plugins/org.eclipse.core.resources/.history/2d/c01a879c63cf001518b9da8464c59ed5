@@ -1,0 +1,23 @@
+package core;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Test extends JFrame implements ActionListener {
+	
+	JTextField myTextField = new JTextField(20);
+	JTextArea myTextArea = new JTextArea("This is a text area", 20, 40);
+	
+		
+	
+	
+
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+		
+		public static void main(String[] args){
+			
+		}
+}
