@@ -1,11 +1,16 @@
+package core;
+
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.LayoutManager;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,7 +19,7 @@ import javax.swing.JPanel;
 
 
 
-public class Split {
+public class Screen extends JFrame{
 
 	
 
@@ -28,13 +33,7 @@ public class Split {
 	    JLabel InputWindow = new JLabel("Input");
 	    InputWindow.setFont(new Font("Verdana",1,20));
 	    
-	    BufferedImage img = null;
-	    try {
-	        img = ImageIO.read(new File("background.jpg"));
-	    } catch (IOException e) {
-	    }
-	    ImageObserver observer = null;
-		
+	    
 	    
 	    
 	    
@@ -53,6 +52,8 @@ public class Split {
         JPanel content2 = new JPanel();
         JPanel content3 = new JPanel();// panel for the text field
         
+        Map points = new Map();
+        
         content.setSize(1350,700);
         content.setLocation(0, 0);
         content.setBackground(Color.WHITE);
@@ -60,6 +61,8 @@ public class Split {
         
         content1.setSize(1000,600);
         content1.setLocation(5, 5);
+        content1.setLayout((LayoutManager) new BoxLayout(content1, BoxLayout.PAGE_AXIS));
+        content1.add(points);
                
         
         content2.setSize(300, 300);
@@ -75,12 +78,13 @@ public class Split {
         content3.setBackground(Color.GREEN);
         
  
-
+        
         frame.getContentPane().add(content3); // adds the buttonarea panel to the main panel
         frame.getContentPane().add(content2); // adds the buttonarea panel to the main panel
         frame.getContentPane().add(content1);
         frame.getContentPane().add(content);
         frame.setBackground(Color.WHITE);
+        
         
         frame.setVisible(true); // makes the window visible, put at end of program        
 		

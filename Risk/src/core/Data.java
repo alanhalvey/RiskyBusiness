@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-public class Risk extends JPanel {
+public class Data extends JPanel {
 
 
 	public static int[] Y_Coordinates = new int[41];
@@ -157,8 +157,8 @@ public class Risk extends JPanel {
 
 		 
 		for(int i = 0; i<=40;i++){
-			X_Coordinates[i]=(COUNTRY_COORD[i][0]);
-			Y_Coordinates[i]=COUNTRY_COORD[i][1];
+			X_Coordinates[i]=(getCountryCoord()[i][0]);
+			Y_Coordinates[i]=getCountryCoord()[i][1];
 
 		}
 		for (int i = 0; i <= 40; i++) {
@@ -195,7 +195,11 @@ public class Risk extends JPanel {
 			}	
 
 			
+			
+			
+			
 			g.setFont(new Font("default", Font.BOLD, 12));
+			
 			if (COUNTRY_NAMES[i].compareTo("E Australia") == 0 || COUNTRY_NAMES[i].compareTo("W Australia") == 0){
 				g2d.drawString(COUNTRY_NAMES[i], x-70, y+2);
 			}
@@ -207,54 +211,19 @@ public class Risk extends JPanel {
 			g2d.drawString(COUNTRY_NAMES[i], x+8, y+2);
 			}
 			//g2d.drawPolyline(CONTINENT_VALUES, CONTINENT_VALUES, 6);
+			
+			
 
 
 		}
 
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		JPanel test1 = new JPanel();
-		test1.setLayout((LayoutManager) new BoxLayout(test1, BoxLayout.PAGE_AXIS));
-		Risk points = new Risk();
-		JFrame frame = new JFrame();
-
-		JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File("background.jpg"))));
-
-		JLayeredPane lpane = new JLayeredPane();
-
-		//JPanel BackgroundPanel = new JPanel();
-		frame.setPreferredSize(new Dimension(1200, 600));
-		frame.setLayout(new BorderLayout());
-		frame.add(lpane, BorderLayout.CENTER);
-		frame.add(background);
-		lpane.setBounds(0, 0, 1200, 600);
-		//BackgroundPanel.add(background);
-
-		//BackgroundPanel.setBounds(0, 0, 1000, 600);
-		//BackgroundPanel.setBackground(new Color(255,255,255,0));
-
-		//BackgroundPanel.setOpaque(true);
-
-		//lpane.add(panelBlue, new Integer(0), 0);
-
-		frame.add(points);
-		//lpane.add(BackgroundPanel, new Integer(1), 0);
-		frame.setBackground(Color.BLUE);
-		frame.pack();
-		frame.add(test1);
-		frame.setVisible(true);
-
-
-
-
-
-
-
-
-
+	public static int[][] getCountryCoord() {
+		return COUNTRY_COORD;
 	}
+
+	
 }
 
 
