@@ -1,29 +1,25 @@
 package core;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
+public class Data{
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
-public class Data extends JPanel {
-
-	public static int[] Y_Coordinates = new int[41];
-	public static int[] X_Coordinates = new int[41];
+	public static int[] Y_Coordinates = new int[42];
+	public static int[] X_Coordinates = new int[42];
+	public static int[] PLAYER_1_COUNTRIES = {0,1,2,3,4,5,6,7,8};
+	public static int[] PLAYER_2_COUNTRIES = {32,33,34,35,36,37,38,39,40};
+	public static int[] NEUTRAL_1_COUNTRIES = {9,10,11,12,13,14};
+	public static int[] NEUTRAL_2_COUNTRIES = {15,16,17,18,19,20};
+	public static int[] NEUTRAL_3_COUNTRIES = {21,22,23,24,25,26};
+	public static int[] NEUTRAL_4_COUNTRIES = {27,28,29,30,31,41};
+	public static int PLAYER_1_ARMIES = 1;
+	public static int PLAYER_2_ARMIES = 1;
+	public static int NEUTRAL_1_ARMIES = 1;
+	public static int NEUTRAL_2_ARMIES = 1;
+	public static int NEUTRAL_3_ARMIES = 1;
+	public static int NEUTRAL_4_ARMIES = 1;
+	
+	
+	
 	public static final int NUM_PLAYERS = 2;
 	public static final int NUM_NEUTRALS = 4;
 	public static final int NUM_PLAYERS_PLUS_NEUTRALS = NUM_PLAYERS + NUM_NEUTRALS;
@@ -133,81 +129,23 @@ public class Data extends JPanel {
 			{547,432},        // 40
 			{586,545}
 	};	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-
-		Graphics2D g2d = (Graphics2D) g;
-
-		g2d.setColor(Color.blue);
-
-		
-    BufferedImage img = null;
-    try {
-        img = ImageIO.read(new File("background.jpg"));
-    } catch (IOException e) {
-    }
-    ImageObserver observer = null;
-	g2d.drawImage(img, 0, 0, observer);
-
-		 
-		for(int i = 0; i<=40;i++){
-			X_Coordinates[i]=(getCountryCoord()[i][0]);
-			Y_Coordinates[i]=getCountryCoord()[i][1];
-
-		}
-		for (int i = 0; i <= 40; i++) {
-			Dimension size = getSize();
-			int w = size.width ;
-			int h = size.height;
-
-			g2d.setColor(Color.BLUE);
-			int x = X_Coordinates[i] % w;
-			int y = Y_Coordinates[i] % h;
-			
-			g2d.draw3DRect(x, y-10, 5, 5, true);
-
-			switch (CONTINENT_IDS[i]){
-			case 0:g2d.setColor(Color.RED) ;
-			break;
-			case 1:g2d.setColor(Color.GREEN) ;
-			break;
-			case 2:g2d.setColor(Color.CYAN) ;
-			break;
-			case 3:g2d.setColor(Color.ORANGE) ;
-			break;
-			case 4:g2d.setColor(Color.GRAY) ;
-			break;
-			case 5:g2d.setColor(Color.MAGENTA) ;
-			break;
-			}
-			if (i>0){
-				if (CONTINENT_IDS[i] == CONTINENT_IDS[i-1]){
-					g2d.drawLine(X_Coordinates[i-1], Y_Coordinates[i-1]-10, X_Coordinates[i], Y_Coordinates[i]-10);
-				}
-			}	
-
-			g.setFont(new Font("default", Font.BOLD, 12));
-			
-			if (COUNTRY_NAMES[i].compareTo("E Australia") == 0 || COUNTRY_NAMES[i].compareTo("W Australia") == 0){
-				g2d.drawString(COUNTRY_NAMES[i], x-70, y+2);
-			}
-			
-			else if (COUNTRY_NAMES[i].compareTo("New Guinea") == 0){
-				g2d.drawString(COUNTRY_NAMES[i], x-30, y-10);
-			}
-			else{
-			g2d.drawString(COUNTRY_NAMES[i], x+8, y+2);
-			}
-			//g2d.drawPolyline(CONTINENT_VALUES, CONTINENT_VALUES, 6);
-		}
-	}
-
 	public static int[][] getCountryCoord() {
 		return COUNTRY_COORD;
-	}	
+	}
+
+
+
+	public static int getFrameHeight() {
+		return FRAME_HEIGHT;
+	}
+
+
+
+	public static int getFrameWidth() {
+		return FRAME_WIDTH;
+	}
+
+
 }
+
+
