@@ -56,21 +56,21 @@ public class Screen extends JFrame{
         content.setBackground(Color.WHITE);
         
         
-        content1.setSize(930,600);
-        content1.setLocation(40, 5);
+        content1.setSize(1380,700);
+        content1.setLocation(0, 0);
         content1.setLayout((LayoutManager) new BoxLayout(content1, BoxLayout.PAGE_AXIS));
         content1.add(points);
                
         
-        content2.setSize(300, 600);
-        content2.setLocation(1010, 5);
+        content2.setSize(300, 400);
+        content2.setLocation(1010, 50);
         //content2.setBackground(Color.RED);
         content2.add(OutputWindow);
         
        
  
         content3.setSize(1400, 100);
-        content3.setLocation(5, 610);
+        content3.setLocation(0, 610);
         content3.add(InputText);
         content3.add(input);
         

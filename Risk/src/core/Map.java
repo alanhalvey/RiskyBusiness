@@ -90,8 +90,8 @@ public class Map extends JPanel {
 
 
 
-			g.setColor(Color.BLACK);
-			g.setFont(new Font("default", Font.BOLD, 11));
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("default", Font.BOLD, 12));
 
 			if (Data.COUNTRY_NAMES[i].compareTo("E Australia") == 0 || Data.COUNTRY_NAMES[i].compareTo("W Australia") == 0){
 				x = x-70;
