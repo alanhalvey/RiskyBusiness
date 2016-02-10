@@ -51,13 +51,13 @@ public class Screen extends JFrame{
         Map points = new Map();
         JPanel input = new FillInput();
         
-        content.setSize(1450,700);
+        content.setSize(1380,700);
         content.setLocation(0, 0);
         content.setBackground(Color.WHITE);
         
         
-        content1.setSize(1000,600);
-        content1.setLocation(5, 5);
+        content1.setSize(930,600);
+        content1.setLocation(40, 5);
         content1.setLayout((LayoutManager) new BoxLayout(content1, BoxLayout.PAGE_AXIS));
         content1.add(points);
                

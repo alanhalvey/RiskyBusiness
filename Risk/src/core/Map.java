@@ -56,8 +56,11 @@ public class Map extends JPanel {
 
 			//g2d.draw3DRect(x, y-10, 5, 5, true);
 
-
-
+			g.setColor(Color.BLACK);
+			Ellipse2D.Double outline = new Ellipse2D.Double(x-9,y-16,16,16);
+			g2d.draw(outline);
+			g2d.fill(outline);
+			
 			switch (Data.CONTINENT_IDS[i]){
 			case 0:g2d.setColor(Color.YELLOW) ;
 			break;
@@ -76,7 +79,7 @@ public class Map extends JPanel {
 			Ellipse2D.Double ellipse = new Ellipse2D.Double(x-7,y-14,12,12);
 			g2d.draw(ellipse);
 			g2d.fill(ellipse);
-
+			
 			g2d.setColor(Color.WHITE);
 			if (i>0){
 				if (Data.CONTINENT_IDS[i] == Data.CONTINENT_IDS[i-1]){
@@ -95,10 +98,7 @@ public class Map extends JPanel {
 				y = y+2;
 			}
 
-			if (Data.COUNTRY_NAMES[i].compareTo("New Guinea") == 0){
-				x = x-30;
-				y = y-10;
-			}
+			
 
 
 
@@ -138,7 +138,7 @@ public class Map extends JPanel {
 			}
 			if (Neutral2){
 				currentPlayer = "Neutral 2";
-				PlayerColor = Color.GREEN;
+				PlayerColor = Color.MAGENTA;
 				NumArmies = Data.NEUTRAL_2_ARMIES;
 			}
 			if (Neutral3){
@@ -148,7 +148,7 @@ public class Map extends JPanel {
 			}
 			if (Neutral4){
 				currentPlayer = "Neutral 4";
-				PlayerColor = Color.MAGENTA;
+				PlayerColor = Color.CYAN;
 				NumArmies = Data.NEUTRAL_4_ARMIES;
 			}
 			
@@ -164,13 +164,13 @@ public class Map extends JPanel {
 			g2d.drawString(currentPlayer, x+8, y+17);
 			g.setFont(new Font("default", Font.BOLD, 11));
 			FontMetrics fm1 = g.getFontMetrics();
-			Rectangle r2 = fm.getStringBounds(("["+NumArmies+ " Armies]  "), g).getBounds();
+			Rectangle r2 = fm.getStringBounds(("["+NumArmies+ " Armies] "), g).getBounds();
 			g.setColor(Color.WHITE);
-			g2d.fillRect(x+8, y+20, r2.width, r2.height);
+			g2d.fillRect(x+4, y+25, r2.width, r2.height);
 			
 			g.setColor(PlayerColor);
 			
-			g2d.drawString("["+NumArmies+ " Armies]", x+8, y+32);
+			g2d.drawString("["+NumArmies+ " Armies]", x+4, y+37);
 			
 			
 			
