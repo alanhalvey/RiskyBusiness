@@ -1,5 +1,7 @@
 package core;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -15,6 +17,7 @@ public class FillInput extends JPanel {
 		JButton button = new JButton("ENTER");
 		JTextField command = new JTextField(85);
 		JPanel input = new JPanel();
+		
 		input.add(command);
 		input.add(button);
 		
