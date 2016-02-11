@@ -15,7 +15,7 @@ public class FillInput extends JPanel {
 		 }
 		 private void createComponents() {
 		JButton button = new JButton("ENTER");
-		JTextField command = new JTextField(85);
+		JTextField command = new JTextField(40);
 		JPanel input = new JPanel();
 		
 		input.add(command);

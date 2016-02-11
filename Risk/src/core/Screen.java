@@ -69,8 +69,8 @@ public class Screen extends JFrame{
         
        
  
-        content3.setSize(1400, 100);
-        content3.setLocation(0, 610);
+        content3.setSize(750, 50);
+        content3.setLocation(150, 605);
         content3.add(InputText);
         content3.add(input);
         
