@@ -42,9 +42,20 @@ public class Map extends JPanel {
 		for(int i = 0; i<=41;i++){
 			Data.X_Coordinates[i]=(Data.getCountryCoord()[i][0]);
 			Data.Y_Coordinates[i]=(Data.getCountryCoord()[i][1]);
-
-		}
-		for (int i = 0; i <= 41; i++) {
+			
+			
+			for(int j=0;j<=Data.ADJACENT[i].length-1;j++){
+				if (contains(Data.ADJACENT[i][j], i)){
+					g.setColor(Color.WHITE);
+					g.drawLine(Data.getCountryCoord()[i][0]-2, Data.getCountryCoord()[i][1]-8, Data.getCountryCoord()[Data.ADJACENT[i][j]][0] -2 , Data.getCountryCoord()[Data.ADJACENT[i][j]][1] -8);
+				}
+				
+			}
+			
+			
+			
+			
+			
 			Dimension size = getSize();
 			int w = size.width ;
 			int h = size.height;
@@ -79,14 +90,14 @@ public class Map extends JPanel {
 			Ellipse2D.Double ellipse = new Ellipse2D.Double(x-7,y-14,12,12);
 			g2d.draw(ellipse);
 			g2d.fill(ellipse);
-			
+			/*
 			g2d.setColor(Color.WHITE);
 			if (i>0){
 				if (Data.CONTINENT_IDS[i] == Data.CONTINENT_IDS[i-1]){
 					g2d.drawLine(Data.X_Coordinates[i-1], Data.Y_Coordinates[i-1]-10, Data.X_Coordinates[i], Data.Y_Coordinates[i]-10);
 				}
 			}	
-
+			*/
 
 
 
@@ -180,6 +191,7 @@ public class Map extends JPanel {
 
 
 		}
+		
 
 	}
 	public static boolean arrayContains(int[] array, Integer item) {
