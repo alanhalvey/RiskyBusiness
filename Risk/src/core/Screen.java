@@ -50,6 +50,7 @@ public class Screen extends JFrame{
         
         Map points = new Map();
         JPanel input = new FillInput();
+        JPanel Outputwriting = new FilledOutputFrame();
         
         content.setSize(1380,700);
         content.setLocation(0, 0);
@@ -65,7 +66,8 @@ public class Screen extends JFrame{
         content2.setSize(300, 400);
         content2.setLocation(1010, 50);
         //content2.setBackground(Color.RED);
-        content2.add(OutputWindow);
+        //content2.add(OutputWindow);
+        content2.add(Outputwriting);
         
        
  

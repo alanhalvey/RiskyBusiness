@@ -17,7 +17,7 @@ public class Data{
 	public static int NEUTRAL_2_ARMIES = 1;
 	public static int NEUTRAL_3_ARMIES = 1;
 	public static int NEUTRAL_4_ARMIES = 1;
-	
+	public static String currentInput = "";
 	
 	
 	public static final int NUM_PLAYERS = 2;
