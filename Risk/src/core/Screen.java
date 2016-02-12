@@ -1,17 +1,22 @@
 package core;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 
@@ -23,18 +28,12 @@ public class Screen extends JFrame{
 		
 		//JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File("RiskMap2.jpg"))));
 		
-		JLabel OutputWindow = new JLabel("OutPut");
-	    OutputWindow.setFont(new Font("Verdana",1,20));
+		JLabel OutputWindow = new JLabel("Output");
+	    OutputWindow.setFont(new Font("Consolas",1,20));
 	    
-	    JLabel InputText = new JLabel("Please enter your command:");
-	    InputText.setFont(new Font("Verdana",1,12));
-	    
-	    
-	    
-	    
-	    
-	    
-	    
+	    JLabel InputText = new JLabel("Enter your command:");
+	    InputText.setFont(new Font("Consolas",1,12));
+
 	    JFrame frame = new JFrame("RISK"); // creates the JFrame(a window with decorations)
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops the program when window is closed
         frame.setSize(1350, 700);
@@ -49,7 +48,7 @@ public class Screen extends JFrame{
         JPanel content3 = new JPanel();// panel for the text field
         
         Map points = new Map();
-        JPanel input = new FillInput();
+        JPanel input = new FillInput2();
         JPanel Outputwriting = new FilledOutputFrame();
         
         content.setSize(1380,700);
@@ -62,19 +61,20 @@ public class Screen extends JFrame{
         content1.setLayout((LayoutManager) new BoxLayout(content1, BoxLayout.PAGE_AXIS));
         content1.add(points);
                
-        
+        /*
         content2.setSize(300, 400);
         content2.setLocation(1010, 50);
         //content2.setBackground(Color.RED);
-        //content2.add(OutputWindow);
-        content2.add(Outputwriting);
-        
+        content2.add(OutputWindow);
+        content2.add();
+        */
        
  
-        content3.setSize(750, 50);
-        content3.setLocation(150, 605);
+        content3.setSize(300, 300);
+        content3.setLocation(1000, 100);
         content3.add(InputText);
         content3.add(input);
+       
         
         
  

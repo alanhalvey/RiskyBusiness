@@ -42,26 +42,4 @@ public class FillInput extends JPanel implements ActionListener {
 	}
 }
 
-	
-
-	/*public static void main(String[] args){
-
-
-	JFrame frame = new JFrame();
-	frame.setSize(1400, 100);
-
-
-
-
-	//input.setLayout(new BorderLayout());
-
-
-	input.add(button);
-	input.add(command);
-
-
-	frame.add(input);
-	frame.setVisible(true);
-	 */
-
 

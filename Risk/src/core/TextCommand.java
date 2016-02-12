@@ -15,7 +15,7 @@ public class TextCommand extends JPanel implements ActionListener {
  
        
         textArea = new JTextArea(20, 40);
-        textArea.setEditable(false);
+        textArea.setEditable(true);
         JScrollPane scrollPane = new JScrollPane(textArea);
         
         textField = new JTextField(40);
@@ -31,8 +31,8 @@ public class TextCommand extends JPanel implements ActionListener {
         add(textField, c);
  
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
+        c.weightx = 0.0;
+        c.weighty = 0.0;
         add(scrollPane, c);
     }
  
