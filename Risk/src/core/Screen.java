@@ -20,9 +20,10 @@ import javax.swing.JTextField;
 
 
 public class Screen extends JFrame{
-
+	volatile static boolean flag = true;
+	
 	public static void main(String[] args) throws IOException {
-
+		
 		//JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File("RiskMap2.jpg"))));
 
 		JLabel OutputWindow = new JLabel("Output");
@@ -76,11 +77,12 @@ public class Screen extends JFrame{
 		frame.setVisible(true); // makes the window visible, put at end of program        	
 
 		FillInput2.run();
-		while(true){
-			frame.repaint();
-			if (!(FillInput2.returnPlayer2().compareTo("") == 0)){
-				break;
-			}
+		while(flag){
+				//if the both users have put in their name
+				if (!(FillInput2.getPlayer2().compareTo("") == 0 )){
+					frame.repaint();
+					flag = false;
+				}	
 		}
 
 	}	

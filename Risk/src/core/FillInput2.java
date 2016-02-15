@@ -1,6 +1,7 @@
 package core;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,8 @@ public class FillInput2 extends JPanel implements ActionListener {
 		a = new JTextArea(10, 10);
 		scrollPane = new JScrollPane(a);
 		a.setEditable(false);
+		scrollPane.setViewportView(a);
+
 		JButton button = new JButton("ENTER");
 		button.addActionListener(this);
 		command.addActionListener(this);  //Allows enter press on keyboard
@@ -86,7 +89,8 @@ public class FillInput2 extends JPanel implements ActionListener {
 		a.append(">" + command.getText() + "\n");
 		command.setText(" ");
 		if(i==1){
-			a.append("\nEnter username for player 2: \n");
+			a.setSelectionColor(Color.RED);
+			a.append("Enter Username For Player 2: \n");
 		}
 		
 		if(i==2){
@@ -96,20 +100,14 @@ public class FillInput2 extends JPanel implements ActionListener {
 	}
 	
 	public static void run(){
-		a.append("Enter username for player 1: \n");
+		a.setSelectionColor(Color.RED);
+		a.append("Enter Username For Player 1: \n");
 	}
 
 	public static String getPlayer1() {
 		return player1;
 	}
 
-	public static String returnPlayer1(){
-		return player1;
-	}
-	
-	public static String returnPlayer2(){
-		return player2;
-	}
 	
 	public static String getPlayer2(){
 		return player2;
