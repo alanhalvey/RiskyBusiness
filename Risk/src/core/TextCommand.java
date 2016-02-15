@@ -37,8 +37,8 @@ public class TextCommand extends JPanel implements ActionListener {
     }
  
     public void actionPerformed(ActionEvent evt) {
-        String Username = textField.getText();
-        textArea.append(Username + newline);
+        Data.currentInput = textField.getText();
+        textArea.append(Data.currentInput + newline);
         textField.selectAll();
  
         //Make sure the new text is visible, even if there

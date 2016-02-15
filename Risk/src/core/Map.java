@@ -42,20 +42,20 @@ public class Map extends JPanel {
 		for(int i = 0; i<=41;i++){
 			Data.X_Coordinates[i]=(Data.getCountryCoord()[i][0]);
 			Data.Y_Coordinates[i]=(Data.getCountryCoord()[i][1]);
-			
-			
+
+
 			for(int j=0;j<=Data.ADJACENT[i].length-1;j++){
 				if (contains(Data.ADJACENT[i][j], i)){
 					g.setColor(Color.WHITE);
 					g.drawLine(Data.getCountryCoord()[i][0]-2, Data.getCountryCoord()[i][1]-8, Data.getCountryCoord()[Data.ADJACENT[i][j]][0] -2 , Data.getCountryCoord()[Data.ADJACENT[i][j]][1] -8);
 				}
-				
+
 			}
-			
-			
-			
-			
-			
+
+
+
+
+
 			Dimension size = getSize();
 			int w = size.width ;
 			int h = size.height;
@@ -71,7 +71,7 @@ public class Map extends JPanel {
 			Ellipse2D.Double outline = new Ellipse2D.Double(x-9,y-16,16,16);
 			g2d.draw(outline);
 			g2d.fill(outline);
-			
+
 			switch (Data.CONTINENT_IDS[i]){
 			case 0:g2d.setColor(Color.YELLOW) ;
 			break;
@@ -97,7 +97,7 @@ public class Map extends JPanel {
 					g2d.drawLine(Data.X_Coordinates[i-1], Data.Y_Coordinates[i-1]-10, Data.X_Coordinates[i], Data.Y_Coordinates[i]-10);
 				}
 			}	
-			*/
+			 */
 
 
 
@@ -109,7 +109,7 @@ public class Map extends JPanel {
 				y = y+2;
 			}
 
-			
+
 
 
 
@@ -117,6 +117,8 @@ public class Map extends JPanel {
 			g2d.drawString(Data.COUNTRY_NAMES[i], x+8, y+2);
 			g.setFont(new Font("default", Font.ITALIC, 12));
 
+			if (!(FillInput2.getPlayer2().compareTo("") == 0)){
+			
 			boolean Player1 = arrayContains(Data.PLAYER_1_COUNTRIES, i);
 			boolean Player2 = arrayContains(Data.PLAYER_2_COUNTRIES, i);
 			boolean Neutral1 = arrayContains(Data.NEUTRAL_1_COUNTRIES, i);
@@ -131,14 +133,14 @@ public class Map extends JPanel {
 			String currentPlayer = "";
 			int NumArmies = 0;
 			Color PlayerColor = null;
-			
+
 			if (Player1 == true){
-				currentPlayer = "Player 1";
+				currentPlayer = FillInput2.getPlayer1();
 				PlayerColor = Color.RED;
 				NumArmies = Data.PLAYER_1_ARMIES;
 			}
 			if (Player2){
-				currentPlayer = "Player 2";
+				currentPlayer = FillInput2.getPlayer2();
 				PlayerColor = Color.BLUE;
 				NumArmies = Data.PLAYER_2_ARMIES;
 			}
@@ -159,39 +161,40 @@ public class Map extends JPanel {
 			}
 			if (Neutral4){
 				currentPlayer = "Neutral 4";
-				PlayerColor = Color.CYAN;
+				PlayerColor = Color.WHITE;
 				NumArmies = Data.NEUTRAL_4_ARMIES;
 			}
-			
+
 			FontMetrics fm = g.getFontMetrics();
 			Rectangle r = fm.getStringBounds(currentPlayer, g).getBounds();
-			
+
 			g.setColor(Color.LIGHT_GRAY);
 			g2d.fillRect(x+8, y+4, r.width, r.height);
-			
+
 			g.setColor(PlayerColor);
-			
+
 			g2d.drawRect(x+8, y+4 , r.width, r.height);
 			g2d.drawString(currentPlayer, x+8, y+17);
 			g.setFont(new Font("default", Font.BOLD, 11));
 			FontMetrics fm1 = g.getFontMetrics();
 			Rectangle r2 = fm.getStringBounds(("["+NumArmies+ " Armies] "), g).getBounds();
+			//g.setColor(Color.WHITE);
+			//g2d.fillRect(x+4, y+25, r2.width, r2.height);
+
 			g.setColor(Color.WHITE);
-			g2d.fillRect(x+4, y+25, r2.width, r2.height);
-			
-			g.setColor(PlayerColor);
-			
+
 			g2d.drawString("["+NumArmies+ " Armies]", x+4, y+37);
-			
-			
-			
+
+			}
+
 
 
 
 
 
 		}
-		
+
+
 
 	}
 	public static boolean arrayContains(int[] array, Integer item) {

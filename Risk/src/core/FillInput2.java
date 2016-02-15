@@ -19,8 +19,8 @@ public class FillInput2 extends JPanel implements ActionListener {
 	protected JScrollPane scrollPane;
 	public static boolean inputUpdated = false;
 		
-	String player1 = "";
-	String player2 = "";
+	public static String player1 = "";
+	public static String player2 = "";
 	
 	int i=0;
 
@@ -74,19 +74,16 @@ public class FillInput2 extends JPanel implements ActionListener {
 		
 		if(i==0){
 			player1 = command.getText();
-			getPlayer1(player1);
 		}
 		
 		if(i==1){
 			player2 = command.getText();
-			getPlayer2(player2);
 		}
 		
 		i++;
 		
 		//Data.currentInput = command.getText();
 		a.append(">" + command.getText() + "\n");
-		
 		command.setText(" ");
 		if(i==1){
 			a.append("\nEnter username for player 2: \n");
@@ -102,15 +99,19 @@ public class FillInput2 extends JPanel implements ActionListener {
 		a.append("Enter username for player 1: \n");
 	}
 
-	public static String getPlayer1(String player1) {
-					
-		System.out.println("Player 1 username: " + player1 + "\n");
+	public static String getPlayer1() {
 		return player1;
 	}
 
-	public static String getPlayer2(String player2){
-		
-		System.out.println("Player 2 username: " + player2 + "\n");	
+	public static String returnPlayer1(){
+		return player1;
+	}
+	
+	public static String returnPlayer2(){
+		return player2;
+	}
+	
+	public static String getPlayer2(){
 		return player2;
 	}
 	
@@ -119,10 +120,10 @@ public class FillInput2 extends JPanel implements ActionListener {
 		DiceRoll players = new DiceRoll();
 		
 		if(players.getRoll() == "1" ){
-			a.append("\n" + getPlayer1(player1) + " to go first.");
+			a.append("\n" + (player1) + " to go first.");
 		}
 		else{
-			a.append("\n" + getPlayer2(player2) + " to go first.");
+			a.append("\n" + (player2) + " to go first.");
 		}
 	}
 }
