@@ -87,6 +87,7 @@ public class FillInput2 extends JPanel implements ActionListener {
 		//Data.currentInput = command.getText();
 		a.append(">" + command.getText() + "\n");
 		
+		command.setText(" ");
 		if(i==1){
 			a.append("\nEnter username for player 2: \n");
 		}
