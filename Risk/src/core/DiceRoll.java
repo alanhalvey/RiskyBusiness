@@ -2,27 +2,21 @@ package core;
 
 import javax.swing.JOptionPane;
 
-//objects from this class will represent
-//six-sided dice.
 class Dice {
 	private int faceValue;
 
-	// mutator method for the dice class
 	public void roll() {
 		faceValue = 1 + (int) (Math.random() * 6.0);
 	}
 
-	// the accessor method for the dice
 	public int value() {
 		return faceValue;
 	}
 
-	// the constructor for dice objects. Starts them
-	// with a roll.
 	public Dice() {
 		roll();
 	}
-} // end of the Dice class
+} 
 
 public class DiceRoll {
 	
@@ -43,12 +37,8 @@ public class DiceRoll {
 			Player2Roll = new Dice();
 			Player2Roll.roll();
 		}
-		// prints dice values and asks user if they would like to roll again or
-		// quit
 		//JOptionPane.showMessageDialog(null, "Player 1's Roll contained the number: \n" + Player1Roll.value() + "\n");
 		//JOptionPane.showMessageDialog(null, "Player 2's Roll contained the number: \n" + Player2Roll.value() + "\n");
-		
-
 
 		System.exit(0);
 	}
@@ -62,10 +52,5 @@ public class DiceRoll {
 			 //JOptionPane.showMessageDialog(null, "Player 2");
 			 return "2";
 		}
-		
-	 
 	}
-
-	
-	
 }

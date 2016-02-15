@@ -19,10 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
-
 public class Screen extends JFrame{
-
-	
 
 	public static void main(String[] args) throws IOException {
 		
@@ -37,10 +34,6 @@ public class Screen extends JFrame{
 	    JFrame frame = new JFrame("RISK"); // creates the JFrame(a window with decorations)
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops the program when window is closed
         frame.setSize(1350, 700);
-        
-        
-        
- 
         
         JPanel content = new JPanel();
         JPanel content1 = new JPanel(); // the main panel of the JFrame, remembet you cant add content directly to JFrame
@@ -68,29 +61,22 @@ public class Screen extends JFrame{
         content2.add(OutputWindow);
         content2.add();
         */
-       
- 
+
         content3.setSize(300, 300);
         content3.setLocation(1000, 100);
         content3.add(InputText);
-        content3.add(input);
-       
-        
-        
- 
+        content3.add(input); 
         
         frame.getContentPane().add(content3); // adds the buttonarea panel to the main panel
         frame.getContentPane().add(content2); // adds the buttonarea panel to the main panel
         frame.getContentPane().add(content1);
         frame.getContentPane().add(content);
         frame.setBackground(Color.WHITE);
+                
+        frame.setVisible(true); // makes the window visible, put at end of program        	
         
+        FillInput2.run();
         
-        frame.setVisible(true); // makes the window visible, put at end of program        
-		
-	}
+	}	
 	
-		
-	}
-
-
+}
