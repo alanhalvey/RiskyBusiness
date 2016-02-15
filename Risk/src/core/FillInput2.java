@@ -9,9 +9,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 public class FillInput2 extends JPanel implements ActionListener {
 
@@ -30,17 +32,25 @@ public class FillInput2 extends JPanel implements ActionListener {
 		setSize(300, 300);
 
 		command = new JTextField(15);
-		a = new JTextArea(10, 10);
-		scrollPane = new JScrollPane(a);
+		a = new JTextArea(15, 10);
 		a.setEditable(false);
-		scrollPane.setViewportView(a);
+		
+		scrollPane=new JScrollPane(a);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		
+		
+
+		//scrollPane.add(a);
+		
 
 		JButton button = new JButton("ENTER");
 		button.addActionListener(this);
 		command.addActionListener(this);  //Allows enter press on keyboard
 
-		scrollPane.add(a);
-
+		
+/*
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.NONE;
 
@@ -52,17 +62,23 @@ public class FillInput2 extends JPanel implements ActionListener {
 		c.weightx = 0.0;
 		c.weighty = 0.0;
 		add(scrollPane, c);
-
+*/
 		JPanel input = new JPanel();
 		// BorderLayout layout = new BorderLayout();
 		// command.setLocation(1000, 300);
 		// a.setLocation(1000, 300);
 
+		
+		
+		
+		
 		input.setLayout(new BorderLayout());
-		input.add(a, BorderLayout.SOUTH);
+		input.add(scrollPane, BorderLayout.SOUTH);
 		input.add(button, BorderLayout.EAST);
 		input.add(command);
-
+		
+		
+		
 		add(input);
 	}
 	
@@ -97,6 +113,7 @@ public class FillInput2 extends JPanel implements ActionListener {
 			RollDice(player1, player2);
 		}
 		
+		a.setCaretPosition(a.getDocument().getLength());
 	}
 	
 	public static void run(){
