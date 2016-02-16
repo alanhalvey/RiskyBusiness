@@ -38,7 +38,32 @@ public class Map extends JPanel {
 		ImageObserver observer = null;
 		g2d.drawImage(img, 0, 0, observer);
 
+		
+		
+		for (int i=0;i<42;i++){
+			int x = Data.getCountryCoord()[i][0] -1;
+			int y = Data.getCountryCoord()[i][1] -1;
 
+			//Alaska + Kamatchka case.
+			if (i == 8 || i == 22){
+				if (i==8){
+					int differenceInLatitude = Data.getCountryCoord()[22][0] - Data.getCountryCoord()[8][0] ;
+					g.drawArc(x, y-70, differenceInLatitude, 130, -10, 190);			}
+			}
+
+			else{
+				for(int j=0;j<=Data.ADJACENT[i].length-1;j++){
+					if (contains(Data.ADJACENT[i][j], i)){
+						g.setColor(Color.WHITE);
+						g.drawLine(Data.getCountryCoord()[i][0] -1, Data.getCountryCoord()[i][1]-8, Data.getCountryCoord()[Data.ADJACENT[i][j]][0]-1, Data.getCountryCoord()[Data.ADJACENT[i][j]][1] -8);
+					}
+
+
+				}
+			}
+		}
+		
+		
 		for(int i = 0; i<=41;i++){
 			Data.X_Coordinates[i]=(Data.getCountryCoord()[i][0]);
 			Data.Y_Coordinates[i]=(Data.getCountryCoord()[i][1]);
@@ -61,7 +86,7 @@ public class Map extends JPanel {
 			g2d.fill(outline);
 
 			switch (Data.CONTINENT_IDS[i]){
-			case 0:g2d.setColor(Color.YELLOW) ;
+			case 0:g2d.setColor(new Color (196, 243, 8)) ;
 			break;
 			case 1:g2d.setColor(Color.BLUE) ;
 			break;
@@ -69,9 +94,9 @@ public class Map extends JPanel {
 			break;
 			case 3:g2d.setColor(Color.magenta) ;
 			break;
-			case 4:g2d.setColor(Color.ORANGE) ;
+			case 4:g2d.setColor(Color.RED) ;
 			break;
-			case 5:g2d.setColor(Color.orange) ;
+			case 5:g2d.setColor(new Color (153, 153, 102)) ;
 			break;
 			}
 
@@ -106,92 +131,84 @@ public class Map extends JPanel {
 			g.setFont(new Font("default", Font.ITALIC, 12));
 
 			if (!(CommandInput.getPlayer2().compareTo("") == 0)){
-			
-			boolean Player1 = arrayContains(Data.PLAYER_1_COUNTRIES, i);
-			boolean Player2 = arrayContains(Data.PLAYER_2_COUNTRIES, i);
-			boolean Neutral1 = arrayContains(Data.NEUTRAL_1_COUNTRIES, i);
-			boolean Neutral2 = arrayContains(Data.NEUTRAL_2_COUNTRIES, i);
-			boolean Neutral3 = arrayContains(Data.NEUTRAL_3_COUNTRIES, i);
-			boolean Neutral4 = arrayContains(Data.NEUTRAL_4_COUNTRIES, i);
+
+				boolean Player1 = arrayContains(Data.PLAYER_1_COUNTRIES, i);
+				boolean Player2 = arrayContains(Data.PLAYER_2_COUNTRIES, i);
+				boolean Neutral1 = arrayContains(Data.NEUTRAL_1_COUNTRIES, i);
+				boolean Neutral2 = arrayContains(Data.NEUTRAL_2_COUNTRIES, i);
+				boolean Neutral3 = arrayContains(Data.NEUTRAL_3_COUNTRIES, i);
+				boolean Neutral4 = arrayContains(Data.NEUTRAL_4_COUNTRIES, i);
 
 
 
 
 
-			String currentPlayer = "";
-			int NumArmies = 0;
-			Color PlayerColor = null;
+				String currentPlayer = "";
+				int NumArmies = 0;
+				Color PlayerColor = null;
 
-			if (Player1 == true){
-				currentPlayer = CommandInput.getPlayer1();
-				PlayerColor = Color.RED;
-				NumArmies = Data.PLAYER_1_ARMIES;
-			}
-			if (Player2){
-				currentPlayer = CommandInput.getPlayer2();
-				PlayerColor = Color.BLUE;
-				NumArmies = Data.PLAYER_2_ARMIES;
-			}
-			if (Neutral1){
-				currentPlayer = "Neutral 1";
-				PlayerColor = Color.ORANGE;
-				NumArmies = Data.NEUTRAL_1_ARMIES;
-			}
-			if (Neutral2){
-				currentPlayer = "Neutral 2";
-				PlayerColor = Color.MAGENTA;
-				NumArmies = Data.NEUTRAL_2_ARMIES;
-			}
-			if (Neutral3){
-				currentPlayer = "Neutral 3";
-				PlayerColor = Color.BLACK;
-				NumArmies = Data.NEUTRAL_3_ARMIES;
-			}
-			if (Neutral4){
-				currentPlayer = "Neutral 4";
-				PlayerColor = Color.WHITE;
-				NumArmies = Data.NEUTRAL_4_ARMIES;
-			}
+				if (Player1 == true){
+					currentPlayer = CommandInput.getPlayer1();
+					PlayerColor = Color.RED;
+					NumArmies = Data.PLAYER_1_ARMIES;
+				}
+				if (Player2){
+					currentPlayer = CommandInput.getPlayer2();
+					PlayerColor = Color.BLUE;
+					NumArmies = Data.PLAYER_2_ARMIES;
+				}
+				if (Neutral1){
+					currentPlayer = "Neutral 1";
+					PlayerColor = new Color (125, 68, 3);
+					NumArmies = Data.NEUTRAL_1_ARMIES;
+				}
+				if (Neutral2){
+					currentPlayer = "Neutral 2";
+					PlayerColor = Color.MAGENTA;
+					NumArmies = Data.NEUTRAL_2_ARMIES;
+				}
+				if (Neutral3){
+					currentPlayer = "Neutral 3";
+					PlayerColor = Color.BLACK;
+					NumArmies = Data.NEUTRAL_3_ARMIES;
+				}
+				if (Neutral4){
+					currentPlayer = "Neutral 4";
+					PlayerColor = Color.WHITE;
+					NumArmies = Data.NEUTRAL_4_ARMIES;
+				}
 
-			FontMetrics fm = g.getFontMetrics();
-			Rectangle r = fm.getStringBounds(currentPlayer, g).getBounds();
+				FontMetrics fm = g.getFontMetrics();
+				Rectangle r = fm.getStringBounds(currentPlayer, g).getBounds();
 
-			g.setColor(Color.LIGHT_GRAY);
-			g2d.fillRect(x+8, y+4, r.width, r.height);
+				g.setColor(Color.LIGHT_GRAY);
+				g2d.fillRect(x+8, y+4, r.width, r.height);
 
-			g.setColor(PlayerColor);
+				g.setColor(PlayerColor);
 
-			g2d.drawRect(x+8, y+4 , r.width, r.height);
-			g2d.drawString(currentPlayer, x+8, y+17);
-			g.setFont(new Font("default", Font.BOLD, 11));
-			FontMetrics fm1 = g.getFontMetrics();
-			Rectangle r2 = fm.getStringBounds(("["+NumArmies+ " Armies] "), g).getBounds();
+				g2d.drawRect(x+8, y+4 , r.width, r.height);
+				g2d.drawString(currentPlayer, x+8, y+17);
+				g.setFont(new Font("default", Font.BOLD, 11));
+				FontMetrics fm1 = g.getFontMetrics();
+				Rectangle r2 = fm.getStringBounds(("["+NumArmies+ " Armies] "), g).getBounds();
 
-			g.setColor(Color.WHITE);
-			if (NumArmies == 1)
-				g2d.drawString("["+NumArmies+ " Army]", x+4, y+37);
-			else{
-				g2d.drawString("["+NumArmies+ " Armies]", x+4, y+37);
-			}
-
-			}
-
-
-
-
-
-
-		}
-
-		for (int i=0;i<42;i++){
-			for(int j=0;j<=Data.ADJACENT[i].length-1;j++){
-				if (contains(Data.ADJACENT[i][j], i)){
-					g.setColor(Color.WHITE);
-					g.drawLine(Data.getCountryCoord()[i][0]-2, Data.getCountryCoord()[i][1]-8, Data.getCountryCoord()[Data.ADJACENT[i][j]][0] -2 , Data.getCountryCoord()[Data.ADJACENT[i][j]][1] -8);
+				g.setColor(Color.WHITE);
+				if (NumArmies == 1)
+					g2d.drawString("["+NumArmies+ " Army]", x+4, y+37);
+				else{
+					g2d.drawString("["+NumArmies+ " Armies]", x+4, y+37);
 				}
 
 			}
+
+
+
+
+
+
 		}
+
+		
 
 
 	}
