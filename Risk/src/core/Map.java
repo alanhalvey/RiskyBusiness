@@ -44,18 +44,6 @@ public class Map extends JPanel {
 			Data.Y_Coordinates[i]=(Data.getCountryCoord()[i][1]);
 
 
-			for(int j=0;j<=Data.ADJACENT[i].length-1;j++){
-				if (contains(Data.ADJACENT[i][j], i)){
-					g.setColor(Color.WHITE);
-					g.drawLine(Data.getCountryCoord()[i][0]-2, Data.getCountryCoord()[i][1]-8, Data.getCountryCoord()[Data.ADJACENT[i][j]][0] -2 , Data.getCountryCoord()[Data.ADJACENT[i][j]][1] -8);
-				}
-
-			}
-
-
-
-
-
 			Dimension size = getSize();
 			int w = size.width ;
 			int h = size.height;
@@ -117,7 +105,7 @@ public class Map extends JPanel {
 			g2d.drawString(Data.COUNTRY_NAMES[i], x+8, y+2);
 			g.setFont(new Font("default", Font.ITALIC, 12));
 
-			if (!(FillInput2.getPlayer2().compareTo("") == 0)){
+			if (!(CommandInput.getPlayer2().compareTo("") == 0)){
 			
 			boolean Player1 = arrayContains(Data.PLAYER_1_COUNTRIES, i);
 			boolean Player2 = arrayContains(Data.PLAYER_2_COUNTRIES, i);
@@ -135,12 +123,12 @@ public class Map extends JPanel {
 			Color PlayerColor = null;
 
 			if (Player1 == true){
-				currentPlayer = FillInput2.getPlayer1();
+				currentPlayer = CommandInput.getPlayer1();
 				PlayerColor = Color.RED;
 				NumArmies = Data.PLAYER_1_ARMIES;
 			}
 			if (Player2){
-				currentPlayer = FillInput2.getPlayer2();
+				currentPlayer = CommandInput.getPlayer2();
 				PlayerColor = Color.BLUE;
 				NumArmies = Data.PLAYER_2_ARMIES;
 			}
@@ -178,12 +166,13 @@ public class Map extends JPanel {
 			g.setFont(new Font("default", Font.BOLD, 11));
 			FontMetrics fm1 = g.getFontMetrics();
 			Rectangle r2 = fm.getStringBounds(("["+NumArmies+ " Armies] "), g).getBounds();
-			//g.setColor(Color.WHITE);
-			//g2d.fillRect(x+4, y+25, r2.width, r2.height);
 
 			g.setColor(Color.WHITE);
-
-			g2d.drawString("["+NumArmies+ " Armies]", x+4, y+37);
+			if (NumArmies == 1)
+				g2d.drawString("["+NumArmies+ " Army]", x+4, y+37);
+			else{
+				g2d.drawString("["+NumArmies+ " Armies]", x+4, y+37);
+			}
 
 			}
 
@@ -194,6 +183,15 @@ public class Map extends JPanel {
 
 		}
 
+		for (int i=0;i<42;i++){
+			for(int j=0;j<=Data.ADJACENT[i].length-1;j++){
+				if (contains(Data.ADJACENT[i][j], i)){
+					g.setColor(Color.WHITE);
+					g.drawLine(Data.getCountryCoord()[i][0]-2, Data.getCountryCoord()[i][1]-8, Data.getCountryCoord()[Data.ADJACENT[i][j]][0] -2 , Data.getCountryCoord()[Data.ADJACENT[i][j]][1] -8);
+				}
+
+			}
+		}
 
 
 	}

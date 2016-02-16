@@ -42,9 +42,8 @@ public class Screen extends JFrame{
 		JPanel content3 = new JPanel();// panel for the text field
 
 		Map points = new Map();
-		JPanel input = new FillInput2();
-		JPanel Outputwriting = new FilledOutputFrame();
-
+		JPanel input = new CommandInput();
+	
 		content.setSize(1380,700);
 		content.setLocation(0, 0);
 		content.setBackground(Color.WHITE);
@@ -76,10 +75,10 @@ public class Screen extends JFrame{
 
 		frame.setVisible(true); // makes the window visible, put at end of program        	
 
-		FillInput2.run();
+		CommandInput.run();
 		while(flag){
 				//if the both users have put in their name
-				if (!(FillInput2.getPlayer2().compareTo("") == 0 )){
+				if (!(CommandInput.getPlayer2().compareTo("") == 0 )){
 					frame.repaint();
 					flag = false;
 				}	

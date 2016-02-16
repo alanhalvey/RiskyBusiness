@@ -2,20 +2,18 @@ package core;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 
-public class FillInput2 extends JPanel implements ActionListener {
+
+public class CommandInput extends JPanel implements ActionListener {
 
 	protected static JTextField command;
 	protected static JTextArea a;
@@ -27,7 +25,7 @@ public class FillInput2 extends JPanel implements ActionListener {
 	
 	int i=0;
 
-	public FillInput2() {
+	public CommandInput() {
 		super(new GridBagLayout());
 		setSize(300, 300);
 
