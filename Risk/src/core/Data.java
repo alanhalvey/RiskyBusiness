@@ -35,7 +35,7 @@ public class Data{
 			"E Australia","New Guinea","W Australia","Indonesia",
 			"Venezuela","Peru","Brazil","Argentina",
 			"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar"};  // for reference
-	public static final int[][] ADJACENT = { 
+	public final static int[][] ADJACENT = { 
 			{4,1,5,6,3,2},    // 0
 			{4,5,0},
 			{4,0,3,8},

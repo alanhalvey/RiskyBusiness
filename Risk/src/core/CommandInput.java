@@ -163,7 +163,7 @@ public class CommandInput extends JPanel implements ActionListener {
 			e1.printStackTrace();
 		}
 
-		//Add the actual text the user inputs with the Color you want
+		//Add the actual text the user inputs with the Colour you want
 		StyleConstants.setForeground(style, c);
 		try {
 			doc.insertString(doc.getLength(), s,style);

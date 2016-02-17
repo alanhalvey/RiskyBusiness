@@ -52,7 +52,7 @@ public class Screen extends JFrame{
 		mainFrame.getContentPane().add(bankgroundPanel);
 		mainFrame.setBackground(Color.WHITE);
 
-		mainFrame.setVisible(true); // makes the window visible, put at end of program        	
+		mainFrame.setVisible(true);     	
 
 		CommandInput.run();
 		while(flag){
