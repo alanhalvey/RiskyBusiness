@@ -45,8 +45,11 @@ public class CommandInput extends JPanel implements ActionListener {
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setPreferredSize(new Dimension(250, 240));
 		scrollPane.setMinimumSize(new Dimension(10, 10));
-
-
+		
+		/*
+		 * The above is setting up the scroll bar and adding the output window to it
+		 */
+		
 
 
 
@@ -56,7 +59,15 @@ public class CommandInput extends JPanel implements ActionListener {
 		DefaultCaret caret = (DefaultCaret)outputWindow.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-
+		/*
+		 * Adding the button and the action listener to the enter key and
+		 * th update caret follows the scroll barto the bottom of the screen
+		 */
+		
+		
+		
+		
+		
 		JPanel finishedPanel = new JPanel();
 
 
@@ -67,13 +78,19 @@ public class CommandInput extends JPanel implements ActionListener {
 		finishedPanel.add(enterButton, BorderLayout.EAST);
 		finishedPanel.add(commandInputWindow);
 
-
+		/*
+		 * adds all elements to the final panel and gets it ready to be aded to the frame in main.
+		 */
 
 		add(finishedPanel);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
+		/*
+		 * The actionlistener adds the player one and
+		 * player two names to the respective string variables, 
+		 * and gives a dice role to see who goes first. 
+		 */
 
 		if(i==0){
 			player1 = commandInputWindow.getText();
@@ -120,7 +137,9 @@ public class CommandInput extends JPanel implements ActionListener {
 	}
 
 	public static void randomPlayerGenerator(String player1, String player2){
-
+		/*
+		 * random generator for who plays first.
+		 */
 		DiceRoll playsFirst = new DiceRoll();
 
 		if(playsFirst.getRoll() == "1" ){

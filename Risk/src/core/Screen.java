@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class Screen extends JFrame{
 	volatile static boolean flag = true;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args)throws IOException {
 
 		
 		JLabel inputScreenTitle = new JLabel("Enter your command:");
