@@ -2,21 +2,13 @@ package core;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 
 public class Screen extends JFrame{
@@ -24,15 +16,11 @@ public class Screen extends JFrame{
 
 	public static void main(String[] args) throws IOException {
 
-		//JLabel background = new JLabel(new ImageIcon(ImageIO.read(new File("RiskMap2.jpg"))));
-		/*
-		JLabel OutputWindow = new JLabel("Output");
-		OutputWindow.setFont(new Font("Consolas",1,20));
-		 */
+		
 		JLabel inputScreenTitle = new JLabel("Enter your command:");
 		inputScreenTitle.setFont(new Font("Consolas",1,12));
 
-		JFrame mainFrame = new JFrame("RISK"); // creates the JFrame(a window with decorations)
+		JFrame mainFrame = new JFrame("RISK"); 
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops the program when window is closed
 		mainFrame.setSize(1350, 700);
 
@@ -59,7 +47,7 @@ public class Screen extends JFrame{
 		inputOutputPanel.add(inputScreenTitle);
 		inputOutputPanel.add(commandInputPanel); 
 
-		mainFrame.getContentPane().add(inputOutputPanel); // adds the buttonarea panel to the main panel
+		mainFrame.getContentPane().add(inputOutputPanel); 
 		mainFrame.getContentPane().add(mapPanel);
 		mainFrame.getContentPane().add(bankgroundPanel);
 		mainFrame.setBackground(Color.WHITE);
