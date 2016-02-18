@@ -57,7 +57,7 @@ public class Screen extends JFrame{
 		CommandInput.run();
 		while(flag){
 			//if the both users have put in their name
-			if (!(CommandInput.getPlayer2().compareTo("") == 0 )){
+			if ((CommandInput.getPlayer2().length() >= 3) && (CommandInput.getPlayer2().length() <= 10)){
 				mainFrame.repaint();
 				flag = false;
 			}	
