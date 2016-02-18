@@ -136,7 +136,7 @@ public class Map extends JPanel {
 	private void drawBackgroundImage(Graphics2D g2d) {
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("background.jpg"));
+			img = ImageIO.read(Screen.class.getResource("/image/background.jpg"));
 		} catch (IOException e) {
 		}
 		ImageObserver observer = null;
