@@ -31,7 +31,7 @@ public class CommandInput extends JPanel implements ActionListener {
 	public static String player2 = "";
 	static StyledDocument doc = outputWindow.getStyledDocument();
 	static Style style = outputWindow.addStyle("Style", null);
-	int i=0; //iterator for going thru the two players
+	static int i=0; //iterator for going thru the two players
 
 	public CommandInput() {
 
@@ -93,39 +93,73 @@ public class CommandInput extends JPanel implements ActionListener {
 		 */
 
 		if(i==0){
-			player1 = commandInputWindow.getText();
+			Player1UsernameChecks();
 		}
-
-
+			
 		if(i==1){
-			player2 = commandInputWindow.getText();
+			Player2UsernameChecks();
 		}
+		
 		i++;
+	}
 
+public static void run(){
+	
+	appendStringTo("Enter Username for Player 1: \n", Color.RED);
 
+}
+
+	public static void Player1UsernameChecks(){ //performs error checks on user input
+	
+		player1 = commandInputWindow.getText();
+		appendStringTo(commandInputWindow.getText() + "\n", Color.BLACK);
+		
+		if (player1.length() < 3){ //Why does this if statement not work more than once?
+			i=-1;
+			appendStringTo("Your username is too short, please enter a new name: \n", Color.GREEN);
+		}
+		
+		if (player1.length() > 10){
+			i=-1;
+			appendStringTo("You username is too long, please enter a new name: \n", Color.GREEN);
+		}
+
+		
+		commandInputWindow.setText(" ");
+		
+		System.out.println("Player 1 = " + player1);
+
+		
+		if(i==0){
+		appendStringTo("Enter Username for Player 2: \n", Color.BLUE);	
+		}
+
+	}
+
+	public static void Player2UsernameChecks() {
+			
+		player2 = commandInputWindow.getText();
 
 		appendStringTo(commandInputWindow.getText() + "\n", Color.BLACK);
 		commandInputWindow.setText(" ");
-		if(i==1){
-			StyleConstants.setForeground(style, Color.blue);
-			appendStringTo("Enter Username for Player 2: \n", Color.BLUE);
-
+	
+		System.out.println("Player 2 = " + player2);
+	
+		if(player2.length() < 3){
+			appendStringTo("Your username is too short, please enter a new name: \n", Color.GREEN);
+			i=0;			
 		}
-
-		if(i==2){
+		if (player2.length() > 10){
+			i=0;
+			appendStringTo("You username is too long, please enter a new name: \n", Color.GREEN);			
+		}
+		if(i==1){
 			randomPlayerGenerator(player1, player2);
 		}
-
-
-	}
-
-	public static void run(){
-
-		appendStringTo("Enter Username for Player 1: \n", Color.RED);
-
-	}
-
 	
+		StyleConstants.setForeground(style, Color.blue);
+		
+}
 	
 	public static String getPlayer1() {
 		return player1;
