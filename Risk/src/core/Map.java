@@ -11,7 +11,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -19,7 +21,7 @@ import javax.swing.JPanel;
 public class Map extends JPanel {
 	//Coordinates.
 	int x,y;
-
+	Country countries[] = new Country[42];
 	private static final long serialVersionUID = 1L;
 
 	public void paintComponent(Graphics g) {
@@ -27,13 +29,15 @@ public class Map extends JPanel {
 
 		//Graphics2D variable we are using to draw all of the elements in this class onto the map.
 		Graphics2D g2d = (Graphics2D) g;
-
+		calculatePlayers();
 		drawBackgroundImage(g2d);
 
+		for(int i = 0;i<41;i++)	drawLinesBetweenNodes(g2d, i, x, y);
+		
 		for(int i = 0; i<=41;i++){
+			fillCountryInfo(i);
 			x = getXCoordinate(i);
 			y = getYCoordinate(i);
-			drawLinesBetweenNodes(g2d, i, x, y);
 			drawCountryNames(g2d, i, x, y);
 			drawPlayers(g2d, i, x, y);
 		}
@@ -49,52 +53,86 @@ public class Map extends JPanel {
 
 
 
+	private void calculatePlayers() {
+		ArrayList<Integer> list = new ArrayList<>(42);
+		
+		
+		for (int k=0;k<42;k++){
+			list.add(k);
+		}
+		Collections.shuffle(list);
+		int l = 0;
+		for(int j=0;j<9;j++){
+			Data.Player_1_Pool[j] = list.get(l);
+			l++;
+		}
+		for(int j=0;j<9;j++){
+			Data.Player_2_Pool[j] = list.get(l);
+			l++;
+		}
+		for(int j=0;j<6;j++){
+			Data.Neutral_1_Pool[j] = list.get(l);
+			l++;
+		}
+		for(int j=0;j<6;j++){
+			Data.Neutral_2_Pool[j] = list.get(l);
+			l++;
+		}
+		for(int j=0;j<6;j++){
+			Data.Neutral_3_Pool[j] = list.get(l);
+			l++;
+		}
+		for(int j=0;j<6;j++){
+			Data.Neutral_4_Pool[j] = list.get(l);
+			l++;
+		}
+		
+		
+		
+		
+	}
+
+
+
+	private void fillCountryInfo(int i) {
+		String countryName = Data.COUNTRY_NAMES[i];
+		String player = getPlayer(i);
+		countries[i] = new Country(countryName, player, 2);
+	}
+
+
+
+	
+
+
+
+	private String getPlayer(int i) {
+		String result = null;
+		if(arrayContains(Data.Player_1_Pool , i))
+			result = CommandInput.getPlayer1();
+		else if(arrayContains(Data.Player_2_Pool , i))
+			result = CommandInput.getPlayer2();
+		else if(arrayContains(Data.Neutral_1_Pool , i))
+			result = "Neutral 1";
+		else if(arrayContains(Data.Neutral_2_Pool , i))
+			result = "Neutral 2";
+		else if(arrayContains(Data.Neutral_3_Pool , i))
+			result = "Neutral 3";
+		else if(arrayContains(Data.Neutral_4_Pool , i))
+			result = "Neutral 4";
+		return result;
+	}
+
+
+
 	private void drawPlayers(Graphics2D g2d, int i, int x2, int y2) {
 		if (!(CommandInput.getPlayer2().compareTo("") == 0)){
 
-			//boolean tests to find which player is the current player.
-			boolean Player1 = arrayContains(Data.PLAYER_1_COUNTRIES, i);
-			boolean Player2 = arrayContains(Data.PLAYER_2_COUNTRIES, i);
-			boolean Neutral1 = arrayContains(Data.NEUTRAL_1_COUNTRIES, i);
-			boolean Neutral2 = arrayContains(Data.NEUTRAL_2_COUNTRIES, i);
-			boolean Neutral3 = arrayContains(Data.NEUTRAL_3_COUNTRIES, i);
-			boolean Neutral4 = arrayContains(Data.NEUTRAL_4_COUNTRIES, i);
+			String playerName = countries[i].getOccupyingPlayer();
+			int numArmies = countries[i].getPlayerArmies();
+			
 
-			String playerName = "";
-			int numArmies = 0;
-			Color playerColor = null;
-
-			//set details for current player based on above tests.
-			if (Player1 == true){
-				playerName = CommandInput.getPlayer1();
-				playerColor = Color.RED;
-				numArmies = Data.PLAYER_1_ARMIES;
-			}
-			if (Player2){
-				playerName = CommandInput.getPlayer2();
-				playerColor = Color.BLUE;
-				numArmies = Data.PLAYER_2_ARMIES;
-			}
-			if (Neutral1){
-				playerName = "Neutral 1";
-				playerColor = new Color (125, 68, 3);
-				numArmies = Data.NEUTRAL_1_ARMIES;
-			}
-			if (Neutral2){
-				playerName = "Neutral 2";
-				playerColor = Color.MAGENTA;
-				numArmies = Data.NEUTRAL_2_ARMIES;
-			}
-			if (Neutral3){
-				playerName = "Neutral 3";
-				playerColor = Color.BLACK;
-				numArmies = Data.NEUTRAL_3_ARMIES;
-			}
-			if (Neutral4){
-				playerName = "Neutral 4";
-				playerColor = Color.WHITE;
-				numArmies = Data.NEUTRAL_4_ARMIES;
-			}
+			Color playerColor = setPlayerColor(i);
 
 			//Create a rectangle that will fit around the players name (with a little room to spare).
 			FontMetrics fm = g2d.getFontMetrics();
@@ -119,6 +157,31 @@ public class Map extends JPanel {
 		}
 
 	}
+
+
+	private Color setPlayerColor(int i) {
+		Color playerColor = null;
+		if (arrayContains(Data.Player_1_Pool, i)){
+			playerColor = Color.RED;
+		}
+		else if (arrayContains(Data.Player_2_Pool, i)){
+			playerColor = Color.BLUE;
+		}
+		else if (arrayContains(Data.Neutral_1_Pool, i)){
+			playerColor = Color.GREEN;
+		}
+		else if (arrayContains(Data.Neutral_2_Pool, i)){
+			playerColor = Color.MAGENTA;
+		}
+		else if (arrayContains(Data.Neutral_3_Pool, i)){
+			playerColor = Color.ORANGE;
+		}
+		else if (arrayContains(Data.Neutral_4_Pool, i)){
+			playerColor = Color.BLACK;
+		}
+		return playerColor;
+	}
+
 
 
 	private void drawNumArmies(Graphics2D g2d, int NumArmies) {
@@ -153,7 +216,7 @@ public class Map extends JPanel {
 		if (i == 8 || i == 22){
 			if (i==8){
 				int differenceInLatitude = Data.getCountryCoord()[22][0] - Data.getCountryCoord()[8][0] ;
-				g2d.drawArc(x, y-70, differenceInLatitude, 130, -10, 190);			}
+				g2d.drawArc(Data.getCountryCoord()[8][0] - 2, Data.getCountryCoord()[8][1]-70, differenceInLatitude, 130, -10, 190);			}
 		}
 		//draw the lines between the other countries Nodes.
 		else{
@@ -170,8 +233,10 @@ public class Map extends JPanel {
 
 
 	private int getXCoordinate(int i) {
-		int x = Data.getCountryCoord()[i][0];
-		return x;
+		
+			return Data.getCountryCoord()[i][0];
+		
+		
 	}
 
 
@@ -235,13 +300,11 @@ public class Map extends JPanel {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("default", Font.BOLD, 12));
 
-		//For East and West Australia, we need to shift x to the left so they display correctly on the map
-		if (Data.COUNTRY_NAMES[i].compareTo("E Australia") == 0 || Data.COUNTRY_NAMES[i].compareTo("W Australia") == 0){
-			x = x-85;
-		}
+
 		g2d.drawString(Data.COUNTRY_NAMES[i], x+8, y+2);
 		g2d.setFont(new Font("default", Font.ITALIC, 12));
 	}
 
+	
 
 }

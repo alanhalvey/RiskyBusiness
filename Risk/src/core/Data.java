@@ -19,6 +19,12 @@ public class Data{
 	public static int NEUTRAL_4_ARMIES = 1;
 	public static String currentInput ;
 	
+	public static int Player_1_Pool[] = new int[9];
+	public static int Player_2_Pool[] = new int[9];
+	public static int Neutral_1_Pool[] = new int[6];
+	public static int Neutral_2_Pool[] = new int[6];
+	public static int Neutral_3_Pool[] = new int[6];
+	public static int Neutral_4_Pool[] = new int[6];
 	
 	public static final int NUM_PLAYERS = 2;
 	public static final int NUM_NEUTRALS = 4;
