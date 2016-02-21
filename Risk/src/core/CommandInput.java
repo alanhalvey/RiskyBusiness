@@ -17,30 +17,26 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 
+@SuppressWarnings("serial")
 public class CommandInput extends JPanel implements ActionListener {
-
-
 
 	protected static JTextField commandInputWindow;
 	protected JScrollPane scrollPane;
 	public static boolean inputUpdated = false;
 	static JTextPane outputWindow = new JTextPane();
 
-
 	public static String player1 = "";
 	public static String player2 = "";
 	static StyledDocument doc = outputWindow.getStyledDocument();
 	static Style style = outputWindow.addStyle("Style", null);
 	static int i=0; //iterator for going thru the two players
-
+	static int check = 0;
 	public CommandInput() {
-
 
 		commandInputWindow = new JTextField(15);
 		outputWindow.setEditable(false);
 		scrollPane=new JScrollPane(outputWindow);
-		
-		
+				
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setPreferredSize(new Dimension(250, 240));
@@ -49,9 +45,6 @@ public class CommandInput extends JPanel implements ActionListener {
 		/*
 		 * The above is setting up the scroll bar and adding the output window to it
 		 */
-		
-
-
 
 		JButton enterButton = new JButton("ENTER");
 		enterButton.addActionListener(this);
@@ -63,15 +56,8 @@ public class CommandInput extends JPanel implements ActionListener {
 		 * Adding the button and the action listener to the enter key and
 		 * th update caret follows the scroll barto the bottom of the screen
 		 */
-		
-		
-		
-		
-		
+				
 		JPanel finishedPanel = new JPanel();
-
-
-
 
 		finishedPanel.setLayout(new BorderLayout());
 		finishedPanel.add(scrollPane, BorderLayout.SOUTH);
@@ -104,9 +90,7 @@ public class CommandInput extends JPanel implements ActionListener {
 	}
 
 public static void run(){
-	
 	appendStringTo("Enter Username for Player 1: \n", Color.RED);
-
 }
 
 	public static void Player1UsernameChecks(){ //performs error checks on user input
@@ -155,6 +139,9 @@ public static void run(){
 		}
 		if(i==1){
 			randomPlayerGenerator(player1, player2);
+			while(check == 1){
+				randomPlayerGenerator(player1, player2);
+			}
 		}
 	
 		StyleConstants.setForeground(style, Color.blue);
@@ -174,19 +161,28 @@ public static void run(){
 		/*
 		 * random generator for who plays first.
 		 */
-		DiceRoll playsFirst = new DiceRoll();
+		DiceRoll bothPlayers = new DiceRoll();
+		bothPlayers.rollDice();
+		
+		appendStringTo(player1 + " rolled a " + bothPlayers.getPlayer1RollValue() + "\n", Color.ORANGE);
+		appendStringTo(player2 + " rolled a " + bothPlayers.getPlayer2RollValue() + "\n", Color.PINK);
 
-		if(playsFirst.getRoll() == "1" ){
+		check = 2;
+		
+		if(bothPlayers.rollWinnerOutcome() == "1" ){
 			appendStringTo((player1) + " to go first.\n", Color.RED);
-
 		}
-		else{
+		
+		if(bothPlayers.rollWinnerOutcome() == "2" ){
 			appendStringTo((player2) + " to go first.\n", Color.BLUE);
 		}
+		
+		if(bothPlayers.rollWinnerOutcome() == "3"){
+			appendStringTo((player1) + "'s and " + (player2) + "'s Die rolls were equal, Re-Roll required: \n", Color.BLACK);
+			check = 1;
+		}
 	}
-	
-	
-	
+		
 	public static void appendStringTo(String s, Color c){
 		//Add the ">" too each line in Dark Gray.
 		StyleConstants.setForeground(style, Color.DARK_GRAY);
@@ -206,6 +202,4 @@ public static void run(){
 			e.printStackTrace();
 		}
 	}
-
 }
-
