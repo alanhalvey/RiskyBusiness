@@ -82,12 +82,15 @@ public class Deck {
 			System.out.println(test.cardsLeft());
 		}
 		
+		
 
 	}
 
+
+
 	private static void PupulateCountries() {
 		for(int i=0;i<42;i++){
-			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], "Player", 0, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i] );
+			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], "Player", 4, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i] );
 		}
 	}
 	
@@ -135,7 +138,7 @@ public class Deck {
 				case 26:
 				case 32:
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("N1");
+					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 1");
 					z++;
 					break;
 				case 3:
@@ -145,7 +148,7 @@ public class Deck {
 				case 27:
 				case 33:
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("N2");
+					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 2");
 					z++;
 					break;
 				case 4:
@@ -155,7 +158,7 @@ public class Deck {
 				case 28:
 				case 34:
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("N3");
+					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 3");
 					z++;
 					break;
 				case 5:
@@ -165,7 +168,7 @@ public class Deck {
 				case 29:
 				case 35:
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("N4");
+					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 4");
 					z++;
 					break;
 				}

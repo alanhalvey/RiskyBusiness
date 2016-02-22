@@ -28,15 +28,18 @@ public class Screen extends JFrame{
 		JPanel bankgroundPanel = new JPanel();
 		JPanel mapPanel = new JPanel(); 
 		JPanel inputOutputPanel = new JPanel();// panel for the text field
-
-		Map fullMap = new Map();
+		
+		
 		JPanel commandInputPanel = new CommandInput();
+		Deck.main(null);
+		Map fullMap = new Map();
+		
 
 		bankgroundPanel.setSize(1380,700);
 		bankgroundPanel.setLocation(0, 0);
 		bankgroundPanel.setBackground(Color.WHITE);
 
-
+		
 		mapPanel.setSize(1380,700);
 		mapPanel.setLocation(0, 0);
 		mapPanel.setLayout((LayoutManager) new BoxLayout(mapPanel, BoxLayout.PAGE_AXIS));
@@ -54,12 +57,13 @@ public class Screen extends JFrame{
 		mainFrame.setBackground(Color.WHITE);
 
 		mainFrame.setVisible(true);     	
-
+		
 		CommandInput.run();
 		while(flag){
 			//if the both users have put in their name
 			if ((CommandInput.getPlayer2().length() >= 3) && (CommandInput.getPlayer2().length() <= 10)){
 				mainFrame.repaint();
+				Deck.main(null);
 				flag = false;
 			}	
 		}

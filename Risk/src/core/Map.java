@@ -21,16 +21,23 @@ public class Map extends JPanel {
 	int x,y;
 	Country countries[] = new Country[42];
 	private static final long serialVersionUID = 1L;
-
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		//Graphics2D variable we are using to draw all of the elements in this class onto the map.
 		Graphics2D g2d = (Graphics2D) g;
 		drawBackgroundImage(g2d);
-		Deck.main(null);
+		
+		
 		for(int i = 0;i<41;i++)	drawLinesBetweenNodes(g2d, i, x, y);
-
+		
+		for(int i = 0; i<=41;i++){
+			x = getXCoordinate(i);
+			y = getYCoordinate(i);
+			drawNodes(g2d, i, x, y);
+		}
+		
 		for(int i = 0; i<=41;i++){
 
 			x = getXCoordinate(i);
@@ -39,15 +46,27 @@ public class Map extends JPanel {
 			drawPlayers(g2d, i, x, y);
 		}
 
-		//Separate for loop to ensure Nodes are always displayed on top of other elements drawn in this class.
-		for(int i = 0; i<=41;i++){
-			x = getXCoordinate(i);
-			y = getYCoordinate(i);
-			drawNodes(g2d, i, x, y);
-		}
+		
 
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 
 
@@ -68,9 +87,7 @@ public class Map extends JPanel {
 		if (!(CommandInput.getPlayer2().compareTo("") == 0)){
 
 			String playerName = Deck.countriesAfterShuffle[i].getOccupyingPlayer();
-			int numArmies = Deck.countriesAfterShuffle[i].getPlayerArmies();
-
-
+			
 			Color playerColor = setPlayerColor(i);
 
 			//Create a rectangle that will fit around the players name (with a little room to spare).
@@ -106,16 +123,16 @@ public class Map extends JPanel {
 		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo(CommandInput.getPlayer2())==0){
 			playerColor = Color.BLUE;
 		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N1")==0){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 1")==0){
 			playerColor = Color.GREEN;
 		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N2")==0){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 2")==0){
 			playerColor = Color.MAGENTA;
 		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N3")==0){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 3")==0){
 			playerColor = Color.ORANGE;
 		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N4")==0){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 4")==0){
 			playerColor = Color.BLACK;
 		}
 		return playerColor;
