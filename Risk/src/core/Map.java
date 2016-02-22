@@ -27,13 +27,12 @@ public class Map extends JPanel {
 
 		//Graphics2D variable we are using to draw all of the elements in this class onto the map.
 		Graphics2D g2d = (Graphics2D) g;
-		calculatePlayers();
 		drawBackgroundImage(g2d);
-
+		Deck.main(null);
 		for(int i = 0;i<41;i++)	drawLinesBetweenNodes(g2d, i, x, y);
-		
+
 		for(int i = 0; i<=41;i++){
-			fillCountryInfo(i);
+
 			x = getXCoordinate(i);
 			y = getYCoordinate(i);
 			drawCountryNames(g2d, i, x, y);
@@ -51,84 +50,26 @@ public class Map extends JPanel {
 
 
 
-	private void calculatePlayers() {
-		ArrayList<Integer> list = new ArrayList<>(42);
-		
-		
-		for (int k=0;k<42;k++){
-			list.add(k);
-		}
-		Collections.shuffle(list);
-		int l = 0;
-		for(int j=0;j<9;j++){
-			Data.Player_1_Pool[j] = list.get(l);
-			l++;
-		}
-		for(int j=0;j<9;j++){
-			Data.Player_2_Pool[j] = list.get(l);
-			l++;
-		}
-		for(int j=0;j<6;j++){
-			Data.Neutral_1_Pool[j] = list.get(l);
-			l++;
-		}
-		for(int j=0;j<6;j++){
-			Data.Neutral_2_Pool[j] = list.get(l);
-			l++;
-		}
-		for(int j=0;j<6;j++){
-			Data.Neutral_3_Pool[j] = list.get(l);
-			l++;
-		}
-		for(int j=0;j<6;j++){
-			Data.Neutral_4_Pool[j] = list.get(l);
-			l++;
-		}
-		
-		
-		
-		
-	}
 
 
 
-	private void fillCountryInfo(int i) {
-		String countryName = Data.COUNTRY_NAMES[i];
-		String player = getPlayer(i);
-		countries[i] = new Country(countryName, player, 2);
-	}
 
 
 
-	
 
 
 
-	private String getPlayer(int i) {
-		String result = null;
-		if(arrayContains(Data.Player_1_Pool , i))
-			result = CommandInput.getPlayer1();
-		else if(arrayContains(Data.Player_2_Pool , i))
-			result = CommandInput.getPlayer2();
-		else if(arrayContains(Data.Neutral_1_Pool , i))
-			result = "Neutral 1";
-		else if(arrayContains(Data.Neutral_2_Pool , i))
-			result = "Neutral 2";
-		else if(arrayContains(Data.Neutral_3_Pool , i))
-			result = "Neutral 3";
-		else if(arrayContains(Data.Neutral_4_Pool , i))
-			result = "Neutral 4";
-		return result;
-	}
+
+
 
 
 
 	private void drawPlayers(Graphics2D g2d, int i, int x2, int y2) {
 		if (!(CommandInput.getPlayer2().compareTo("") == 0)){
 
-			String playerName = countries[i].getOccupyingPlayer();
-			int numArmies = countries[i].getPlayerArmies();
-			
+			String playerName = Deck.countriesAfterShuffle[i].getOccupyingPlayer();
+			int numArmies = Deck.countriesAfterShuffle[i].getPlayerArmies();
+
 
 			Color playerColor = setPlayerColor(i);
 
@@ -151,7 +92,7 @@ public class Map extends JPanel {
 			g2d.setFont(new Font("default", Font.BOLD, 11));
 
 			//Draw info on each players armies on the map.
-			drawNumArmies(g2d, numArmies);
+			drawNumArmies(g2d, i);
 		}
 
 	}
@@ -159,22 +100,22 @@ public class Map extends JPanel {
 
 	private Color setPlayerColor(int i) {
 		Color playerColor = null;
-		if (arrayContains(Data.Player_1_Pool, i)){
+		if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo(CommandInput.getPlayer1())==0){
 			playerColor = Color.RED;
 		}
-		else if (arrayContains(Data.Player_2_Pool, i)){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo(CommandInput.getPlayer2())==0){
 			playerColor = Color.BLUE;
 		}
-		else if (arrayContains(Data.Neutral_1_Pool, i)){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N1")==0){
 			playerColor = Color.GREEN;
 		}
-		else if (arrayContains(Data.Neutral_2_Pool, i)){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N2")==0){
 			playerColor = Color.MAGENTA;
 		}
-		else if (arrayContains(Data.Neutral_3_Pool, i)){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N3")==0){
 			playerColor = Color.ORANGE;
 		}
-		else if (arrayContains(Data.Neutral_4_Pool, i)){
+		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("N4")==0){
 			playerColor = Color.BLACK;
 		}
 		return playerColor;
@@ -182,9 +123,9 @@ public class Map extends JPanel {
 
 
 
-	private void drawNumArmies(Graphics2D g2d, int NumArmies) {
+	private void drawNumArmies(Graphics2D g2d, int i) {
 		g2d.setColor(Color.WHITE);
-		
+		int NumArmies = Deck.countriesAfterShuffle[i].getPlayerArmies();
 		if (NumArmies == 1)
 			g2d.drawString("["+NumArmies+ " Army]", x+4, y+37);
 		else{
@@ -231,28 +172,27 @@ public class Map extends JPanel {
 
 
 	private int getXCoordinate(int i) {
-		
-			return Data.getCountryCoord()[i][0];
-		
-		
+
+		return Deck.countriesAfterShuffle[i].getX_Coordinate();
+
+
 	}
 
 
 	private int getYCoordinate(int i) {
-		int y = Data.getCountryCoord()[i][1];
-		return y;
+		return Deck.countriesAfterShuffle[i].getY_Coordinate();
 	}
 
-	
+
 	//simple method to test if an integer array contains a specific integer.
 	public static boolean arrayContains(int[] array, Integer item) {
 		return Arrays.stream(array).anyMatch(item::equals);
 	}
 
-	
+
 	public void setContinentNodeColor (Graphics g2d, int i){
 		//Changes colour based on which continent current country is.
-		switch (Data.CONTINENT_IDS[i]){
+		switch (Deck.countriesAfterShuffle[i].getContinent()){
 		//North America
 		case 0:g2d.setColor(new Color (196, 243, 8)) ;
 		break;
@@ -282,7 +222,7 @@ public class Map extends JPanel {
 
 	public void drawNodes(Graphics2D g2d, int i, int x, int y){
 		g2d.setColor(Color.BLACK);
-		
+
 		//I decided to draw an outline and inner circle for each node, to make them more clear on the map.
 		Ellipse2D.Double nodeOutlineCircle = new Ellipse2D.Double(x-9,y-16,16,16);
 		g2d.draw(nodeOutlineCircle);
@@ -299,10 +239,10 @@ public class Map extends JPanel {
 		g2d.setFont(new Font("default", Font.BOLD, 12));
 
 
-		g2d.drawString(Data.COUNTRY_NAMES[i], x+8, y+2);
+		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x+8, y+2);
 		g2d.setFont(new Font("default", Font.ITALIC, 12));
 	}
 
-	
+
 
 }
