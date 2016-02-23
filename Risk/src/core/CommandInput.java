@@ -2,8 +2,10 @@ package core;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,9 +20,16 @@ import javax.swing.text.StyledDocument;
 
 
 @SuppressWarnings("serial")
-public class CommandInput extends JPanel implements ActionListener {
+public class CommandInput extends JPanel{
 
-	protected static JTextField commandInputWindow;
+	protected static JTextField commandInputWindow = new JTextField(15);
+	private static JButton enterButton = new JButton("ENTER");
+
+	private static LinkedList<String> commandBuffer = new LinkedList<String>();
+	private static final int FONT_SIZE = 14;
+
+
+	
 	protected JScrollPane scrollPane;
 	public static boolean inputUpdated = false;
 	static JTextPane outputWindow = new JTextPane();
@@ -33,7 +42,23 @@ public class CommandInput extends JPanel implements ActionListener {
 	static int check = 0;
 	public CommandInput() {
 
-		commandInputWindow = new JTextField(15);
+		class AddActionListener implements ActionListener {
+			   public void actionPerformed(ActionEvent event)	{
+				   synchronized (commandBuffer) {
+					   commandBuffer.add(commandInputWindow.getText());
+					   commandInputWindow.setText("");
+					   commandBuffer.notify();
+				   }
+		           return;
+			   }
+		   }
+		ActionListener listener = new AddActionListener();
+		commandInputWindow.addActionListener(listener);
+		enterButton.addActionListener(listener);
+		commandInputWindow.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
+		setLayout(new BorderLayout());
+		add(commandInputWindow, BorderLayout.CENTER);
+	
 		outputWindow.setEditable(false);
 		scrollPane=new JScrollPane(outputWindow);
 				
@@ -46,9 +71,6 @@ public class CommandInput extends JPanel implements ActionListener {
 		 * The above is setting up the scroll bar and adding the output window to it
 		 */
 
-		JButton enterButton = new JButton("ENTER");
-		enterButton.addActionListener(this);
-		commandInputWindow.addActionListener(this);  //Allows enter press on keyboard
 		DefaultCaret caret = (DefaultCaret)outputWindow.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
@@ -63,86 +85,80 @@ public class CommandInput extends JPanel implements ActionListener {
 		finishedPanel.add(scrollPane, BorderLayout.SOUTH);
 		finishedPanel.add(enterButton, BorderLayout.EAST);
 		finishedPanel.add(commandInputWindow);
-
 		/*
 		 * adds all elements to the final panel and gets it ready to be aded to the frame in main.
 		 */
-
 		add(finishedPanel);
+		
+		return;
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		/*
-		 * The actionlistener adds the player one and
-		 * player two names to the respective string variables, 
-		 * and gives a dice role to see who goes first. 
-		 */
-
-		if(i==0){
+	public static void run(){
+	
+		if(player1 == ""){
+			appendStringTo("Enter Username for Player 1: \n", Color.RED);
 			Player1UsernameChecks();
 		}
-			
-		if(i==1){
+		if(player2 == ""){
+			appendStringTo("Enter Username for Player 2: \n", Color.BLUE);	
 			Player2UsernameChecks();
 		}
 		
-		i++;
+			randomPlayerGenerator(player1, player2);
+			while(check == 1){
+				randomPlayerGenerator(player1, player2);
+			}
 	}
 
-public static void run(){
-	appendStringTo("Enter Username for Player 1: \n", Color.RED);
-}
+	public static String getCommand() {
+		String command;
+		synchronized (commandBuffer) {
+			while (commandBuffer.isEmpty()) {
+				try {
+					commandBuffer.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			command = commandBuffer.pop();
+		}
+		return command;
+	}
 
 	public static void Player1UsernameChecks(){ //performs error checks on user input
 	
-		player1 = commandInputWindow.getText();
-		appendStringTo(commandInputWindow.getText() + "\n", Color.BLACK);
+		player1 = getCommand();
+		appendStringTo(player1 + "\n", Color.BLACK);
 		
 		if (player1.length() < 3){ //Why does this if statement not work more than once?
-			i=-1;
 			appendStringTo("Your username is too short, please enter a new name: \n", Color.GREEN);
 		}
 		
 		if (player1.length() > 10){
-			i=-1;
 			appendStringTo("You username is too long, please enter a new name: \n", Color.GREEN);
 		}
-
 		
-		commandInputWindow.setText(" ");
-		
+		commandInputWindow.setText("");		
 		System.out.println("Player 1 = " + player1);
-
-		
-		if(i==0){
-		appendStringTo("Enter Username for Player 2: \n", Color.BLUE);	
-		}
 
 	}
 
 	public static void Player2UsernameChecks() {
 			
-		player2 = commandInputWindow.getText();
+		player2 = getCommand();
 
-		appendStringTo(commandInputWindow.getText() + "\n", Color.BLACK);
-		commandInputWindow.setText(" ");
-	
-		System.out.println("Player 2 = " + player2);
+		appendStringTo(player2 + "\n", Color.BLACK);
 	
 		if(player2.length() < 3){
 			appendStringTo("Your username is too short, please enter a new name: \n", Color.GREEN);
-			i=0;			
 		}
 		if (player2.length() > 10){
-			i=0;
 			appendStringTo("You username is too long, please enter a new name: \n", Color.GREEN);			
 		}
-		if(i==1){
-			randomPlayerGenerator(player1, player2);
-			while(check == 1){
-				randomPlayerGenerator(player1, player2);
-			}
-		}
+		
+		commandInputWindow.setText("");
+		
+		System.out.println("Player 2 = " + player2);
 	
 		StyleConstants.setForeground(style, Color.blue);
 		
@@ -151,7 +167,6 @@ public static void run(){
 	public static String getPlayer1() {
 		return player1;
 	}
-
 
 	public static String getPlayer2(){
 		return player2;
