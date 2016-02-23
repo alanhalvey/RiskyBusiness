@@ -31,7 +31,7 @@ public class CommandInput extends JPanel{
 	protected JScrollPane scrollPane;
 	public static boolean inputUpdated = false;
 	static JTextPane outputWindow = new JTextPane();
-
+	static String currentPlayer = "";
 	public static String player1 = "";
 	public static String player2 = "";
 	static StyledDocument doc = outputWindow.getStyledDocument();
@@ -128,6 +128,60 @@ public class CommandInput extends JPanel{
 		}
 		return command;
 	}
+	
+	public static String placeUnits(String currentPlayer) {
+		boolean flag = false;
+		appendStringTo(currentPlayer + ", please type the country name to place units in: \n", Color.GREEN);
+		if(currentPlayer.compareTo(player1)==0){
+			String country = getCommand();
+			for(int i=0;i<42;i++){
+				if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
+
+					if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer())==0){
+						int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
+						Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
+						appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
+						flag = true;
+						Data.PLAYER_1_ARMIES-=3;
+						appendStringTo((currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " units\n"), Color.RED);
+						return player2;
+						
+					}
+					else{
+						appendStringTo("You do not own this country\n", Color.RED);
+						placeUnits(player1);
+					}
+				}
+			}
+		}
+		
+		if(currentPlayer.compareTo(player2)==0 && (flag == false)){
+			String country = getCommand();
+			for(int i=0;i<42;i++){
+				if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
+
+					if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer())==0){
+						
+						int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
+						Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
+						appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
+						Data.PLAYER_2_ARMIES-=3;
+						appendStringTo((currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " units\n"), Color.BLUE);
+						return player1;
+						
+					}
+					else{
+						appendStringTo("You do not own this country\n", Color.RED);
+						placeUnits(player2);
+					}
+				}
+				
+			}
+		}
+		return currentPlayer;
+
+	}
+	
 
 	public static void Player1UsernameChecks(){ //performs error checks on user input
 	
@@ -194,10 +248,12 @@ public class CommandInput extends JPanel{
 		
 		if(bothPlayers.rollWinnerOutcome() == "1" ){
 			appendStringTo((player1) + " to go first.\n", Color.RED);
+			currentPlayer = player1;
 		}
 		
 		if(bothPlayers.rollWinnerOutcome() == "2" ){
 			appendStringTo((player2) + " to go first.\n", Color.BLUE);
+			currentPlayer = player2;
 		}
 		
 		if(bothPlayers.rollWinnerOutcome() == "3"){

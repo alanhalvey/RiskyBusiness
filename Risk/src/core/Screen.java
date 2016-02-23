@@ -66,6 +66,13 @@ public class Screen extends JFrame{
 				flag = false;
 			}	
 		}
+		while(true){
+			String next = CommandInput.placeUnits(CommandInput.currentPlayer);
+			mainFrame.repaint();
+			CommandInput.placeUnits(next);
+			mainFrame.repaint();
+			CommandInput.placeUnits(CommandInput.currentPlayer);
+		}
 
 	}	
 
