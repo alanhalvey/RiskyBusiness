@@ -28,8 +28,6 @@ public class CommandInput extends JPanel{
 	private static LinkedList<String> commandBuffer = new LinkedList<String>();
 	private static final int FONT_SIZE = 14;
 
-
-	
 	protected JScrollPane scrollPane;
 	public static boolean inputUpdated = false;
 	static JTextPane outputWindow = new JTextPane();
@@ -94,20 +92,26 @@ public class CommandInput extends JPanel{
 	}
 
 	public static void run(){
-	
-		if(player1 == ""){
-			appendStringTo("Enter Username for Player 1: \n", Color.RED);
+
+		appendStringTo("Enter Username for Player 1: \n", Color.RED);
+
+		while(player1.length() < 3 || player1.length() > 10){
 			Player1UsernameChecks();
 		}
-		if(player2 == ""){
-			appendStringTo("Enter Username for Player 2: \n", Color.BLUE);	
+
+		appendStringTo("Enter Username for Player 2: \n", Color.BLUE);	
+
+		while((player2.length() < 3 || player2.length() > 10)){
 			Player2UsernameChecks();
 		}
 		
+		System.out.println(player1 + "\n");
+		System.out.println(player2 + "\n");
+		
+		randomPlayerGenerator(player1, player2);
+		while(check == 1){
 			randomPlayerGenerator(player1, player2);
-			while(check == 1){
-				randomPlayerGenerator(player1, player2);
-			}
+		}
 	}
 
 	public static String getCommand() {
@@ -147,8 +151,12 @@ public class CommandInput extends JPanel{
 			
 		player2 = getCommand();
 
-		appendStringTo(player2 + "\n", Color.BLACK);
-	
+		appendStringTo(player2 + "\n", Color.BLACK);	
+
+		if(player1 == player2){
+			appendStringTo("your username is already taken, please enter a new name: \n", Color.GREEN);
+		}
+		
 		if(player2.length() < 3){
 			appendStringTo("Your username is too short, please enter a new name: \n", Color.GREEN);
 		}
