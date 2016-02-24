@@ -22,7 +22,7 @@ public class Main {
 			//if the both users have put in their name
 			if ((CommandInput.getPlayer2().length() >= 3) && (CommandInput.getPlayer2().length() <= 10)){
 				Screen.mainFrame.repaint();
-				Deck.main(null);
+				Deck.shuffledDeck();
 				flag = false;
 			}	
 		}

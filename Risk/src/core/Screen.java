@@ -37,7 +37,7 @@ public class Screen extends JFrame{
 		
 		
 		JPanel commandInputPanel = new CommandInput();
-		Deck.main(null);
+		Deck.shuffledDeck();
 		Map fullMap = new Map();
 		
 

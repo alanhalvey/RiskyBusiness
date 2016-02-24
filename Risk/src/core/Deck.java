@@ -37,14 +37,7 @@ public class Deck {
 	public void shuffle() {
 
 		Collections.shuffle(deck);
-		/*
-	    	for ( int i=0; i<deck.size();i++)
-	    	{
-	            int rand = (int)(Math.random()*(i+1));
-	             temp[i] = deck.remove(i);
-	             deck. = Data.COUNTRY_NAMES[rand];
-	             Data.COUNTRY_NAMES[rand] = temp[i];
-	        }*/
+	
 
 	}	
 
@@ -75,18 +68,18 @@ public class Deck {
 
 
 
-	public static void main(String[] args) {
-		Deck test = new Deck();
+	public static void shuffledDeck() {
+		Deck deck = new Deck();
 		PupulateCountries();
 
 
-		test.getCards();
-		test.shuffle();
+		deck.getCards();
+		deck.shuffle();
 		for(int i =0;i<42;i++){
-			String result= test.deal();
+			String result= deck.deal();
 			System.out.println(result);
 			Reassign(result);
-			System.out.println(test.cardsLeft());
+			System.out.println(deck.cardsLeft());
 		}
 		
 		
