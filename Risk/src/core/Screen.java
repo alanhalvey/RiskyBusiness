@@ -1,3 +1,10 @@
+/*
+ * Alan Halvey -
+ * Alan Holmes -
+ * Greg Sloggett - 14522247
+ * 
+ */
+
 package core;
 
 import java.awt.Color;
@@ -12,15 +19,15 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Screen extends JFrame{
-	volatile static boolean flag = true;
 
-	public static void main(String[] args)throws IOException {
+	static JFrame mainFrame = new JFrame("RISK"); 
+
+	public Screen() throws IOException {
 
 		
 		JLabel inputScreenTitle = new JLabel("Enter your command:");
 		inputScreenTitle.setFont(new Font("Consolas",1,12));
 
-		JFrame mainFrame = new JFrame("RISK"); 
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops the program when window is closed
 		mainFrame.setSize(1350, 700);
 
@@ -56,23 +63,6 @@ public class Screen extends JFrame{
 		mainFrame.setBackground(Color.WHITE);
 
 		mainFrame.setVisible(true);     	
-		
-		CommandInput.run();
-		while(flag){
-			//if the both users have put in their name
-			if ((CommandInput.getPlayer2().length() >= 3) && (CommandInput.getPlayer2().length() <= 10)){
-				mainFrame.repaint();
-				Deck.main(null);
-				flag = false;
-			}	
-		}
-		while(true){
-			String next = CommandInput.placeUnits(CommandInput.currentPlayer);
-			mainFrame.repaint();
-			CommandInput.placeUnits(next);
-			mainFrame.repaint();
-			CommandInput.placeUnits(CommandInput.currentPlayer);
-		}
 
 	}	
 

@@ -1,4 +1,12 @@
 package core;
+/*
+ * Alan Halvey -
+ * Alan Holmes -
+ * Greg Sloggett - 14522247
+ * 
+ */
+
+import java.awt.Color;
 
 public class Data{
 
@@ -34,6 +42,7 @@ public class Data{
 	public static final int INIT_COUNTRIES_NEUTRAL = 6;
 	public static final int INIT_UNITS_PLAYER = 36;
 	public static final int INIT_UNITS_NEUTRAL = 24;
+	public static final Color[] COLOURS = {Color.RED, Color.BLUE, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.BLACK};
 	public static final String[] COUNTRY_NAMES = {
 			"Ontario","Quebec","NW Territory","Alberta","Greenland","E United States","W United States","Central America","Alaska",
 			"Great Britain","W Europe","S Europe","Ukraine","N Europe","Iceland","Scandinavia",

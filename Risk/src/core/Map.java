@@ -1,3 +1,10 @@
+/*
+ * Alan Halvey -
+ * Alan Holmes -
+ * Greg Sloggett - 14522247
+ * 
+ */
+
 package core;
 import java.awt.Color;
 import java.awt.Font;
@@ -50,39 +57,6 @@ public class Map extends JPanel {
 
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private void drawPlayers(Graphics2D g2d, int i, int x2, int y2) {
 		if (!(CommandInput.getPlayer2().compareTo("") == 0)){
 
@@ -118,13 +92,13 @@ public class Map extends JPanel {
 	private Color setPlayerColor(int i) {
 		Color playerColor = null;
 		if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo(CommandInput.getPlayer1())==0){
-			playerColor = Color.RED;
+			playerColor = CommandInput.getPlayer1Colour();
 		}
 		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo(CommandInput.getPlayer2())==0){
-			playerColor = Color.BLUE;
+			playerColor = CommandInput.getPlayer2Colour();
 		}
 		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 1")==0){
-			playerColor = Color.GREEN;
+			playerColor = Color.RED;
 		}
 		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 2")==0){
 			playerColor = Color.MAGENTA;

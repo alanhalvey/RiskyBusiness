@@ -1,3 +1,11 @@
+/*
+ * Alan Halvey -
+ * Alan Holmes -
+ * Greg Sloggett - 14522247
+ * 
+ */
+
+
 package core;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,7 +26,6 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-
 @SuppressWarnings("serial")
 public class CommandInput extends JPanel{
 
@@ -29,15 +36,24 @@ public class CommandInput extends JPanel{
 	private static final int FONT_SIZE = 14;
 
 	protected JScrollPane scrollPane;
+	
 	public static boolean inputUpdated = false;
+	
 	static JTextPane outputWindow = new JTextPane();
+
 	static String currentPlayer = "";
 	public static String player1 = "";
 	public static String player2 = "";
+	
 	static StyledDocument doc = outputWindow.getStyledDocument();
 	static Style style = outputWindow.addStyle("Style", null);
-	static int i=0; //iterator for going thru the two players
-	static int check = 0;
+	static String checkIfDieEqual = "NO";
+	
+	public static Color player1Colour = Color.BLUE;
+	public static Color player2Colour = Color.GREEN;
+	public static Color currentPlayerColour = Color.BLACK;
+
+	
 	public CommandInput() {
 
 		class AddActionListener implements ActionListener {
@@ -92,24 +108,26 @@ public class CommandInput extends JPanel{
 	}
 
 	public static void run(){
-
-		appendStringTo("Enter Username for Player 1: \n", Color.RED);
+		appendStringTo("Enter Username for Player 1: \n", Color.BLACK);
 
 		while(player1.length() < 3 || player1.length() > 10){
 			Player1UsernameChecks();
 		}
 
-		appendStringTo("Enter Username for Player 2: \n", Color.BLUE);	
+		appendStringTo("Enter Username for Player 2: \n", Color.BLACK);	
 
 		while((player2.length() < 3 || player2.length() > 10)){
 			Player2UsernameChecks();
+			if(player2.equalsIgnoreCase(player1)){
+				appendStringTo("That username has already been taken, please enter another name: \n", Color.RED);
+				player2 = "";
+			}
 		}
+
 		
-		System.out.println(player1 + "\n");
-		System.out.println(player2 + "\n");
 		
 		randomPlayerGenerator(player1, player2);
-		while(check == 1){
+		while(checkIfDieEqual == "YES"){
 			randomPlayerGenerator(player1, player2);
 		}
 	}
@@ -128,10 +146,18 @@ public class CommandInput extends JPanel{
 		}
 		return command;
 	}
-	
+
 	public static String placeUnits(String currentPlayer) {
 		boolean flag = false;
-		appendStringTo(currentPlayer + ", please type the country name to place units in: \n", Color.GREEN);
+		
+		if(currentPlayer == player1){
+			currentPlayerColour = player1Colour;
+		}
+		else {
+			currentPlayerColour = player2Colour;
+		}
+		
+		appendStringTo(currentPlayer + ", please type the country name to place units in: \n", currentPlayerColour);
 		if(currentPlayer.compareTo(player1)==0){
 			String country = getCommand();
 			for(int i=0;i<42;i++){
@@ -143,7 +169,7 @@ public class CommandInput extends JPanel{
 						appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 						flag = true;
 						Data.PLAYER_1_ARMIES-=3;
-						appendStringTo((currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " units\n"), Color.RED);
+						appendStringTo((currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " units\n"), currentPlayerColour);
 						return player2;
 						
 					}
@@ -166,7 +192,7 @@ public class CommandInput extends JPanel{
 						Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
 						appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 						Data.PLAYER_2_ARMIES-=3;
-						appendStringTo((currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " units\n"), Color.BLUE);
+						appendStringTo((currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " units\n"), currentPlayerColour);
 						return player1;
 						
 					}
@@ -181,49 +207,44 @@ public class CommandInput extends JPanel{
 		return currentPlayer;
 
 	}
+		
 	
-
 	public static void Player1UsernameChecks(){ //performs error checks on user input
 	
 		player1 = getCommand();
-		appendStringTo(player1 + "\n", Color.BLACK);
+		appendStringTo(player1 + "\n", player1Colour);
 		
 		if (player1.length() < 3){ //Why does this if statement not work more than once?
-			appendStringTo("Your username is too short, please enter a new name: \n", Color.GREEN);
+			appendStringTo("Your username is too short, please enter a new name: \n", Color.RED);
 		}
 		
 		if (player1.length() > 10){
-			appendStringTo("You username is too long, please enter a new name: \n", Color.GREEN);
+			appendStringTo("You username is too long, please enter a new name: \n", Color.RED);
 		}
 		
 		commandInputWindow.setText("");		
 		System.out.println("Player 1 = " + player1);
-
 	}
 
 	public static void Player2UsernameChecks() {
 			
 		player2 = getCommand();
-
-		appendStringTo(player2 + "\n", Color.BLACK);	
+		appendStringTo(player2 + "\n", player2Colour);	
 
 		if(player1 == player2){
-			appendStringTo("your username is already taken, please enter a new name: \n", Color.GREEN);
+			appendStringTo("your username is already taken, please enter a new name: \n", Color.RED);
 		}
-		
 		if(player2.length() < 3){
-			appendStringTo("Your username is too short, please enter a new name: \n", Color.GREEN);
+			appendStringTo("Your username is too short, please enter a new name: \n", Color.RED);
 		}
 		if (player2.length() > 10){
-			appendStringTo("You username is too long, please enter a new name: \n", Color.GREEN);			
+			appendStringTo("You username is too long, please enter a new name: \n", Color.RED);			
 		}
 		
 		commandInputWindow.setText("");
-		
 		System.out.println("Player 2 = " + player2);
 	
 		StyleConstants.setForeground(style, Color.blue);
-		
 }
 	
 	public static String getPlayer1() {
@@ -234,6 +255,14 @@ public class CommandInput extends JPanel{
 		return player2;
 	}
 
+	public static Color getPlayer1Colour(){
+		return player1Colour;
+	}
+	
+	public static Color getPlayer2Colour(){
+		return player2Colour;
+	}
+	
 	public static void randomPlayerGenerator(String player1, String player2){
 		/*
 		 * random generator for who plays first.
@@ -241,24 +270,24 @@ public class CommandInput extends JPanel{
 		DiceRoll bothPlayers = new DiceRoll();
 		bothPlayers.rollDice();
 		
-		appendStringTo(player1 + " rolled a " + bothPlayers.getPlayer1RollValue() + "\n", Color.ORANGE);
-		appendStringTo(player2 + " rolled a " + bothPlayers.getPlayer2RollValue() + "\n", Color.PINK);
+		appendStringTo(player1 + " rolled a " + bothPlayers.getPlayer1RollValue() + "\n", player1Colour);
+		appendStringTo(player2 + " rolled a " + bothPlayers.getPlayer2RollValue() + "\n", player2Colour);
 
-		check = 2;
+		checkIfDieEqual = "NO";
 		
 		if(bothPlayers.rollWinnerOutcome() == "1" ){
-			appendStringTo((player1) + " to go first.\n", Color.RED);
+			appendStringTo((player1) + " to go first.\n", player1Colour);
 			currentPlayer = player1;
 		}
 		
 		if(bothPlayers.rollWinnerOutcome() == "2" ){
-			appendStringTo((player2) + " to go first.\n", Color.BLUE);
+			appendStringTo((player2) + " to go first.\n", player2Colour);
 			currentPlayer = player2;
 		}
 		
 		if(bothPlayers.rollWinnerOutcome() == "3"){
-			appendStringTo((player1) + "'s and " + (player2) + "'s Die rolls were equal, Re-Roll required: \n", Color.BLACK);
-			check = 1;
+			appendStringTo((player1) + "'s and " + (player2) + "'s Die rolls were equal, Re-Roll required: \n", Color.RED);
+			checkIfDieEqual = "YES";
 		}
 	}
 		
