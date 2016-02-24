@@ -77,9 +77,9 @@ public class Deck {
 		deck.shuffle();
 		for(int i =0;i<42;i++){
 			String result= deck.deal();
-			System.out.println(result);
+			//System.out.println(result);
 			Reassign(result);
-			System.out.println(deck.cardsLeft());
+			//System.out.println(deck.cardsLeft());
 		}
 		
 		

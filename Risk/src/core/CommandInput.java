@@ -30,7 +30,7 @@ import javax.swing.text.StyledDocument;
 public class CommandInput extends JPanel{
 
 	protected static JTextField commandInputWindow = new JTextField(15);
-	private static JButton enterButton = new JButton("ENTER");
+	//private static JButton enterButton = new JButton("ENTER");
 
 	private static LinkedList<String> commandBuffer = new LinkedList<String>();
 	private static final int FONT_SIZE = 14;
@@ -40,6 +40,7 @@ public class CommandInput extends JPanel{
 	public static boolean inputUpdated = false;
 	
 	static JTextPane outputWindow = new JTextPane();
+	
 
 	static String currentPlayer = "";
 	public static String player1 = "";
@@ -68,17 +69,18 @@ public class CommandInput extends JPanel{
 		   }
 		ActionListener listener = new AddActionListener();
 		commandInputWindow.addActionListener(listener);
-		enterButton.addActionListener(listener);
+		//enterButton.addActionListener(listener);
 		commandInputWindow.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
 		setLayout(new BorderLayout());
 		add(commandInputWindow, BorderLayout.CENTER);
-	
+		
+
 		outputWindow.setEditable(false);
 		scrollPane=new JScrollPane(outputWindow);
 				
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setPreferredSize(new Dimension(250, 240));
+		scrollPane.setPreferredSize(new Dimension(250, 525));
 		scrollPane.setMinimumSize(new Dimension(10, 10));
 		
 		/*
@@ -97,7 +99,7 @@ public class CommandInput extends JPanel{
 
 		finishedPanel.setLayout(new BorderLayout());
 		finishedPanel.add(scrollPane, BorderLayout.SOUTH);
-		finishedPanel.add(enterButton, BorderLayout.EAST);
+		//finishedPanel.add(enterButton, BorderLayout.EAST);
 		finishedPanel.add(commandInputWindow);
 		/*
 		 * adds all elements to the final panel and gets it ready to be aded to the frame in main.
@@ -111,13 +113,13 @@ public class CommandInput extends JPanel{
 		appendStringTo("Enter Username for Player 1: \n", Color.BLACK);
 
 		while(player1.length() < 3 || player1.length() > 10){
-			Player1UsernameChecks();
+			ErrorHandling.Player1UsernameChecks();
 		}
 
 		appendStringTo("Enter Username for Player 2: \n", Color.BLACK);	
 
 		while((player2.length() < 3 || player2.length() > 10)){
-			Player2UsernameChecks();
+			ErrorHandling.Player2UsernameChecks();
 			if(player2.equalsIgnoreCase(player1)){
 				appendStringTo("That username has already been taken, please enter another name: \n", Color.RED);
 				player2 = "";
@@ -208,46 +210,7 @@ public class CommandInput extends JPanel{
 
 	}
 		
-	
-	public static void Player1UsernameChecks(){ //performs error checks on user input
-	
-		player1 = getCommand();
-		appendStringTo(player1 + "\n", player1Colour);
-		
-		if (player1.length() < 3){ //Why does this if statement not work more than once?
-			appendStringTo("Your username is too short, please enter a new name: \n", Color.RED);
-		}
-		
-		if (player1.length() > 10){
-			appendStringTo("You username is too long, please enter a new name: \n", Color.RED);
-		}
-		
-		commandInputWindow.setText("");		
-		System.out.println("Player 1 = " + player1);
-	}
-
-	public static void Player2UsernameChecks() {
-			
-		player2 = getCommand();
-		appendStringTo(player2 + "\n", player2Colour);	
-
-		if(player1 == player2){
-			appendStringTo("your username is already taken, please enter a new name: \n", Color.RED);
-		}
-		if(player2.length() < 3){
-			appendStringTo("Your username is too short, please enter a new name: \n", Color.RED);
-		}
-		if (player2.length() > 10){
-			appendStringTo("You username is too long, please enter a new name: \n", Color.RED);			
-		}
-		
-		commandInputWindow.setText("");
-		System.out.println("Player 2 = " + player2);
-	
-		StyleConstants.setForeground(style, Color.blue);
-}
-	
-	public static String getPlayer1() {
+		public static String getPlayer1() {
 		return player1;
 	}
 
