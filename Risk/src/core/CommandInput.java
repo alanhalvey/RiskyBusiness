@@ -1,11 +1,9 @@
 /*
- * Alan Halvey -
- * Alan Holmes -
+ * Alan Halvey - 14465722
+ * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
  * 
  */
-
-
 package core;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,6 +26,7 @@ import javax.swing.text.StyledDocument;
 
 @SuppressWarnings("serial")
 public class CommandInput extends JPanel{
+	
 	protected static JTextField commandInputWindow = new JTextField(15);
 	private static JButton enterButton = new JButton("ENTER");
 
@@ -51,7 +50,6 @@ public class CommandInput extends JPanel{
 	public static Color player1Colour = Color.BLUE;
 	public static Color player2Colour = Color.MAGENTA;
 	public static Color currentPlayerColour = Color.BLACK;
-
 
 	public CommandInput() {
 
@@ -122,13 +120,6 @@ public class CommandInput extends JPanel{
 				player2 = "";
 			}
 		}
-
-
-
-		randomPlayerGenerator(player1, player2);
-		while(checkIfDieEqual == "YES"){
-			randomPlayerGenerator(player1, player2);
-		}
 	}
 
 	public static String getCommand() {
@@ -167,12 +158,8 @@ public class CommandInput extends JPanel{
 				String country = getCommand();
 				ErrorHandling.P2checkTerritories(country);
 			}
-		}
-		
-		
-
+		}	
 	}
-
 
 	public static void placeNeutrals() {
 		for(int i =0;i<3;i++){
@@ -201,7 +188,6 @@ public class CommandInput extends JPanel{
 		}
 
 	}
-
 
 	public static String getPlayer1() {
 		return player1;

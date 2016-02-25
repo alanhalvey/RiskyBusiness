@@ -1,12 +1,10 @@
 /*
- * Alan Halvey -
- * Alan Holmes -
+ * Alan Halvey - 14465722
+ * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
  * 
  */
-
 package core;
-
 import java.awt.Color;
 
 public class Country {
@@ -84,7 +82,5 @@ public class Country {
 
 	public void setContinent(int continent) {
 		this.continent = continent;
-	}
-
-	
+	}	
 }

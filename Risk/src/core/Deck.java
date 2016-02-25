@@ -1,12 +1,10 @@
 /*
- * Alan Halvey -
- * Alan Holmes -
+ * Alan Halvey - 14465722
+ * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
  * 
  */
-
 package core;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,12 +13,13 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 public class Deck {
 
-
+	public static int u = 0;
 	public static int z =0;
 	public static Country[] countriesBeforeShuffle = new Country[42];
 	public static Country[] countriesAfterShuffle = new Country[42];
 	protected int MAX_CARD_AMOUNT = 42;
-
+	public static ArrayList<String> player1Countries = new ArrayList<String>();
+	public static ArrayList<String> player2Countries = new ArrayList<String>();
 
 	private String[] temp = new String[MAX_CARD_AMOUNT];
 	private int cardUsed;
@@ -29,65 +28,46 @@ public class Deck {
 
 	public void getCards(){
 
-
 		for(int i=0; i<MAX_CARD_AMOUNT;i++){
 			deck.add(Data.COUNTRY_NAMES[i]);
 		}
 	}
 
 	public void shuffle() {
-
 		Collections.shuffle(deck);
-	
-
 	}	
-
 
 	public String cardsLeft() {
 		return deck.size()+1 + " Cards left";
 	}
-
 
 	public String deal() {
 		if(deck.isEmpty()== true){
 			System.out.println("Deck is now empty");
 		}
 
-
-
-
-
 		else{   
 			int j=0; 
 			card = deck.get(j);
 			deck.remove(j);
-
 		}
 		return card;	
-
 	}
-
-
 
 	public static void shuffledDeck() {
 		Deck deck = new Deck();
 		PupulateCountries();
 
-
 		deck.getCards();
 		deck.shuffle();
 		for(int i =0;i<42;i++){
 			String result= deck.deal();
-			System.out.println(result);
+			//System.out.println(result);
 			Reassign(result);
-			System.out.println(deck.cardsLeft());
+			//System.out.println(deck.cardsLeft());
 		}
-		
-		
-
+		u++;
 	}
-
-
 
 	private static void PupulateCountries() {
 		for(int i=0;i<42;i++){
@@ -95,8 +75,6 @@ public class Deck {
 			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 1, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i] );
 		}
 	}
-	
-	
 
 	private static void Reassign(String result) {
 		if(z==42){
@@ -117,9 +95,11 @@ public class Deck {
 					Player p = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					if(u==1){
+						player1Countries.add(result);
+						}
 					z++;
 					break;
-
 				case 1:
 				case 7:
 				case 13:
@@ -132,6 +112,9 @@ public class Deck {
 					p = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					if(u==1){
+					player2Countries.add(result);
+					}
 					z++;
 					break;
 				case 2:
@@ -180,7 +163,6 @@ public class Deck {
 					break;
 				}
 			}
-
 		}
 	}
 }

@@ -1,10 +1,9 @@
 /*
- * Alan Halvey -
- * Alan Holmes -
+ * Alan Halvey - 14465722
+ * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
  * 
  */
-
 package core;
 import java.awt.Color;
 import java.awt.Font;
@@ -47,17 +46,12 @@ public class Map extends JPanel {
 		}
 
 		for(int i = 0; i<=41;i++){
-
 			x = getXCoordinate(i);
 			y = getYCoordinate(i);
 			drawCountryNames(g2d, i, x, y);
 		}
 		drawKey(g2d);
-
-
 	}
-
-
 
 	private void drawKey(Graphics2D g2d){
 		g2d.setColor(Color.lightGray);
@@ -93,9 +87,7 @@ public class Map extends JPanel {
 			key = new Ellipse2D.Double(1160,60,10,10);
 			g2d.fill(key);
 			g2d.drawString("Neutral 4", (int)key.x+20, (int)key.y+10);
-
 		}
-
 	}
 
 	private void drawNumArmies(Graphics2D g2d, int i) {
@@ -107,9 +99,7 @@ public class Map extends JPanel {
 		else{
 			g2d.drawString("("+NumArmies+ " Armies)", x-20, y+15);
 		}
-
 	}
-
 
 	private void drawBackgroundImage(Graphics2D g2d) {
 		BufferedImage img = null;
@@ -120,7 +110,6 @@ public class Map extends JPanel {
 		ImageObserver observer = null;
 		g2d.drawImage(img, 0, 0, observer);
 	}
-
 
 	private void drawLinesBetweenNodes(Graphics2D g2d, int i, int x, int y) {
 		/* This is for the case of Alaska and Kamatchka nodes.
@@ -146,25 +135,18 @@ public class Map extends JPanel {
 		}
 	}
 
-
 	private int getXCoordinate(int i) {
-
 		return Deck.countriesAfterShuffle[i].getX_Coordinate();
-
-
 	}
-
 
 	private int getYCoordinate(int i) {
 		return Deck.countriesAfterShuffle[i].getY_Coordinate();
 	}
 
-
 	//simple method to test if an integer array contains a specific integer.
 	public static boolean arrayContains(int[] array, Integer item) {
 		return Arrays.stream(array).anyMatch(item::equals);
 	}
-
 
 	public void setContinentNodeColor (Graphics g2d, int i){
 		//Changes colour based on which continent current country is.
@@ -195,9 +177,7 @@ public class Map extends JPanel {
 		}
 	}
 
-
 	public void drawNodes(Graphics2D g2d, int i, int x, int y){
-
 		setContinentNodeColor(g2d, i);
 		//I decided to draw an outline and inner circle for each node, to make them more clear on the map.
 		Ellipse2D.Double nodeOutlineCircle = new Ellipse2D.Double(x-11.5,y-17.25,20,20);
@@ -214,16 +194,11 @@ public class Map extends JPanel {
 		}
 	}
 
-
 	public void drawCountryNames(Graphics2D g2d, int i, int x, int y){
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("default", Font.BOLD, 12));
 
-
 		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x-20, y-20);
 		g2d.setFont(new Font("default", Font.ITALIC, 12));
 	}
-
-
-
 }

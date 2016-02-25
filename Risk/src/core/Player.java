@@ -1,12 +1,10 @@
 /*
- * Alan Halvey -
- * Alan Holmes -
+ * Alan Halvey - 14465722
+ * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
  * 
  */
-
 package core;
-
 import java.awt.Color;
 
 public class Player {
@@ -16,7 +14,5 @@ public class Player {
 	public Player(String playerName, Color playerColor){
 		this.playerName = playerName;
 		this.playerColor = playerColor;
-	}
-	
-	
+	}	
 }

@@ -1,5 +1,10 @@
+/*
+ * Alan Halvey - 14465722
+ * Alan Holmes - 14719591
+ * Greg Sloggett - 14522247
+ * 
+ */
 package core;
-
 import java.awt.Color;
 
 import javax.swing.text.StyleConstants;
@@ -44,8 +49,6 @@ public class ErrorHandling {
 		StyleConstants.setForeground(CommandInput.style, Color.blue);
 }
 
-
-
 	public static void P1checkTerritories(String country){
 		for(int i=0;i<42;i++){
 			if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
@@ -57,7 +60,6 @@ public class ErrorHandling {
 					Data.PLAYER_1_ARMIES-=3;
 					CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " units left.\n"), CommandInput.currentPlayerColour);
 					CommandInput.currentPlayer = CommandInput.player2;
-
 				}
 				else{
 					CommandInput.appendStringTo("You do not own this country\n", Color.RED);
@@ -65,9 +67,7 @@ public class ErrorHandling {
 				}
 			}
 		}
-	
-	}
-	
+	}	
 	
 public static void P2checkTerritories(String country){
 	for(int i=0;i<42;i++){
@@ -85,15 +85,8 @@ public static void P2checkTerritories(String country){
 			else{
 				CommandInput.appendStringTo("You do not own this country\n", Color.RED);
 				CommandInput.placeUnits(CommandInput.player2);
+				}
 			}
 		}
-		
-		
-	}
-	
-	}
-	
-	
-	
-	
-		}
+	}	
+}
