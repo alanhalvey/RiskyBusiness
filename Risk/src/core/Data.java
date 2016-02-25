@@ -10,7 +10,7 @@ import java.awt.Color;
 
 public class Data{
 
-
+	public static boolean unitsLeft=true;
 	public static int[] Y_Coordinates = new int[42];
 	public static int[] X_Coordinates = new int[42];
 	public static int[] PLAYER_1_COUNTRIES = {0,1,2,3,4,5,6,7,8};

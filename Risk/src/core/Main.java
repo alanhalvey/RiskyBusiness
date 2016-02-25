@@ -7,6 +7,7 @@
 
 package core;
 
+import java.awt.Color;
 import java.io.IOException;
 
 public class Main {
@@ -14,7 +15,7 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String args[]) throws IOException{
 		Screen screen = new Screen();
-		
+
 		CommandInput.run();
 		boolean flag = true;
 
@@ -26,14 +27,22 @@ public class Main {
 				flag = false;
 			}	
 		}
-		
-		while(true){
-			String next = CommandInput.placeUnits(CommandInput.currentPlayer);
-			Screen.mainFrame.repaint();
-			CommandInput.placeUnits(next);
-			Screen.mainFrame.repaint();
-			CommandInput.placeUnits(CommandInput.currentPlayer);
+
+		while(Data.unitsLeft==true){
+			if(flag==false){
+				CommandInput.placeNeutrals();
+				Screen.mainFrame.repaint();
+				flag=true;
+			}
+			if(Data.PLAYER_1_ARMIES !=0 || Data.PLAYER_2_ARMIES !=0){
+				CommandInput.placeUnits(CommandInput.currentPlayer);
+				Screen.mainFrame.repaint();
+			}
+			else{
+				CommandInput.appendStringTo("No units left to place", Color.RED);
+				Data.unitsLeft=false;
+			}
 		}
 	}
-	
+
 }
