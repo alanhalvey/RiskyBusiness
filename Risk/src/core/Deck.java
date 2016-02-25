@@ -114,7 +114,7 @@ public class Deck {
 				case 36:
 				case 38:
 				case 40:
-					Player p = new Player (CommandInput.getPlayer2(), CommandInput.player1Colour);
+					Player p = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;

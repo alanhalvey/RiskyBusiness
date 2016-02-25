@@ -78,7 +78,7 @@ public class CommandInput extends JPanel{
 
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setPreferredSize(new Dimension(250, 240));
+		scrollPane.setPreferredSize(new Dimension(250, 480));
 		scrollPane.setMinimumSize(new Dimension(10, 10));
 
 		/*
@@ -159,48 +159,13 @@ public class CommandInput extends JPanel{
 		if(Data.PLAYER_1_ARMIES != 0){
 			if(currentPlayer.compareTo(player1)==0){
 				String country = getCommand();
-				for(int i=0;i<42;i++){
-					if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
-
-						if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
-							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
-							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
-							appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
-							Data.PLAYER_1_ARMIES-=3;
-							appendStringTo((currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " units left.\n"), currentPlayerColour);
-							CommandInput.currentPlayer = player2;
-
-						}
-						else{
-							appendStringTo("You do not own this country\n", Color.RED);
-							placeUnits(player1);
-						}
-					}
-				}
+				ErrorHandling.P1checkTerritories(country);
 			}
 
 			if(currentPlayer.compareTo(player2)==0){
 				String country = getCommand();
-				for(int i=0;i<42;i++){
-					if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
+				ErrorHandling.P2checkTerritories(country);
 
-						if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
-
-							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
-							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
-							appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
-							Data.PLAYER_2_ARMIES-=3;
-							appendStringTo((currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " units left.\n"), currentPlayerColour);
-							CommandInput.currentPlayer = player1;
-						}
-						else{
-							appendStringTo("You do not own this country\n", Color.RED);
-							placeUnits(player2);
-						}
-					}
-					
-
-				}
 			}
 		}
 	}

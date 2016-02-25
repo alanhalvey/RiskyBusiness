@@ -52,7 +52,7 @@ public class Screen extends JFrame{
 		mapPanel.add(fullMap);
 
 
-		inputOutputPanel.setSize(300, 300);
+		inputOutputPanel.setSize(300, 550);
 		inputOutputPanel.setLocation(1000, 100);
 		inputOutputPanel.add(inputScreenTitle);
 		inputOutputPanel.add(commandInputPanel); 
