@@ -50,7 +50,7 @@ public class CommandInput extends JPanel{
 	static String checkIfDieEqual = "NO";
 
 	public static Color player1Colour = Color.BLUE;
-	public static Color player2Colour = Color.GREEN;
+	public static Color player2Colour = Color.MAGENTA;
 	public static Color currentPlayerColour = Color.BLACK;
 
 
@@ -147,21 +147,16 @@ public class CommandInput extends JPanel{
 		return command;
 	}
 
-	public static String placeUnits(String currentPlayer) {
-		boolean flag = false;
+	public static void placeUnits(String currentPlayer) {
+		if(currentPlayer == player1){
+			currentPlayerColour = player1Colour;
+		}
+		else {
+			currentPlayerColour = player2Colour;
+		}
 
-		
-
-
-			if(currentPlayer == player1){
-				currentPlayerColour = player1Colour;
-			}
-			else {
-				currentPlayerColour = player2Colour;
-			}
-
-			appendStringTo(currentPlayer + ", please type the country name to place units in: \n", currentPlayerColour);
-			if(Data.PLAYER_1_ARMIES != 0){
+		appendStringTo(currentPlayer + ", please type the country name to place units in: \n", Color.BLACK);
+		if(Data.PLAYER_1_ARMIES != 0){
 			if(currentPlayer.compareTo(player1)==0){
 				String country = getCommand();
 				for(int i=0;i<42;i++){
@@ -171,11 +166,9 @@ public class CommandInput extends JPanel{
 							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
 							appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
-							flag = true;
 							Data.PLAYER_1_ARMIES-=3;
 							appendStringTo((currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " units left.\n"), currentPlayerColour);
 							CommandInput.currentPlayer = player2;
-							return player2;
 
 						}
 						else{
@@ -186,7 +179,7 @@ public class CommandInput extends JPanel{
 				}
 			}
 
-			if(currentPlayer.compareTo(player2)==0 && (flag == false)){
+			if(currentPlayer.compareTo(player2)==0){
 				String country = getCommand();
 				for(int i=0;i<42;i++){
 					if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
@@ -199,27 +192,22 @@ public class CommandInput extends JPanel{
 							Data.PLAYER_2_ARMIES-=3;
 							appendStringTo((currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " units left.\n"), currentPlayerColour);
 							CommandInput.currentPlayer = player1;
-							return player1;
-
 						}
 						else{
 							appendStringTo("You do not own this country\n", Color.RED);
 							placeUnits(player2);
 						}
 					}
+					
 
 				}
 			}
-			return currentPlayer;
 		}
-		else{
-	
-		}
-		return "";
-		}
+	}
 
 
-		public static void placeNeutrals() {
+	public static void placeNeutrals() {
+		for(int i =0;i<3;i++){
 			for(int z=0;z<42;z++){
 				System.out.println(Deck.countriesAfterShuffle[z].getOccupyingPlayer());
 				if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().compareTo("Neutral 1")==0){
@@ -244,69 +232,70 @@ public class CommandInput extends JPanel{
 				}
 			}
 		}
+	}
 
 
-		public static String getPlayer1() {
-			return player1;
+	public static String getPlayer1() {
+		return player1;
+	}
+
+	public static String getPlayer2(){
+		return player2;
+	}
+
+	public static Color getPlayer1Colour(){
+		return player1Colour;
+	}
+
+	public static Color getPlayer2Colour(){
+		return player2Colour;
+	}
+
+	public static void randomPlayerGenerator(String player1, String player2){
+		/*
+		 * random generator for who plays first.
+		 */
+		DiceRoll bothPlayers = new DiceRoll();
+		bothPlayers.rollDice();
+
+		appendStringTo(player1 + " rolled a " + bothPlayers.getPlayer1RollValue() + "\n", player1Colour);
+		appendStringTo(player2 + " rolled a " + bothPlayers.getPlayer2RollValue() + "\n", player2Colour);
+
+		checkIfDieEqual = "NO";
+
+		if(bothPlayers.rollWinnerOutcome() == "1" ){
+			appendStringTo((player1) + " to go first.\n", player1Colour);
+			currentPlayer = player1;
 		}
 
-		public static String getPlayer2(){
-			return player2;
+		if(bothPlayers.rollWinnerOutcome() == "2" ){
+			appendStringTo((player2) + " to go first.\n", player2Colour);
+			currentPlayer = player2;
 		}
 
-		public static Color getPlayer1Colour(){
-			return player1Colour;
-		}
-
-		public static Color getPlayer2Colour(){
-			return player2Colour;
-		}
-
-		public static void randomPlayerGenerator(String player1, String player2){
-			/*
-			 * random generator for who plays first.
-			 */
-			DiceRoll bothPlayers = new DiceRoll();
-			bothPlayers.rollDice();
-
-			appendStringTo(player1 + " rolled a " + bothPlayers.getPlayer1RollValue() + "\n", player1Colour);
-			appendStringTo(player2 + " rolled a " + bothPlayers.getPlayer2RollValue() + "\n", player2Colour);
-
-			checkIfDieEqual = "NO";
-
-			if(bothPlayers.rollWinnerOutcome() == "1" ){
-				appendStringTo((player1) + " to go first.\n", player1Colour);
-				currentPlayer = player1;
-			}
-
-			if(bothPlayers.rollWinnerOutcome() == "2" ){
-				appendStringTo((player2) + " to go first.\n", player2Colour);
-				currentPlayer = player2;
-			}
-
-			if(bothPlayers.rollWinnerOutcome() == "3"){
-				appendStringTo((player1) + "'s and " + (player2) + "'s Die rolls were equal, Re-Roll required: \n", Color.RED);
-				checkIfDieEqual = "YES";
-			}
-		}
-
-		public static void appendStringTo(String s, Color c){
-			//Add the ">" too each line in Dark Gray.
-			StyleConstants.setForeground(style, Color.DARK_GRAY);
-			try {
-				doc.insertString(doc.getLength(), "> ", style);
-			} catch (BadLocationException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			//Add the actual text the user inputs with the Colour you want
-			StyleConstants.setForeground(style, c);
-			try {
-				doc.insertString(doc.getLength(), s,style);
-			} catch (BadLocationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if(bothPlayers.rollWinnerOutcome() == "3"){
+			appendStringTo((player1) + "'s and " + (player2) + "'s Die rolls were equal, Re-Roll required: \n", Color.RED);
+			checkIfDieEqual = "YES";
 		}
 	}
+
+	public static void appendStringTo(String s, Color c){
+		//Add the ">" too each line in Dark Gray.
+		StyleConstants.setForeground(style, Color.DARK_GRAY);
+		try {
+			doc.insertString(doc.getLength(), "> ", style);
+		} catch (BadLocationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		//Add the actual text the user inputs with the Colour you want
+		StyleConstants.setForeground(style, c);
+		try {
+			doc.insertString(doc.getLength(), s,style);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

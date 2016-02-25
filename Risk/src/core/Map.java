@@ -101,7 +101,7 @@ public class Map extends JPanel {
 			playerColor = Color.RED;
 		}
 		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 2")==0){
-			playerColor = Color.MAGENTA;
+			playerColor = Color.RED;
 		}
 		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 3")==0){
 			playerColor = Color.ORANGE;
