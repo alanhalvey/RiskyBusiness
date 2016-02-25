@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
@@ -28,76 +29,83 @@ public class Map extends JPanel {
 	int x,y;
 	Country countries[] = new Country[42];
 	private static final long serialVersionUID = 1L;
-	
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		//Graphics2D variable we are using to draw all of the elements in this class onto the map.
 		Graphics2D g2d = (Graphics2D) g;
 		drawBackgroundImage(g2d);
-		
-		
+
+
 		for(int i = 0;i<41;i++)	drawLinesBetweenNodes(g2d, i, x, y);
-		
+
 		for(int i = 0; i<=41;i++){
 			x = getXCoordinate(i);
 			y = getYCoordinate(i);
 			drawNodes(g2d, i, x, y);
 		}
-		
+
 		for(int i = 0; i<=41;i++){
 
 			x = getXCoordinate(i);
 			y = getYCoordinate(i);
 			drawCountryNames(g2d, i, x, y);
-			drawPlayers(g2d, i, x, y);
 		}
+		drawKey(g2d);
 
-		
-
-	}
-
-	private void drawPlayers(Graphics2D g2d, int i, int x2, int y2) {
-		if (!(CommandInput.getPlayer2().compareTo("") == 0)){
-
-			String playerName = Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName;
-			Color playerColor =  Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerColor;
-
-			//Create a rectangle that will fit around the players name (with a little room to spare).
-			FontMetrics fm = g2d.getFontMetrics();
-			Rectangle r = fm.getStringBounds(" " +playerName + " ", g2d).getBounds();
-
-			//Draw the backround rectangle behind the Player's name
-			g2d.setColor(Color.LIGHT_GRAY);
-			g2d.fillRect(x+4, y+4, r.width, r.height);
-
-			g2d.setColor(playerColor);
-
-			//Draw an outline around the rectangle which contains the players name
-			g2d.drawRect(x+4, y+4 , r.width, r.height);
-
-			//Display the player's name on the map.
-			g2d.drawString(playerName, x+8, y+17);
-
-			g2d.setFont(new Font("default", Font.BOLD, 11));
-
-			//Draw info on each players armies on the map.
-			drawNumArmies(g2d, i);
-		}
 
 	}
 
 
-	
 
+	private void drawKey(Graphics2D g2d){
+		g2d.setColor(Color.lightGray);
+		g2d.fillRect(1000, 10, 300, 80);
+		if(CommandInput.currentPlayer!=""){
+			g2d.setFont(new Font("default", Font.BOLD, 14));
+			g2d.setColor(CommandInput.player1Colour);
+			Ellipse2D.Double key = new Ellipse2D.Double(1020,20,10,10);
+			g2d.fill(key);
+			g2d.drawString(CommandInput.getPlayer1(), 1040, 30);
+
+			g2d.setColor(CommandInput.player2Colour);
+			key = new Ellipse2D.Double(1020,40,10,10);
+			g2d.fill(key);
+			g2d.drawString(CommandInput.getPlayer2(), (int)key.x+20, (int)key.y+10);
+
+			g2d.setColor(Color.BLACK);
+			key = new Ellipse2D.Double(1020,60,10,10);
+			g2d.fill(key);
+			g2d.drawString("Neutral 1", (int)key.x+20, (int)key.y+10);
+
+			g2d.setColor(Color.GREEN);
+			key = new Ellipse2D.Double(1160,20,10,10);
+			g2d.fill(key);
+			g2d.drawString("Neutral 2", (int)key.x+20, (int)key.y+10);
+
+			g2d.setColor(Color.RED);
+			key = new Ellipse2D.Double(1160,40,10,10);
+			g2d.fill(key);
+			g2d.drawString("Neutral 3", (int)key.x+20, (int)key.y+10);
+
+			g2d.setColor(Color.YELLOW);
+			key = new Ellipse2D.Double(1160,60,10,10);
+			g2d.fill(key);
+			g2d.drawString("Neutral 4", (int)key.x+20, (int)key.y+10);
+
+		}
+
+	}
 
 	private void drawNumArmies(Graphics2D g2d, int i) {
 		g2d.setColor(Color.WHITE);
+		g2d.setFont(new Font("default", Font.BOLD, 12));
 		int NumArmies = Deck.countriesAfterShuffle[i].getPlayerArmies();
 		if (NumArmies == 1)
-			g2d.drawString("["+NumArmies+ " Army]", x+4, y+37);
+			g2d.drawString("("+NumArmies+ " Army)", x-20, y+15);
 		else{
-			g2d.drawString("["+NumArmies+ " Armies]", x+4, y+37);
+			g2d.drawString("("+NumArmies+ " Armies)", x-20, y+15);
 		}
 
 	}
@@ -131,7 +139,7 @@ public class Map extends JPanel {
 			for(int j=0;j<=Data.ADJACENT[i].length-1;j++){
 				//if countries are adjacent
 				if (contains(Data.ADJACENT[i][j], i)){
-					g2d.setColor(Color.WHITE);
+					g2d.setColor(Color.ORANGE);
 					g2d.drawLine(Data.getCountryCoord()[i][0] -1, Data.getCountryCoord()[i][1]-8, Data.getCountryCoord()[Data.ADJACENT[i][j]][0]-1, Data.getCountryCoord()[Data.ADJACENT[i][j]][1] -8);
 				}
 			}
@@ -189,16 +197,21 @@ public class Map extends JPanel {
 
 
 	public void drawNodes(Graphics2D g2d, int i, int x, int y){
-		g2d.setColor(Color.BLACK);
 
+		setContinentNodeColor(g2d, i);
 		//I decided to draw an outline and inner circle for each node, to make them more clear on the map.
-		Ellipse2D.Double nodeOutlineCircle = new Ellipse2D.Double(x-9,y-16,16,16);
+		Ellipse2D.Double nodeOutlineCircle = new Ellipse2D.Double(x-11.5,y-17.25,20,20);
 		g2d.draw(nodeOutlineCircle);
 		g2d.fill(nodeOutlineCircle);
-		setContinentNodeColor(g2d, i);
-		Ellipse2D.Double nodeInnerCircle = new Ellipse2D.Double(x-7,y-14,12,12);
-		g2d.draw(nodeInnerCircle);
-		g2d.fill(nodeInnerCircle);
+		if(CommandInput.currentPlayer!=""){
+			Ellipse2D.Double countryNodeOutlineCircle = new Ellipse2D.Double(x-8,y-13.5,13,13);
+			Ellipse2D.Double nodeInnerCircle = new Ellipse2D.Double(x-7.5,y-13,12,12);
+			g2d.setColor(Color.WHITE);
+			g2d.draw(countryNodeOutlineCircle);
+			g2d.setColor(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerColor);
+			g2d.fill(nodeInnerCircle);
+			drawNumArmies(g2d, i);
+		}
 	}
 
 
@@ -207,7 +220,7 @@ public class Map extends JPanel {
 		g2d.setFont(new Font("default", Font.BOLD, 12));
 
 
-		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x+8, y+2);
+		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x-20, y-20);
 		g2d.setFont(new Font("default", Font.ITALIC, 12));
 	}
 

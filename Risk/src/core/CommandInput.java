@@ -28,7 +28,6 @@ import javax.swing.text.StyledDocument;
 
 @SuppressWarnings("serial")
 public class CommandInput extends JPanel{
-
 	protected static JTextField commandInputWindow = new JTextField(15);
 	private static JButton enterButton = new JButton("ENTER");
 
@@ -161,13 +160,17 @@ public class CommandInput extends JPanel{
 				String country = getCommand();
 				ErrorHandling.P1checkTerritories(country);
 			}
-
+		}
+			
+		if(Data.PLAYER_2_ARMIES != 0){
 			if(currentPlayer.compareTo(player2)==0){
 				String country = getCommand();
 				ErrorHandling.P2checkTerritories(country);
-
 			}
 		}
+		
+		
+
 	}
 
 
@@ -196,6 +199,7 @@ public class CommandInput extends JPanel{
 				}
 			}
 		}
+
 	}
 
 

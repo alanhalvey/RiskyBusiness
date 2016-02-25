@@ -151,7 +151,7 @@ public class Deck {
 				case 21:
 				case 27:
 				case 33:
-					p = new Player("Neutral 2", Color.black);
+					p = new Player("Neutral 2", Color.GREEN);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
