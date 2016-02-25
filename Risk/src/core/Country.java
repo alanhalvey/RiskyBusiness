@@ -7,16 +7,18 @@
 
 package core;
 
+import java.awt.Color;
+
 public class Country {
 	private String name;
-	private String occupyingPlayer;
+	private Player occupyingPlayer;
 	private int playerArmies;
 	private int X_Coordinate;
 	private int Y_Coordinate;
 	private int Adjacent[];
 	private int continent;
 	
-	public Country(String name, String occupyingPlayer, int playerArmies,int x, int y, int[] Adjacent, int continentIds){
+	public Country(String name, Player occupyingPlayer, int playerArmies,int x, int y, int[] Adjacent, int continentIds){
 		this.setName(name);
 		this.setOccupyingPlayer(occupyingPlayer);
 		this.setPlayerArmies(playerArmies);
@@ -36,12 +38,12 @@ public class Country {
 		this.continent = country.continent;
 	}
 
-	public String getOccupyingPlayer() {
+	public Player getOccupyingPlayer() {
 		return occupyingPlayer;
 	}
 
-	public void setOccupyingPlayer(String occupyingPlayer) {
-		this.occupyingPlayer = occupyingPlayer;
+	public void setOccupyingPlayer(Player occupyingPlayer2) {
+		this.occupyingPlayer = occupyingPlayer2;
 	}
 
 	public int getPlayerArmies() {
@@ -83,4 +85,6 @@ public class Country {
 	public void setContinent(int continent) {
 		this.continent = continent;
 	}
+
+	
 }

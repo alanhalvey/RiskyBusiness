@@ -60,9 +60,8 @@ public class Map extends JPanel {
 	private void drawPlayers(Graphics2D g2d, int i, int x2, int y2) {
 		if (!(CommandInput.getPlayer2().compareTo("") == 0)){
 
-			String playerName = Deck.countriesAfterShuffle[i].getOccupyingPlayer();
-			
-			Color playerColor = setPlayerColor(i);
+			String playerName = Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName;
+			Color playerColor =  Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerColor;
 
 			//Create a rectangle that will fit around the players name (with a little room to spare).
 			FontMetrics fm = g2d.getFontMetrics();
@@ -89,29 +88,7 @@ public class Map extends JPanel {
 	}
 
 
-	private Color setPlayerColor(int i) {
-		Color playerColor = null;
-		if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo(CommandInput.getPlayer1())==0){
-			playerColor = CommandInput.getPlayer1Colour();
-		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo(CommandInput.getPlayer2())==0){
-			playerColor = CommandInput.getPlayer2Colour();
-		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 1")==0){
-			playerColor = Color.RED;
-		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 2")==0){
-			playerColor = Color.RED;
-		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 3")==0){
-			playerColor = Color.ORANGE;
-		}
-		else if (Deck.countriesAfterShuffle[i].getOccupyingPlayer().compareTo("Neutral 4")==0){
-			playerColor = Color.BLACK;
-		}
-		return playerColor;
-	}
-
+	
 
 
 	private void drawNumArmies(Graphics2D g2d, int i) {

@@ -162,7 +162,7 @@ public class CommandInput extends JPanel{
 				for(int i=0;i<42;i++){
 					if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
 
-						if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer())==0){
+						if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
 							appendStringTo((country+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
@@ -184,7 +184,7 @@ public class CommandInput extends JPanel{
 				for(int i=0;i<42;i++){
 					if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
 
-						if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer())==0){
+						if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 
 							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
@@ -209,23 +209,22 @@ public class CommandInput extends JPanel{
 	public static void placeNeutrals() {
 		for(int i =0;i<3;i++){
 			for(int z=0;z<42;z++){
-				System.out.println(Deck.countriesAfterShuffle[z].getOccupyingPlayer());
-				if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().compareTo("Neutral 1")==0){
+				if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 1")==0){
 					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
 					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
 					Data.NEUTRAL_1_ARMIES-=1;
 				}
-				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().compareTo("Neutral 2")==0){
+				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 2")==0){
 					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
 					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
 					Data.NEUTRAL_2_ARMIES-=1;
 				}
-				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().compareTo("Neutral 3")==0){
+				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 3")==0){
 					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
 					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
 					Data.NEUTRAL_3_ARMIES-=1;
 				}
-				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().compareTo("Neutral 4")==0){
+				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 4")==0){
 					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
 					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
 					Data.NEUTRAL_4_ARMIES-=1;

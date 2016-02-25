@@ -7,6 +7,7 @@
 
 package core;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -90,7 +91,8 @@ public class Deck {
 
 	private static void PupulateCountries() {
 		for(int i=0;i<42;i++){
-			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], "Player", 1, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i] );
+			Player p = null;
+			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 1, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i] );
 		}
 	}
 	
@@ -112,8 +114,9 @@ public class Deck {
 				case 36:
 				case 38:
 				case 40:
+					Player p = new Player (CommandInput.getPlayer2(), CommandInput.player1Colour);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(CommandInput.getPlayer1());
+					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
 					break;
 
@@ -126,9 +129,9 @@ public class Deck {
 				case 37:
 				case 39:
 				case 41:
-					
+					p = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(CommandInput.getPlayer2());
+					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
 					break;
 				case 2:
@@ -137,8 +140,9 @@ public class Deck {
 				case 20:
 				case 26:
 				case 32:
+					p = new Player("Neutral 1", Color.BLACK);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 1");
+					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
 					break;
 				case 3:
@@ -147,8 +151,9 @@ public class Deck {
 				case 21:
 				case 27:
 				case 33:
+					p = new Player("Neutral 2", Color.black);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 2");
+					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
 					break;
 				case 4:
@@ -157,8 +162,9 @@ public class Deck {
 				case 22:
 				case 28:
 				case 34:
+					p = new Player("Neutral 3", Color.RED);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 3");
+					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
 					break;
 				case 5:
@@ -167,8 +173,9 @@ public class Deck {
 				case 23:
 				case 29:
 				case 35:
+					p = new Player("Neutral 4", Color.YELLOW);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer("Neutral 4");
+					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
 					break;
 				}
