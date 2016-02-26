@@ -25,7 +25,7 @@ public class ErrorHandling {
 		}
 		
 		CommandInput.commandInputWindow.setText("");		
-		System.out.println("Player 1 = " + CommandInput.player1);
+		
 	}
 
 	public static void Player2UsernameChecks() {
@@ -44,7 +44,7 @@ public class ErrorHandling {
 		}
 		
 		CommandInput.commandInputWindow.setText("");
-		System.out.println("Player 2 = " + CommandInput.player2);
+		
 	
 		StyleConstants.setForeground(CommandInput.style, Color.blue);
 }

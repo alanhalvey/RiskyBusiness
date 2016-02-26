@@ -95,9 +95,9 @@ public class Map extends JPanel {
 		g2d.setFont(new Font("default", Font.BOLD, 12));
 		int NumArmies = Deck.countriesAfterShuffle[i].getPlayerArmies();
 		if (NumArmies == 1)
-			g2d.drawString("("+NumArmies+ " Army)", x-20, y+15);
+			g2d.drawString("("+NumArmies+ " Army)", x-20, y+13);
 		else{
-			g2d.drawString("("+NumArmies+ " Armies)", x-20, y+15);
+			g2d.drawString("("+NumArmies+ " Armies)", x-20, y+13);
 		}
 	}
 
@@ -198,9 +198,9 @@ public class Map extends JPanel {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("default", Font.BOLD, 12));
 
-		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x-20, y-35);
+		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x-20, y-30);
 		g2d.setFont(new Font("default", Font.ITALIC, 12));
-		g2d.drawString("( "+Deck.countriesAfterShuffle[i].getAbbreviation() + " )", x-20, y-20);
+		g2d.drawString("( "+Deck.countriesAfterShuffle[i].getAbbreviation() + " )", x-20, y-18);
 		
 	}
 }

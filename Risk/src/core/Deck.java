@@ -98,7 +98,7 @@ public class Deck {
 				countriesAfterShuffle[i].setAbbreviation("CAM");
 				break;
 			case "Alaska":
-				countriesAfterShuffle[i].setAbbreviation("Grld");
+				countriesAfterShuffle[i].setAbbreviation("ALK");
 				break;
 			case "Great Britain":
 				countriesAfterShuffle[i].setAbbreviation("GBR");
