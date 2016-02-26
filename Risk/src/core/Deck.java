@@ -66,7 +66,143 @@ public class Deck {
 			Reassign(result);
 			//System.out.println(deck.cardsLeft());
 		}
+		assignAbbreviations();
 		u++;
+	}
+
+	private static void assignAbbreviations() {
+		for(int i=0;i<42;i++){
+			switch(countriesAfterShuffle[i].getName()){
+			case "Ontario":
+				countriesAfterShuffle[i].setAbbreviation("ONT");
+				break;
+			case "Quebec":
+				countriesAfterShuffle[i].setAbbreviation("QUE");
+				break;
+			case "NW Territory":
+				countriesAfterShuffle[i].setAbbreviation("NWT");
+				break;
+			case "Alberta":
+				countriesAfterShuffle[i].setAbbreviation("ALB");
+				break;
+			case "Greenland":
+				countriesAfterShuffle[i].setAbbreviation("GRLD");
+				break;
+			case "E United States":
+				countriesAfterShuffle[i].setAbbreviation("EUS");
+				break;
+			case "W United States":
+				countriesAfterShuffle[i].setAbbreviation("WUS");
+				break;
+			case "Central America":
+				countriesAfterShuffle[i].setAbbreviation("CAM");
+				break;
+			case "Alaska":
+				countriesAfterShuffle[i].setAbbreviation("Grld");
+				break;
+			case "Great Britain":
+				countriesAfterShuffle[i].setAbbreviation("GBR");
+				break;
+			case "W Europe":
+				countriesAfterShuffle[i].setAbbreviation("WEU");
+				break;
+			case "S Europe":
+				countriesAfterShuffle[i].setAbbreviation("SEU");
+				break;
+			case "Ukraine":
+				countriesAfterShuffle[i].setAbbreviation("UKR");
+				break;
+			case "N Europe":
+				countriesAfterShuffle[i].setAbbreviation("NEU");
+				break;
+			case "Iceland":
+				countriesAfterShuffle[i].setAbbreviation("ICE");
+				break;
+			case "Scandinavia":
+				countriesAfterShuffle[i].setAbbreviation("SCN");
+				break;
+			case "Afghanistan":
+				countriesAfterShuffle[i].setAbbreviation("AFG");
+				break;
+			case "India":
+				countriesAfterShuffle[i].setAbbreviation("IND");
+				break;
+			case "Middle East":
+				countriesAfterShuffle[i].setAbbreviation("MEA");
+				break;
+			case "Japan":
+				countriesAfterShuffle[i].setAbbreviation("JAP");
+				break;
+			case "Ural":
+				countriesAfterShuffle[i].setAbbreviation("URL");
+				break;
+			case "Yakutsk":
+				countriesAfterShuffle[i].setAbbreviation("YAK");
+				break;
+			case "Kamchatka":
+				countriesAfterShuffle[i].setAbbreviation("KAM");
+				break;
+			case "Siam":
+				countriesAfterShuffle[i].setAbbreviation("SIAM");
+				break;
+			case "Irkutsk":
+				countriesAfterShuffle[i].setAbbreviation("IRK");
+				break;
+			case "Siberia":
+				countriesAfterShuffle[i].setAbbreviation("SIB");
+				break;
+			case "Mongolia":
+				countriesAfterShuffle[i].setAbbreviation("MON");
+				break;
+			case "China":
+				countriesAfterShuffle[i].setAbbreviation("CHN");
+				break;
+			case "E Australia":
+				countriesAfterShuffle[i].setAbbreviation("EAU");
+				break;
+			case "New Guinea":
+				countriesAfterShuffle[i].setAbbreviation("NGU");
+				break;
+			case "W Australia":
+				countriesAfterShuffle[i].setAbbreviation("WAU");
+				break;
+			case "Indonesia":
+				countriesAfterShuffle[i].setAbbreviation("INS");
+				break;
+			case "Venezuela":
+				countriesAfterShuffle[i].setAbbreviation("VEN");
+				break;
+			case "Peru":
+				countriesAfterShuffle[i].setAbbreviation("PERU");
+				break;
+			case "Brazil":
+				countriesAfterShuffle[i].setAbbreviation("BRZ");
+				break;
+			case "Argentina":
+				countriesAfterShuffle[i].setAbbreviation("ARG");
+				break;
+			case "Congo":
+				countriesAfterShuffle[i].setAbbreviation("CON");
+				break;
+			case "N Africa":
+				countriesAfterShuffle[i].setAbbreviation("NAF");
+				break;
+			case "S Africa":
+				countriesAfterShuffle[i].setAbbreviation("SAF");
+				break;
+			case "Egypt":
+				countriesAfterShuffle[i].setAbbreviation("EGY");
+				break;
+			case "E Africa":
+				countriesAfterShuffle[i].setAbbreviation("EAF");
+				break;
+			case "Madagascar":
+				countriesAfterShuffle[i].setAbbreviation("MAD");
+				break;
+				
+			}
+		}
+		
 	}
 
 	private static void PupulateCountries() {

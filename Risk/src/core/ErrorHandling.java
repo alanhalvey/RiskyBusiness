@@ -51,7 +51,8 @@ public class ErrorHandling {
 
 	public static void P1checkTerritories(String country){
 		for(int i=0;i<42;i++){
-			if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
+			if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 
+					|| country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
 
 				if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 					int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();

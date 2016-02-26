@@ -25,7 +25,7 @@ public class Country {
 		this.setY_Coordinate(y);
 		this.Adjacent = Adjacent;
 		this.setContinent(continentIds);
-		this.abbreviation = abbreviation;
+		this.setAbbreviation(abbreviation);
 	}
 
 	public Country(Country country) {
@@ -36,7 +36,7 @@ public class Country {
 		this.setY_Coordinate(country.getY_Coordinate());
 		this.Adjacent=country.Adjacent;
 		this.continent = country.continent;
-		this.abbreviation = abbreviation;
+		this.setAbbreviation(abbreviation);
 	}
 
 	public Player getOccupyingPlayer() {
@@ -85,5 +85,13 @@ public class Country {
 
 	public void setContinent(int continent) {
 		this.continent = continent;
+	}
+
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
 	}	
 }
