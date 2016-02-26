@@ -198,7 +198,9 @@ public class Map extends JPanel {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("default", Font.BOLD, 12));
 
-		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x-20, y-20);
+		g2d.drawString(Deck.countriesAfterShuffle[i].getName(), x-20, y-35);
 		g2d.setFont(new Font("default", Font.ITALIC, 12));
+		g2d.drawString("( "+Deck.countriesAfterShuffle[i].getAbbreviation() + " )", x-20, y-20);
+		
 	}
 }
