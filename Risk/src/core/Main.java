@@ -49,6 +49,7 @@ public class Main {
 				CommandInput.appendStringTo("No units left to place", Color.RED);
 				Data.unitsLeft=false;
 			}
+		
 		}
 	}
 }
