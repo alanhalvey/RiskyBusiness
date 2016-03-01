@@ -3,36 +3,56 @@ package core;
 import java.awt.Color;
 
 public class Gameplay {
-	int numP1Territories;
-	int numP2Territories;
-	int numN1Territories;
-	int numN2Territories;
-	int numN3Territories;
-	int numN4Territories;
+	static int numP1Territories;
+	static int numP2Territories;
+	static int numN1Territories;
+	static int numN2Territories;
+	static int numN3Territories;
+	static int numN4Territories;
 
-	private void placeReinforcements(String currentPlayer){
-		calculateReinforcements();
-		String numToPlace;
-		CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
-		if(numP1Territories != 0){
-			if(currentPlayer.compareTo(CommandInput.player1)==0){
-				String country = CommandInput.getCommand();
-				ErrorHandling.P1checkTerritories(country);
+	public static boolean reinforcementsLeft(String player){
+		boolean result = true;
+		for(int k = 0;k<42;k++){
+			if(player.compareToIgnoreCase(Deck.countriesAfterShuffle[k].getOccupyingPlayer().playerName)==0){
+				if(Deck.countriesAfterShuffle[k].getOccupyingPlayer().numReinforcements == 0){
+					result = false;
+				}
 			}
-			CommandInput.appendStringTo(currentPlayer + ", please type the number of Reinforcements to place: \n", Color.BLACK);
-			numToPlace = CommandInput.getCommand();
-			int numReinforcementsToPlace = Integer.parseInt(numToPlace);
+
 		}
-		
-		
-		
-		
-		
-
-
+		return result;
 	}
 
-	private void calculateReinforcements() {
+	static void placeReinforcements(String currentPlayer){
+		if(currentPlayer.compareTo(CommandInput.player1)==0){
+			if(Gameplay.reinforcementsLeft(CommandInput.player1)==true){
+				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
+				String country = CommandInput.getCommand();
+				ErrorHandling.placeReinforcementsErrorChecksP1(country);
+			}
+			else{
+				CommandInput.appendStringTo(currentPlayer + " has no reinforcements left, skipping turn.\n", Color.RED);
+				CommandInput.currentPlayer = CommandInput.player2;
+				placeReinforcements(CommandInput.currentPlayer);
+			}
+		}
+
+
+		if(currentPlayer.compareTo(CommandInput.player2)==0){
+			if(Gameplay.reinforcementsLeft(CommandInput.player2)==true){
+				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
+				String country = CommandInput.getCommand();
+				ErrorHandling.placeReinforcementsErrorChecksP2(country);
+			}
+			else{
+				CommandInput.appendStringTo(currentPlayer + " has no reinforcements left, skipping turn.\n", Color.RED);
+				CommandInput.currentPlayer = CommandInput.player1;
+				placeReinforcements(CommandInput.currentPlayer);
+			}
+		}	
+	}
+
+	static void calculateReinforcements() {
 		for(int i=0;i<42;i++){
 			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase(CommandInput.player1)==0){
 				numP1Territories++;

@@ -18,13 +18,16 @@ public class Data{
 	public static int[] NEUTRAL_2_COUNTRIES = {15,16,17,18,19,20};
 	public static int[] NEUTRAL_3_COUNTRIES = {21,22,23,24,25,26};
 	public static int[] NEUTRAL_4_COUNTRIES = {27,28,29,30,31,41};
-	public static int PLAYER_1_ARMIES = 27;
-	public static int PLAYER_2_ARMIES = 27;
+	public static int PLAYER_1_ARMIES = 3;
+	public static int PLAYER_2_ARMIES = 3;
 	public static int NEUTRAL_1_ARMIES = 18;
 	public static int NEUTRAL_2_ARMIES = 18;
 	public static int NEUTRAL_3_ARMIES = 18;
 	public static int NEUTRAL_4_ARMIES = 18;
 	public static String currentInput ;
+	public static boolean P1ReinforcementsEmpty;
+	public static boolean P2ReinforcementsEmpty;
+	
 	
 	public static int Player_1_Pool[] = new int[9];
 	public static int Player_2_Pool[] = new int[9];

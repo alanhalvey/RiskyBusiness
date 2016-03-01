@@ -28,13 +28,13 @@ public class Main {
 
 		CommandInput.appendStringTo(CommandInput.player1 + " owns the following countries: \n" + Deck.player1Countries + "\n", CommandInput.player1Colour);
 		CommandInput.appendStringTo(CommandInput.player2 + " owns the following countries: \n" + Deck.player2Countries + "\n", CommandInput.player2Colour);
-		
+
 		CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		while(CommandInput.checkIfDieEqual == "YES"){
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
-		
-		
+
+
 		while(Data.unitsLeft==true){
 			if(flag==false){
 				CommandInput.placeNeutrals();
@@ -46,10 +46,15 @@ public class Main {
 				Screen.mainFrame.repaint();
 			}
 			else{
-				CommandInput.appendStringTo("No units left to place", Color.RED);
+				CommandInput.appendStringTo("No units left to place\n", Color.RED);
 				Data.unitsLeft=false;
 			}
-		
+
+		}
+		Gameplay.calculateReinforcements();
+		while(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
+			Gameplay.placeReinforcements(CommandInput.currentPlayer);
+			Screen.mainFrame.repaint();
 		}
 	}
 }
