@@ -13,7 +13,7 @@ public class Country {
 	private int playerArmies;
 	private int X_Coordinate;
 	private int Y_Coordinate;
-	private int Adjacent[];
+	public int Adjacent[];
 	private int continent;
 	private String abbreviation;
 	
