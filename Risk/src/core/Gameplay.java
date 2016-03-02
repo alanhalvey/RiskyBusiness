@@ -95,4 +95,42 @@ public class Gameplay {
 
 	}
 
-}
+
+
+
+
+	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
+		
+	
+		
+		if(takeArmies.getPlayerArmies()<=1){
+			System.out.println("You do not have enough armies to do this foritfy");
+			Fortify(takeArmies,  putArmies, amountMoved);
+		}
+		
+		else{
+			for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
+				if(takeArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k])  == 0 || putArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k]) == 0 ){
+					
+					
+					
+					for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
+							
+							if(takeArmies.getAdjacent()[j]== k && takeArmies.getOccupyingPlayer().equals(putArmies.getOccupyingPlayer())){
+								takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
+								putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
+							
+						}
+							
+
+					}
+				}
+				else{
+					System.out.println("this is not a counrty");
+
+				}
+			}
+
+		}
+	}
+	}

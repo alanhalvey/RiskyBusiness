@@ -13,7 +13,7 @@ public class Country {
 	private int playerArmies;
 	private int X_Coordinate;
 	private int Y_Coordinate;
-	public int Adjacent[];
+	private int Adjacent[];
 	private int continent;
 	private String abbreviation;
 	
@@ -23,7 +23,7 @@ public class Country {
 		this.setPlayerArmies(playerArmies);
 		this.setX_Coordinate(x);
 		this.setY_Coordinate(y);
-		this.Adjacent = Adjacent;
+		this.setAdjacent(Adjacent);
 		this.setContinent(continentIds);
 		this.setAbbreviation(abbreviation);
 	}
@@ -34,7 +34,7 @@ public class Country {
 		this.playerArmies = country.playerArmies;
 		this.setX_Coordinate(country.getX_Coordinate());
 		this.setY_Coordinate(country.getY_Coordinate());
-		this.Adjacent=country.Adjacent;
+		this.setAdjacent(country.getAdjacent());
 		this.continent = country.continent;
 		this.setAbbreviation(abbreviation);
 	}
@@ -93,5 +93,13 @@ public class Country {
 
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
+	}
+
+	public int[] getAdjacent() {
+		return Adjacent;
+	}
+
+	public void setAdjacent(int adjacent[]) {
+		Adjacent = adjacent;
 	}	
 }
