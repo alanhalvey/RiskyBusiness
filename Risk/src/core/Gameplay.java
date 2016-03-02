@@ -138,6 +138,17 @@ public class Gameplay {
 
 		}
 	}
+	public static void skip(){
+		
+		if (CommandInput.currentPlayer.compareToIgnoreCase(CommandInput.player1) == 0){
+			CommandInput.currentPlayer= CommandInput.player2;
+		}
+		else {
+			CommandInput.currentPlayer = CommandInput.player1;
+		}
+		
+	}
+
 
 	public static String setFromAbbreviation(String country) {
 		for(int i = 0;i<42;i++){
