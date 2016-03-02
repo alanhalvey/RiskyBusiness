@@ -100,28 +100,33 @@ public class Gameplay {
 
 
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
-		
-	
-		
+
+
+
 		if(takeArmies.getPlayerArmies()<=1){
 			System.out.println("You do not have enough armies to do this foritfy");
 			Fortify(takeArmies,  putArmies, amountMoved);
 		}
-		
 		else{
+			System.out.println("1");
 			for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
 				if(takeArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k])  == 0 || putArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k]) == 0 ){
-					
-					
-					
+					System.out.println("2");
+
+
+
 					for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
-							
-							if(takeArmies.getAdjacent()[j]== k && takeArmies.getOccupyingPlayer().equals(putArmies.getOccupyingPlayer())){
-								takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
-								putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
-							
+						System.out.println("3");
+
+						if(takeArmies.getAdjacent()[j]== k && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0){
+							System.out.println("4");
+
+							takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
+							putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
+							CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.", Color.RED);
+							CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.", Color.RED);
 						}
-							
+
 
 					}
 				}
@@ -133,4 +138,28 @@ public class Gameplay {
 
 		}
 	}
+
+	public static String setFromAbbreviation(String country) {
+		for(int i = 0;i<42;i++){
+			if(country.compareTo(Deck.countriesAfterShuffle[i].getAbbreviation())==0){
+				return Deck.countriesAfterShuffle[i].getName();
+			}
+			if(country.compareTo(Deck.countriesAfterShuffle[i].getName())==0){
+				return Deck.countriesAfterShuffle[i].getName();
+			}
+
+		}
+		return null;
 	}
+
+	public static Country setCountry(String country) {
+		for(int i =0;i<42;i++){
+			if (country.compareTo(Deck.countriesAfterShuffle[i].getName())==0){
+				return Deck.countriesAfterShuffle[i];
+			}
+		}
+		return null;
+	}
+
+
+}

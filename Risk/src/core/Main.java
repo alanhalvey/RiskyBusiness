@@ -34,7 +34,7 @@ public class Main {
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
 
-
+		
 		while(Data.unitsLeft==true){
 			if(flag==false){
 				CommandInput.placeNeutrals();
@@ -55,6 +55,23 @@ public class Main {
 		while(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
 			Screen.mainFrame.repaint();
+		}
+		
+		while(true){
+			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter the three details.", Color.RED);
+			String takeArmies = CommandInput.getCommand();
+			String putArmies = CommandInput.getCommand();
+			int toMove = Integer.parseInt(CommandInput.getCommand());
+			Gameplay.setFromAbbreviation(takeArmies);
+			Gameplay.setFromAbbreviation(putArmies);
+			Country takingFrom = Gameplay.setCountry(takeArmies);
+			Country puttingTo = Gameplay.setCountry(putArmies);
+			System.out.println(takingFrom.getName());
+			
+			
+			Gameplay.Fortify(takingFrom, puttingTo, toMove );
+			Screen.mainFrame.repaint();
+			
 		}
 	}
 }
