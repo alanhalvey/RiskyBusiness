@@ -220,12 +220,12 @@ public class Gameplay {
 		countryToAttack = CommandInput.getCommand();
 
 		String didPickOccur = "NO";
-
+	
 		for(int i=0;i<42;i++){
 			if (countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName()) == 0 || countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
-
+				int attackingCountryIndex = getIndex(countryToAttackWith);
 				if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)!=0){
-					if(true == true){
+					if(Map.arrayContains(Deck.countriesAfterShuffle[i].getAdjacent(), attackingCountryIndex)){
 						CommandInput.appendStringTo("You have chosen to attack " + countryToAttack + "\n", CommandInput.currentPlayerColour);
 						didPickOccur = "YES";
 					}
@@ -243,6 +243,16 @@ public class Gameplay {
 		}
 	}
 
+	private static int getIndex(String countryToAttackWith2) {
+		int index = -1;
+		for(int i=0;i<42;i++){
+			if (countryToAttackWith2.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith2.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation())==0){
+				index = Deck.countriesAfterShuffle[i].getIndex();
+			}
+		}
+		return index;
+	}
+
 	static void BattleBetweenCountries(String currentPlayer){
 
 		CommandInput.appendStringTo(currentPlayer + ", please enter how many units you wish to attack with.\n", Color.BLACK);
@@ -252,6 +262,8 @@ public class Gameplay {
 		//if(currentPlayer.  numberOfUnitsToAttackWith)
 
 		CommandInput.appendStringTo(currentPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", Color.BLACK);
+		
+		
 
 	}
 

@@ -16,8 +16,9 @@ public class Country {
 	private int Adjacent[];
 	private int continent;
 	private String abbreviation;
+	private int index;
 	
-	public Country(String name, Player occupyingPlayer, int playerArmies,int x, int y, int[] Adjacent, int continentIds, String abbreviation){
+	public Country(String name, Player occupyingPlayer, int playerArmies,int x, int y, int[] Adjacent, int continentIds, String abbreviation, int index){
 		this.setName(name);
 		this.setOccupyingPlayer(occupyingPlayer);
 		this.setPlayerArmies(playerArmies);
@@ -26,7 +27,10 @@ public class Country {
 		this.setAdjacent(Adjacent);
 		this.setContinent(continentIds);
 		this.setAbbreviation(abbreviation);
+		this.setIndex(index);
 	}
+
+
 
 	public Country(Country country) {
 		this.name = country.name;
@@ -36,7 +40,12 @@ public class Country {
 		this.setY_Coordinate(country.getY_Coordinate());
 		this.setAdjacent(country.getAdjacent());
 		this.continent = country.continent;
-		this.setAbbreviation(abbreviation);
+		this.setAbbreviation(country.abbreviation);
+		this.setIndex(country.index);
+	}
+	private void setIndex(int index2) {
+		this.index = index2;
+		
 	}
 
 	public Player getOccupyingPlayer() {
@@ -101,5 +110,11 @@ public class Country {
 
 	public void setAdjacent(int adjacent[]) {
 		Adjacent = adjacent;
+	}
+
+
+
+	public int getIndex() {
+		return index;
 	}	
 }
