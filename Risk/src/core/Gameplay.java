@@ -10,6 +10,11 @@ public class Gameplay {
 	static int numN3Territories;
 	static int numN4Territories;
 
+	static String countryToAttackWith = "";
+	static String countryToAttack = "";
+	static int numberOfUnitsToAttackWith = 0;
+
+
 	public static boolean reinforcementsLeft(String player){
 		boolean result = true;
 		for(int k = 0;k<42;k++){
@@ -139,14 +144,14 @@ public class Gameplay {
 		}
 	}
 	public static void skip(){
-		
+
 		if (CommandInput.currentPlayer.compareToIgnoreCase(CommandInput.player1) == 0){
 			CommandInput.currentPlayer= CommandInput.player2;
 		}
 		else {
 			CommandInput.currentPlayer = CommandInput.player1;
 		}
-		
+
 	}
 
 
@@ -172,5 +177,99 @@ public class Gameplay {
 		return null;
 	}
 
+	public static void combat(String currentPlayer){
+
+		CommandInput.updatePlayerColour(currentPlayer);
+		PickAttackingCountry(currentPlayer);
+
+		CommandInput.updatePlayerColour(currentPlayer);
+		PickCountryToAttack(currentPlayer);
+
+		CommandInput.updatePlayerColour(currentPlayer);
+		BattleBetweenCountries(currentPlayer);
+	}
+
+
+	static void PickAttackingCountry(String currentPlayer){
+
+		CommandInput.appendStringTo(currentPlayer + ", please enter which of your countries you wish to attack with: \n", Color.BLACK);
+		countryToAttackWith = CommandInput.getCommand();
+
+		String didPickOccur = "NO";
+
+		for(int i=0;i<42;i++){
+			if (countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
+
+				if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
+					CommandInput.appendStringTo("You have chose " + countryToAttackWith + " to attack with. \n", CommandInput.currentPlayerColour);
+					didPickOccur = "YES";
+				}
+
+				else{
+					CommandInput.appendStringTo("You do not own this country\n", Color.RED);
+				}
+			}
+		}
+		if(didPickOccur == "NO"){
+			PickAttackingCountry(currentPlayer);
+		}
+	}
+
+	static void PickCountryToAttack(String currentPlayer){
+		CommandInput.appendStringTo(currentPlayer + ", please enter which country you wish to attack.\n", Color.BLACK);
+		countryToAttack = CommandInput.getCommand();
+
+		String didPickOccur = "NO";
+
+		for(int i=0;i<42;i++){
+			if (countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName()) == 0 || countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
+
+				if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)!=0){
+					if(true == true){
+						CommandInput.appendStringTo("You have chosen to attack " + countryToAttack + "\n", CommandInput.currentPlayerColour);
+						didPickOccur = "YES";
+					}
+					else{
+						CommandInput.appendStringTo("You cannot attack this country, please select an adjacent country that you do not own. \n", Color.RED);
+					}	
+				}
+				else{
+					CommandInput.appendStringTo("You cannot attack this country, please select an adjacent country that you do not own. \n", Color.RED);
+				}
+			}
+		}
+		if(didPickOccur == "NO"){
+			PickCountryToAttack(currentPlayer);
+		}
+	}
+
+	static void BattleBetweenCountries(String currentPlayer){
+
+		CommandInput.appendStringTo(currentPlayer + ", please enter how many units you wish to attack with.\n", Color.BLACK);
+
+		CheckIntegerErrorInput(currentPlayer);
+
+		//if(currentPlayer.  numberOfUnitsToAttackWith)
+
+		CommandInput.appendStringTo(currentPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", Color.BLACK);
+
+	}
+
+	static void CheckIntegerErrorInput(String currentPlayer){
+
+		numberOfUnitsToAttackWith = 0;
+
+		while(numberOfUnitsToAttackWith == 0 ){
+			try{
+				numberOfUnitsToAttackWith = Integer.parseInt(CommandInput.getCommand());	
+			}
+			catch(NumberFormatException exception){
+				CommandInput.appendStringTo("You entered the number incorrectly. Please enter it in Integer form (e.g 7, 3, 4) \n Please enter how many units you wish to attack with.\n", Color.BLACK);
+			}
+		}
+
+	}
+
 
 }
+

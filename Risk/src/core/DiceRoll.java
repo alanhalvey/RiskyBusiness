@@ -74,7 +74,7 @@ public class DiceRoll {
 		for(i=0; i<3; i++){
 			AttackerRoll.roll();		
 			AttackerRolls[i] = getAttackerRollValue();
-			System.out.println("Player 1 rolls = " + AttackerRolls[i]);
+			CommandInput.appendStringTo("Player 1 rolls = " + AttackerRolls[i] + "\n", CommandInput.player1Colour);
 			
 			if(i==0){
 				attackerHighestRoll = AttackerRolls[i];
@@ -87,8 +87,7 @@ public class DiceRoll {
 		for(i=0; i<2; i++){
 			DefenderRoll.roll();
 			DefenderRolls[i] = getDefenderRollValue();
-			System.out.println("Player 2 rolls = " + DefenderRolls[i]);
-			
+			CommandInput.appendStringTo("Player 2 rolls = " + DefenderRolls[i] + "\n", CommandInput.player2Colour);			
 			if(i==0){
 				defenderHighestRoll = DefenderRolls[i];
 			}
@@ -97,16 +96,15 @@ public class DiceRoll {
 			}
 		}
 
-		System.out.println("Player 1 highest roll = " + attackerHighestRoll);
-		System.out.println("Player 2 highest roll = " + defenderHighestRoll);
+		CommandInput.appendStringTo("Player 1 highest roll = " + attackerHighestRoll  + "\n", CommandInput.player1Colour);
+		CommandInput.appendStringTo("Player 2 highest roll = " + defenderHighestRoll + "\n", CommandInput.player2Colour);
 		
 		combatDiceRollWinner();
 		
 		if(string == "0"){
-			System.out.println("Player 1 wins combat");
-		}
+			CommandInput.appendStringTo("Player 1 wins combat" + "\n", CommandInput.player1Colour);		}
 		if(string == "1"){
-			System.out.println("Player 2 wins combat");
+			CommandInput.appendStringTo("Player 2 wins combat" + "\n", CommandInput.player2Colour);
 		}
 	}
 	

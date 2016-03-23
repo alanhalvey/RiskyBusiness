@@ -34,13 +34,10 @@ public class Main {
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
 
+		Gameplay.combat(CommandInput.currentPlayer);
+		
 		
 		while(Data.unitsLeft==true){
-			if(flag==false){
-				CommandInput.placeNeutrals();
-				Screen.mainFrame.repaint();
-				flag=true;
-			}
 			if(Data.PLAYER_1_ARMIES !=0 || Data.PLAYER_2_ARMIES !=0){
 				CommandInput.placeUnits(CommandInput.currentPlayer);
 				Screen.mainFrame.repaint();

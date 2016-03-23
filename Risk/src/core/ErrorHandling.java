@@ -50,45 +50,88 @@ public class ErrorHandling {
 	}
 
 	public static void P1checkTerritories(String country){
-		for(int i=0;i<42;i++){
-			if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 
-					|| country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
+		if(Data.PLAYER_1_ARMIES!=0){
+			for(int i=0;i<42;i++){
+				if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 
+						|| country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
 
-				if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
-					int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
-					Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
-					CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
-					Data.PLAYER_1_ARMIES-=3;
-					CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " units left.\n"), CommandInput.currentPlayerColour);
-					CommandInput.currentPlayer = CommandInput.player2;
-				}
-				else{
-					CommandInput.appendStringTo("You do not own this country\n", Color.RED);
-					CommandInput.placeUnits(CommandInput.player1);
+					if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
+						CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of armies to place: \n", Color.BLACK);
+						String numToPlace = CommandInput.getCommand();
+						int numReinforcementsToPlace = Integer.parseInt(numToPlace);
+						if(numReinforcementsToPlace <= Data.PLAYER_1_ARMIES){
+							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
+							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
+							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
+							Data.PLAYER_1_ARMIES-=numReinforcementsToPlace;
+							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " armies left.\n"), Color.BLUE);
+							Data.neutralsFilled = false;
+							CommandInput.placeNeutrals(CommandInput.currentPlayer, "Neutral 1");
+							if(Data.PLAYER_2_ARMIES!=0){
+								CommandInput.currentPlayer = CommandInput.player2;
+							}
+							else{
+								CommandInput.currentPlayer = CommandInput.player1;
+							}
+
+						}
+						else{
+							CommandInput.appendStringTo("You do not have enough armies to place that many.\n", Color.RED);
+							P1checkTerritories(country);
+						}
+					}
+					else{
+						CommandInput.appendStringTo("You do not own this country\n", Color.RED);
+						CommandInput.placeUnits(CommandInput.player1);
+					}
 				}
 			}
+		}
+		else{
+			CommandInput.currentPlayer = CommandInput.player2;
 		}
 	}	
 
 	public static void P2checkTerritories(String country){
-		for(int i=0;i<42;i++){
-			if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0
-					|| country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
+		if(Data.PLAYER_2_ARMIES!=0){
+			for(int i=0;i<42;i++){
+				if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 
+						|| country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
 
-				if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
+					if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
+						CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of armies to place: \n", Color.BLACK);
+						String numToPlace = CommandInput.getCommand();
+						int numReinforcementsToPlace = Integer.parseInt(numToPlace);
+						if(numReinforcementsToPlace <= Data.PLAYER_2_ARMIES){
+							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
+							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
+							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
+							Data.PLAYER_2_ARMIES-=numReinforcementsToPlace;
+							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " armies left.\n"), Color.BLUE);
+							Data.neutralsFilled = false;
+							CommandInput.placeNeutrals(CommandInput.currentPlayer, "Neutral 1");
+							if(Data.PLAYER_1_ARMIES!=0){
+								CommandInput.currentPlayer = CommandInput.player1;
+							}
+							else{
+								CommandInput.currentPlayer = CommandInput.player2;
+							}
 
-					int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
-					Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+3);
-					CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
-					Data.PLAYER_2_ARMIES-=3;
-					CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " units left.\n"), CommandInput.currentPlayerColour);
-					CommandInput.currentPlayer = CommandInput.player1;
-				}
-				else{
-					CommandInput.appendStringTo("You do not own this country\n", Color.RED);
-					CommandInput.placeUnits(CommandInput.player2);
+						}
+						else{
+							CommandInput.appendStringTo("You do not have enough armies to place that many.\n", Color.RED);
+							P2checkTerritories(country);
+						}
+					}
+					else{
+						CommandInput.appendStringTo("You do not own this country\n", Color.RED);
+						CommandInput.placeUnits(CommandInput.player2);
+					}
 				}
 			}
+		}
+		else{
+			CommandInput.currentPlayer = CommandInput.player1;
 		}
 	}	
 

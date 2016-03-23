@@ -8,7 +8,7 @@ package core;
 import java.awt.Color;
 
 public class Data{
-
+	public static boolean neutralsFilled = false;
 	public static boolean unitsLeft=true;
 	public static int[] Y_Coordinates = new int[42];
 	public static int[] X_Coordinates = new int[42];

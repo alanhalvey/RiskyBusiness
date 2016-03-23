@@ -26,7 +26,7 @@ import javax.swing.text.StyledDocument;
 
 @SuppressWarnings("serial")
 public class CommandInput extends JPanel{
-	
+
 	protected static JTextField commandInputWindow = new JTextField(15);
 	private static JButton enterButton = new JButton("ENTER");
 
@@ -136,55 +136,145 @@ public class CommandInput extends JPanel{
 		}
 		return command;
 	}
-
-	public static void placeUnits(String currentPlayer) {
+	public static void updatePlayerColour(String currentPlayer){
+  		if(currentPlayer == player1){
+  			currentPlayerColour = player1Colour;
+  		}
+  		else {
+  			currentPlayerColour = player2Colour;
+  		}
+ 	}
+ 
+ 	public static void placeUnits(String currentPlayer) {
+ 
+ 		updatePlayerColour(currentPlayer);
+		int currentUnits;
 		if(currentPlayer == player1){
-			currentPlayerColour = player1Colour;
+			currentUnits = Data.PLAYER_1_ARMIES;
 		}
 		else {
-			currentPlayerColour = player2Colour;
+			currentUnits = Data.PLAYER_2_ARMIES;
 		}
 
-		appendStringTo(currentPlayer + ", please type the country name to place units in: \n", Color.BLACK);
-		if(Data.PLAYER_1_ARMIES != 0){
-			if(currentPlayer.compareTo(player1)==0){
-				String country = getCommand();
-				ErrorHandling.P1checkTerritories(country);
-			}
+
+
+
+		if(currentPlayer.compareTo(player1)==0 && currentUnits ==0 ){
+			currentPlayer=player2;
+			placeUnits(currentPlayer);
 		}
-			
-		if(Data.PLAYER_2_ARMIES != 0){
-			if(currentPlayer.compareTo(player2)==0){
-				String country = getCommand();
-				ErrorHandling.P2checkTerritories(country);
+		else if(currentPlayer.compareTo(player2)==0 && currentUnits == 0){
+			currentPlayer=player1;
+			placeUnits(currentPlayer);
+		}
+
+
+		else if(currentUnits!=0){
+			appendStringTo(currentPlayer + ", please type the country name to place units in: \n", Color.BLACK);
+			if(Data.PLAYER_1_ARMIES != 0){
+				if(currentPlayer.compareTo(player1)==0){
+					String country = getCommand();
+					ErrorHandling.P1checkTerritories(country);
+				}
 			}
-		}	
+
+			if(Data.PLAYER_2_ARMIES != 0){
+				if(currentPlayer.compareTo(player2)==0){
+					String country = getCommand();
+					ErrorHandling.P2checkTerritories(country);
+				}
+			}	
+		}
+
+
 	}
 
-	public static void placeNeutrals() {
-		for(int i =0;i<3;i++){
-			for(int z=0;z<42;z++){
-				if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 1")==0){
-					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
-					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
-					Data.NEUTRAL_1_ARMIES-=1;
+	public static void placeNeutrals(String currentPlayer, String Neutral) {
+		appendStringTo(currentPlayer + ", which " + Neutral+ " country do you want to place units in\n", Color.BLACK);
+		String country = getCommand();
+		while(Data.neutralsFilled==false){
+			NeutralChecks(country, Neutral);
+		}
+
+
+	}
+
+	private static void NeutralChecks(String country, String currentNeutral) {
+		for(int i=0;i<42;i++){
+			if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 
+					|| country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
+
+				if(currentNeutral.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
+					CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of armies to place: \n", Color.BLACK);
+					String numToPlace = CommandInput.getCommand();
+					int numReinforcementsToPlace = Integer.parseInt(numToPlace);
+					int currentNeutralArmies = 0;
+
+					if(currentNeutral.compareToIgnoreCase("Neutral 1")==0){
+						currentNeutralArmies = Data.NEUTRAL_1_ARMIES;
+					}
+					if(currentNeutral.compareToIgnoreCase("Neutral 2")==0){
+						currentNeutralArmies = Data.NEUTRAL_2_ARMIES;
+					}
+					if(currentNeutral.compareToIgnoreCase("Neutral 3")==0){
+						currentNeutralArmies = Data.NEUTRAL_3_ARMIES;
+					}
+					if(currentNeutral.compareToIgnoreCase("Neutral 4")==0){
+						currentNeutralArmies = Data.NEUTRAL_4_ARMIES;
+					}
+
+
+
+
+					if(numReinforcementsToPlace <= currentNeutralArmies){
+						int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
+						Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
+						CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
+
+						String nextNeutral = "";
+						if(currentNeutral.compareToIgnoreCase("Neutral 1")==0){
+							Data.NEUTRAL_1_ARMIES-=numReinforcementsToPlace;
+							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_1_ARMIES + " armies left.\n"), Color.BLUE);
+							nextNeutral = "Neutral 2";
+						}
+						else if(currentNeutral.compareToIgnoreCase("Neutral 2")==0){
+							Data.NEUTRAL_2_ARMIES-=numReinforcementsToPlace;
+							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_2_ARMIES + " armies left.\n"), Color.BLUE);
+							nextNeutral = "Neutral 3";
+						}
+						else if(currentNeutral.compareToIgnoreCase("Neutral 3")==0){
+							Data.NEUTRAL_3_ARMIES-=numReinforcementsToPlace;
+							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_3_ARMIES + " armies left.\n"), Color.BLUE);
+							nextNeutral = "Neutral 4";
+						}
+						else if(currentNeutral.compareToIgnoreCase("Neutral 4")==0){
+							Data.neutralsFilled = true;
+							Data.NEUTRAL_4_ARMIES-=numReinforcementsToPlace;
+							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_4_ARMIES + " armies left.\n"), Color.BLUE);
+							if(currentPlayer.compareTo(player1)==0){
+								currentPlayer=player2;
+								placeUnits(currentPlayer);
+							}
+							if(currentPlayer.compareTo(player2)==0){
+								currentPlayer=player1;
+								placeUnits(currentPlayer);
+							}
+						}
+						placeNeutrals(currentPlayer, nextNeutral);
+
+
+					}
+					else{
+						CommandInput.appendStringTo("You do not have enough armies to place that many.\n", Color.RED);
+						NeutralChecks(country, currentNeutral);
+					}
 				}
-				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 2")==0){
-					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
-					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
-					Data.NEUTRAL_2_ARMIES-=1;
-				}
-				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 3")==0){
-					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
-					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
-					Data.NEUTRAL_3_ARMIES-=1;
-				}
-				else if(Deck.countriesAfterShuffle[z].getOccupyingPlayer().playerName.compareTo("Neutral 4")==0){
-					int units = Deck.countriesAfterShuffle[z].getPlayerArmies();
-					Deck.countriesAfterShuffle[z].setPlayerArmies(units+1);
-					Data.NEUTRAL_4_ARMIES-=1;
+				else{
+					CommandInput.appendStringTo(currentNeutral+" does not own this country\n", Color.RED);
+					placeNeutrals(currentPlayer, currentNeutral);
 				}
 			}
+
 		}
 
 	}
