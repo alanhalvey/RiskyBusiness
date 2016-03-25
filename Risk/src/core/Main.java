@@ -36,7 +36,6 @@ public class Main {
 
 		Gameplay.combat(CommandInput.currentPlayer);
 		
-		
 		while(Data.unitsLeft==true){
 			if(Data.PLAYER_1_ARMIES !=0 || Data.PLAYER_2_ARMIES !=0){
 				CommandInput.placeUnits(CommandInput.currentPlayer);
@@ -48,6 +47,8 @@ public class Main {
 			}
 
 		}
+		
+
 		Gameplay.calculateReinforcements();
 		while(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);

@@ -13,6 +13,13 @@ public class Gameplay {
 	static String countryToAttackWith = "";
 	static String countryToAttack = "";
 	static int numberOfUnitsToAttackWith = 0;
+	static int numberOfUnitsToDefendWith = 0;
+	
+	static String attackingPlayer = "";
+	static String defendingPlayer = "";
+
+	static Color attackingPlayerColour = Color.ORANGE;
+	static Color defendingPlayerColour = Color.ORANGE;
 
 
 	public static boolean reinforcementsLeft(String player){
@@ -179,30 +186,60 @@ public class Gameplay {
 
 	public static void combat(String currentPlayer){
 
-		CommandInput.updatePlayerColour(currentPlayer);
-		PickAttackingCountry(currentPlayer);
+		SortingPlayersForCombat(currentPlayer);
+		
+		PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
 
-		CommandInput.updatePlayerColour(currentPlayer);
-		PickCountryToAttack(currentPlayer);
+		PickCountryToAttack(currentPlayer, attackingPlayer, defendingPlayer);
 
-		CommandInput.updatePlayerColour(currentPlayer);
-		BattleBetweenCountries(currentPlayer);
+		AttackingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
+		
+		DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
+		
+		InternalCombatLogic(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
 	}
 
 
-	static void PickAttackingCountry(String currentPlayer){
+	public static void SortingPlayersForCombat(String currentPlayer){
+	
+		if(currentPlayer == CommandInput.player1){
+			attackingPlayer = CommandInput.player1;
+			attackingPlayerColour = CommandInput.player1Colour;
+		
+			defendingPlayer = CommandInput.player2;
+			defendingPlayerColour = CommandInput.player2Colour;
+		}
+		else{
+			attackingPlayer = CommandInput.player2;
+			attackingPlayerColour = CommandInput.player2Colour;
 
-		CommandInput.appendStringTo(currentPlayer + ", please enter which of your countries you wish to attack with: \n", Color.BLACK);
+			defendingPlayer = CommandInput.player1;
+			defendingPlayerColour = CommandInput.player1Colour;
+		}
+	}
+	
+	static void PickAttackingCountry(String currentPlayer, String attackingPlayer, String defendingPlayer){
+
+		CommandInput.appendStringTo(attackingPlayer + ", please enter which of your countries you wish to attack with: \n", Color.BLACK);
 		countryToAttackWith = CommandInput.getCommand();
+		
+		int NumArmies = 0;
+		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
 
 		String didPickOccur = "NO";
 
 		for(int i=0;i<42;i++){
 			if (countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
-
-				if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
-					CommandInput.appendStringTo("You have chose " + countryToAttackWith + " to attack with. \n", CommandInput.currentPlayerColour);
-					didPickOccur = "YES";
+				
+				if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
+					/*if(NumArmies <= 1){
+						CommandInput.appendStringTo("You cannot attack using a country that contains less than 2 armies, please select another country to attack with: ", Color.RED);
+						combat(currentPlayer);
+					}
+					else{*/
+						CommandInput.appendStringTo("You have chose " + countryToAttackWith + " to attack with. \n", attackingPlayerColour);
+						didPickOccur = "YES";
+					//}
 				}
 
 				else{
@@ -211,12 +248,12 @@ public class Gameplay {
 			}
 		}
 		if(didPickOccur == "NO"){
-			PickAttackingCountry(currentPlayer);
+			PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
 		}
 	}
 
-	static void PickCountryToAttack(String currentPlayer){
-		CommandInput.appendStringTo(currentPlayer + ", please enter which country you wish to attack.\n", Color.BLACK);
+	static void PickCountryToAttack(String currentPlayer, String attackingPlayer, String defendingPlayer){
+		CommandInput.appendStringTo(attackingPlayer + ", please enter which country you wish to attack.\n", Color.BLACK);
 		countryToAttack = CommandInput.getCommand();
 
 		String didPickOccur = "NO";
@@ -224,9 +261,9 @@ public class Gameplay {
 		for(int i=0;i<42;i++){
 			if (countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName()) == 0 || countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
 				int attackingCountryIndex = getIndex(countryToAttackWith);
-				if(currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)!=0){
+				if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)!=0){
 					if(Map.arrayContains(Deck.countriesAfterShuffle[i].getAdjacent(), attackingCountryIndex)){
-						CommandInput.appendStringTo("You have chosen to attack " + countryToAttack + "\n", CommandInput.currentPlayerColour);
+						CommandInput.appendStringTo("You have chosen to attack " + countryToAttack + "\n", attackingPlayerColour);
 						didPickOccur = "YES";
 					}
 					else{
@@ -239,7 +276,7 @@ public class Gameplay {
 			}
 		}
 		if(didPickOccur == "NO"){
-			PickCountryToAttack(currentPlayer);
+			PickCountryToAttack(currentPlayer, attackingPlayer, defendingPlayer);
 		}
 	}
 
@@ -253,27 +290,111 @@ public class Gameplay {
 		return index;
 	}
 
-	static void BattleBetweenCountries(String currentPlayer){
+	static void AttackingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer){
 
-		CommandInput.appendStringTo(currentPlayer + ", please enter how many units you wish to attack with.\n", Color.BLACK);
-
-		CheckIntegerErrorInput(currentPlayer);
-
-		//if(currentPlayer.  numberOfUnitsToAttackWith)
-
-		CommandInput.appendStringTo(currentPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", Color.BLACK);
+		CommandInput.appendStringTo(attackingPlayer + ", please enter how many units you wish to attack with.\n", Color.BLACK);
+		CheckAttackerIntegerErrorInput(attackingPlayer, defendingPlayer);
+		int NumArmies = 0;
 		
+		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
+		System.out.println("" + NumArmies);
+		int count = 0;
+		if(count == 0){
+			
+			if(numberOfUnitsToAttackWith == 0){
+				CommandInput.appendStringTo("You must attack with at least one army", Color.RED);
+				count++;
+			}
+			else if(numberOfUnitsToAttackWith >= NumArmies){
+				CommandInput.appendStringTo("You do not have a sufficient number of armies for that attack, " + countryToAttackWith + " has " + NumArmies + ". Please enter a value between 1-" + NumArmies, Color.RED);
+				count++;
+			}
+			else if(numberOfUnitsToAttackWith > 3){
+				CommandInput.appendStringTo("You can only attack with a maximum of 3 units", Color.RED);
+				count++;
+			}
+			if(count > 0){
+				AttackingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
+			}
 		
+			if(count == 0){				
+				CommandInput.appendStringTo(attackingPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", attackingPlayerColour);
+			}
+		}	
+	}
+
+	private static void DefendingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer) {
+				
+		int NumArmies = 0;
+		int count = 0;
+		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies();
+		System.out.println("" + NumArmies);
+		
+			if(NumArmies == 1){
+				CommandInput.appendStringTo(defendingPlayer + ", only have one army in " + countryToAttack + ", so you do not get to choose how many armies to defend with.", defendingPlayerColour);
+				numberOfUnitsToDefendWith = 1;
+			}
+			else{
+				CommandInput.appendStringTo(defendingPlayer + ", " + attackingPlayer + " has attacked your country, " + countryToAttack + ", using " + numberOfUnitsToAttackWith + " units. Please specify how many units you wish to defend with: ", defendingPlayerColour);
+		
+				CheckDefenderIntegerErrorInput(attackingPlayer, defendingPlayer);
+				System.out.println(" " + numberOfUnitsToDefendWith);
+
+				if(count == 0){
+					if(numberOfUnitsToDefendWith < 1){
+						CommandInput.appendStringTo("You must defend with at least one army. Please pick how many armies to defend with again.", Color.RED);
+						count++;
+					}
+					else if(numberOfUnitsToDefendWith > 2){
+						CommandInput.appendStringTo("You must defend with less than three armies. Please pick how many armies to defend with again.", Color.RED);
+						count++;
+					}
+					else if(numberOfUnitsToDefendWith > NumArmies){
+						CommandInput.appendStringTo("You do not have that number of armies. Please pick how many armies to defend with again.", Color.RED);
+					}
+				}
+				if(count>0){
+					DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
+				}
+				if(count==0){
+					CommandInput.appendStringTo("You have chosen to defend with " + numberOfUnitsToDefendWith + " units. ", defendingPlayerColour);
+				}
+			}
+		
+	}
+
+	private static void InternalCombatLogic(String currentPlayer, String attackingPlayer, String defendingPlayer, int numberOfUnitsToAttackWith, int numberOfUnitsToDefendWith) {
+
+		DiceRoll.combatDiceRoll(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
+		
+		if(DiceRoll.combatDiceRollWinner().equals(0)){
+			
+		}
+		
+	}
+
+	static void CheckAttackerIntegerErrorInput(String attackingPlayer, String defendingPlayer){
+
+		numberOfUnitsToAttackWith = -1234;
+		
+		while(numberOfUnitsToAttackWith == -1234 ){
+			try{
+				numberOfUnitsToAttackWith = Integer.parseInt(CommandInput.getCommand());	
+			}
+			catch(NumberFormatException exception){
+				CommandInput.appendStringTo("You entered the number incorrectly. Please enter it in Integer form (e.g 7, 3, 4) \n Please enter how many units you wish to attack with.\n", Color.BLACK);
+			}
+		}
 
 	}
 
-	static void CheckIntegerErrorInput(String currentPlayer){
+	static void CheckDefenderIntegerErrorInput(String attackingPlayer, String defendingPlayer){
 
-		numberOfUnitsToAttackWith = 0;
-
-		while(numberOfUnitsToAttackWith == 0 ){
+		numberOfUnitsToDefendWith = -1234;
+		
+		while(numberOfUnitsToDefendWith == -1234 ){
 			try{
-				numberOfUnitsToAttackWith = Integer.parseInt(CommandInput.getCommand());	
+				numberOfUnitsToDefendWith = Integer.parseInt(CommandInput.getCommand());	
 			}
 			catch(NumberFormatException exception){
 				CommandInput.appendStringTo("You entered the number incorrectly. Please enter it in Integer form (e.g 7, 3, 4) \n Please enter how many units you wish to attack with.\n", Color.BLACK);
