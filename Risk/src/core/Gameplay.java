@@ -232,14 +232,14 @@ public class Gameplay {
 			if (countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
 				
 				if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
-					/*if(NumArmies <= 1){
+					if(NumArmies <= 1){
 						CommandInput.appendStringTo("You cannot attack using a country that contains less than 2 armies, please select another country to attack with: ", Color.RED);
 						combat(currentPlayer);
 					}
-					else{*/
+					else{
 						CommandInput.appendStringTo("You have chose " + countryToAttackWith + " to attack with. \n", attackingPlayerColour);
 						didPickOccur = "YES";
-					//}
+					}
 				}
 
 				else{
