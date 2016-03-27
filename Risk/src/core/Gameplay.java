@@ -172,7 +172,7 @@ public class Gameplay {
 		}
 		return null;
 	}
-
+	
 	public static void combat(String currentPlayer){
 		SortingPlayersForCombat(currentPlayer);
 		
@@ -198,7 +198,7 @@ public class Gameplay {
 			attackingPlayer = CommandInput.player2;
 			attackingPlayerColour = CommandInput.player2Colour;
 		}
-		/*if(currentPlayer == "Neutral 1"){
+		if(currentPlayer == "Neutral 1"){
 			attackingPlayer = "Neutral 1";
 			attackingPlayerColour = Color.BLACK;
 		}
@@ -213,7 +213,7 @@ public class Gameplay {
 		if(currentPlayer == "Neutral 4"){
 			attackingPlayer = "Neutral 4";
 			attackingPlayerColour = Color.YELLOW;
-		}*/
+		}
 	}
 	
 	static void PickAttackingCountry(String currentPlayer, String attackingPlayer, String defendingPlayer){
@@ -329,7 +329,7 @@ public class Gameplay {
 				CommandInput.appendStringTo("You must attack with at least one army", Color.RED);
 				count++;
 			}
-			else if(numberOfUnitsToAttackWith < NumArmies){
+			else if(numberOfUnitsToAttackWith >= NumArmies){
 				CommandInput.appendStringTo("You do not have a sufficient number of armies for that attack, " + countryToAttackWith + " has " + NumArmies + ". Please enter a value between 1-" + NumArmies, Color.RED);
 				count++;
 			}
@@ -354,7 +354,7 @@ public class Gameplay {
 		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies();
 		System.out.println("" + NumArmies);
 		
-			if(NumArmies == -1){
+			if(NumArmies == 1){
 				CommandInput.appendStringTo(defendingPlayer + ", only have one army in " + countryToAttack + ", so you do not get to choose how many armies to defend with:\n", defendingPlayerColour);
 				numberOfUnitsToDefendWith = 1;
 			}
@@ -373,7 +373,7 @@ public class Gameplay {
 						CommandInput.appendStringTo("You must defend with less than three armies. Please pick how many armies to defend with again: \n", Color.RED);
 						count++;
 					}
-					else if(numberOfUnitsToDefendWith < NumArmies){
+					else if(numberOfUnitsToDefendWith > NumArmies){
 						CommandInput.appendStringTo("You do not have that number of armies. Please pick how many armies to defend with again: \n", Color.RED);
 					}
 				}
@@ -391,17 +391,23 @@ public class Gameplay {
 
 		DiceRoll.combatDiceRoll(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
 
-		if((DiceRoll.highestDiceRollWinner() == "0") && DiceRoll.secondDiceRollWinner() == "0"){
-			System.out.println("attacker wins both combats and defender loses two armies");
+		if((DiceRoll.string1 == "0") && DiceRoll.string2 == "-1"){
+			CommandInput.appendStringTo(attackingPlayer + " wins one combat. " + attackingPlayer + " does not lose an army. " + tempPlayer + " loses one army.\n", Color.BLACK);
 		}
-		else if((DiceRoll.highestDiceRollWinner() == "1") && DiceRoll.secondDiceRollWinner() == "1"){
-			System.out.println("defender wins both combats and attacker loses two armies");
+		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "-1"){
+			CommandInput.appendStringTo(tempPlayer + " wins one combat. " + tempPlayer + " does not lose an army. " + attackingPlayer + " loses one army.\n", Color.BLACK);
 		}
-		else if((DiceRoll.highestDiceRollWinner() == "0") && DiceRoll.secondDiceRollWinner() == "1"){
-			System.out.println("attacker and defender each win and lose a combat and both lose 1 army");
+		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "0"){
+			CommandInput.appendStringTo( attackingPlayer + " wins both combats. " + attackingPlayer + " does not lose an army. " + tempPlayer + " loses two armies.\n", Color.BLACK);
 		}
-		else if((DiceRoll.highestDiceRollWinner() == "1") && DiceRoll.secondDiceRollWinner() == "0"){
-			System.out.println("attacker and defender each win and lose a combat and both lose 1 army");
+		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "1"){
+			CommandInput.appendStringTo(tempPlayer + " wins both combats. " + tempPlayer + " does not lose an army. " + attackingPlayer + " loses two armies.\n", Color.BLACK);
+		}
+		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "1"){
+			CommandInput.appendStringTo(attackingPlayer + " and " + tempPlayer + " each win and lose a combat and both lose 1 army.\n", Color.BLACK);
+		}
+		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "0"){
+			CommandInput.appendStringTo(attackingPlayer + " and " + tempPlayer + " each win and lose a combat and both lose 1 army.\n", Color.BLACK);
 		}
 		
 	}

@@ -33,7 +33,7 @@ public class Main {
 		while(CommandInput.checkIfDieEqual == "YES"){
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
-		/*
+		
 		Gameplay.combat(CommandInput.currentPlayer);
 
 		while(Data.unitsLeft==true){
@@ -53,9 +53,6 @@ public class Main {
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
 			Screen.mainFrame.repaint();
 		}
-
-		Gameplay.combat(CommandInput.currentPlayer);
-		 */
 
 		while(true){
 			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies from\n", Color.RED);

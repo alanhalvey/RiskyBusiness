@@ -14,6 +14,7 @@ public class ErrorHandling {
 	public static void Player1UsernameChecks(){ //performs error checks on user input
 
 		CommandInput.player1 = CommandInput.getCommand();
+		CommandInput.player1 = CommandInput.player1.toUpperCase();
 		CommandInput.appendStringTo(CommandInput.player1 + "\n", CommandInput.player1Colour);
 
 		if (CommandInput.player1.length() < 3){ //Why does this if statement not work more than once?
@@ -31,6 +32,7 @@ public class ErrorHandling {
 	public static void Player2UsernameChecks() {
 
 		CommandInput.player2 = CommandInput.getCommand();
+		CommandInput.player2 = CommandInput.player2.toUpperCase();
 		CommandInput.appendStringTo(CommandInput.player2 + "\n", CommandInput.player2Colour);	
 
 		if(CommandInput.player1 == CommandInput.player2){
