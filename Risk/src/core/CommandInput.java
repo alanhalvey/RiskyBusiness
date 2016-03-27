@@ -137,17 +137,17 @@ public class CommandInput extends JPanel{
 		return command;
 	}
 	public static void updatePlayerColour(String currentPlayer){
-  		if(currentPlayer == player1){
-  			currentPlayerColour = player1Colour;
-  		}
-  		else {
-  			currentPlayerColour = player2Colour;
-  		}
- 	}
- 
- 	public static void placeUnits(String currentPlayer) {
- 
- 		updatePlayerColour(currentPlayer);
+		if(currentPlayer == player1){
+			currentPlayerColour = player1Colour;
+		}
+		else {
+			currentPlayerColour = player2Colour;
+		}
+	}
+
+	public static void placeUnits(String currentPlayer) {
+
+		updatePlayerColour(currentPlayer);
 		int currentUnits;
 		if(currentPlayer == player1){
 			currentUnits = Data.PLAYER_1_ARMIES;
@@ -162,10 +162,23 @@ public class CommandInput extends JPanel{
 		if(currentPlayer.compareTo(player1)==0 && currentUnits ==0 ){
 			currentPlayer=player2;
 			placeUnits(currentPlayer);
+			currentUnits = Data.PLAYER_2_ARMIES;
+			if(currentUnits == 0){
+				Data.keepPlacingUnits = false;
+			}
+			else{
+				placeUnits(currentPlayer);
+			}
 		}
 		else if(currentPlayer.compareTo(player2)==0 && currentUnits == 0){
 			currentPlayer=player1;
-			placeUnits(currentPlayer);
+			currentUnits = Data.PLAYER_1_ARMIES;
+			if(currentUnits == 0){
+				Data.keepPlacingUnits = false;
+			}
+			else{
+				placeUnits(currentPlayer);
+			}
 		}
 
 
@@ -253,14 +266,28 @@ public class CommandInput extends JPanel{
 							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_4_ARMIES + " armies left.\n"), Color.BLUE);
 							if(currentPlayer.compareTo(player1)==0){
 								currentPlayer=player2;
-								placeUnits(currentPlayer);
+								currentUnits = Data.PLAYER_2_ARMIES;
+								if(currentUnits!=0){
+									placeUnits(currentPlayer);
+								}
+								else{
+									break;
+								}
 							}
 							if(currentPlayer.compareTo(player2)==0){
 								currentPlayer=player1;
-								placeUnits(currentPlayer);
+								currentUnits = Data.PLAYER_1_ARMIES;
+								if(currentUnits!=0){
+									placeUnits(currentPlayer);
+								}
+								else{
+									break;
+								}
 							}
 						}
-						placeNeutrals(currentPlayer, nextNeutral);
+						if(currentNeutral.compareToIgnoreCase("Neutral 4")!=0){
+							placeNeutrals(currentPlayer, nextNeutral);
+						}
 
 
 					}

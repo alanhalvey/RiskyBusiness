@@ -160,7 +160,6 @@ public class ErrorHandling {
 								}
 							}
 							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements + " Reinforcements left.\n"), Color.BLUE);
-							CommandInput.currentPlayer = CommandInput.player2;
 
 						}
 						else{
@@ -202,7 +201,6 @@ public class ErrorHandling {
 						System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements);
 
 						CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements + " Reinforcements left.\n"), Color.MAGENTA);
-						CommandInput.currentPlayer = CommandInput.player1;
 					}
 					else{
 						CommandInput.appendStringTo("You do not have enough Reinforcements to place that many.\n", Color.RED);

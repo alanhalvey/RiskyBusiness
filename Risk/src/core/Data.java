@@ -10,6 +10,7 @@ import java.awt.Color;
 public class Data{
 	public static boolean neutralsFilled = false;
 	public static boolean unitsLeft=true;
+	public static boolean Fortifying = true;
 	public static int[] Y_Coordinates = new int[42];
 	public static int[] X_Coordinates = new int[42];
 	public static int[] PLAYER_1_COUNTRIES = {0,1,2,3,4,5,6,7,8};
@@ -35,6 +36,7 @@ public class Data{
 	public static int Neutral_2_Pool[] = new int[6];
 	public static int Neutral_3_Pool[] = new int[6];
 	public static int Neutral_4_Pool[] = new int[6];
+	public static boolean keepPlacingUnits = true;
 	
 	public static final int NUM_PLAYERS = 2;
 	public static final int NUM_NEUTRALS = 4;
@@ -145,7 +147,9 @@ public class Data{
 			{499,354},
 			{547,432},        // 40
 			{586,545}
-	};	
+	};
+	public static final boolean Player1Wins = false;	
+	public static final boolean Player2Wins = false;
 	public static int[][] getCountryCoord() {
 		return COUNTRY_COORD;
 	}

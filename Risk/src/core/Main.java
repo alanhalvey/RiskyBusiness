@@ -13,8 +13,17 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String args[]) throws IOException{
 		Screen screen = new Screen();
-
 		CommandInput.run();
+		//Gameplay.combat(CommandInput.currentPlayer);
+		DisplayInfo();
+		PlaceUnits();
+		while(!(Data.Player1Wins || Data.Player2Wins)){
+			TurnSequence();
+		}
+
+	}
+
+	private static void DisplayInfo() {
 		boolean flag = true;
 
 		while(flag){
@@ -33,9 +42,10 @@ public class Main {
 		while(CommandInput.checkIfDieEqual == "YES"){
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
-		
-		Gameplay.combat(CommandInput.currentPlayer);
 
+	}
+
+	private static void PlaceUnits() {
 		while(Data.unitsLeft==true){
 			if(Data.PLAYER_1_ARMIES != 0 || Data.PLAYER_2_ARMIES != 0){
 				CommandInput.placeUnits(CommandInput.currentPlayer);
@@ -48,13 +58,42 @@ public class Main {
 
 		}
 
+	}
+
+	private static void TurnSequence() {
+		PlaceReinforcements();
+		Combat();
+		Fortify();
+	}
+
+	private static void PlaceReinforcements() {
 		Gameplay.calculateReinforcements();
-		while(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
+		if(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
 			Screen.mainFrame.repaint();
 		}
+	}
 
-		while(true){
+	private static void Combat() {
+		CommandInput.appendStringTo("Would you like to combat? (Y/N)\n", Color.RED);
+		String choice = CommandInput.getCommand();
+		if(choice.compareToIgnoreCase("Y")==0){
+			Gameplay.combat(CommandInput.currentPlayer);
+		}
+		else if (choice.compareToIgnoreCase("N")==0){
+			CommandInput.appendStringTo("You have skipped combat\n", Color.RED);
+		}
+		else{
+			CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
+			Combat();
+		}
+
+	}
+	private static void Fortify() {
+		CommandInput.appendStringTo("Would you like to Fortify? (Y/N)\n", Color.RED);
+		String choice = CommandInput.getCommand();
+
+		if(choice.compareToIgnoreCase("Y")==0){
 			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies from\n", Color.RED);
 			String takeArmies = CommandInput.getCommand();
 			CommandInput.appendStringTo(Gameplay.setFromAbbreviation(takeArmies)+"\n", CommandInput.currentPlayerColour);
@@ -81,13 +120,16 @@ public class Main {
 					CommandInput.currentPlayer = CommandInput.player1;
 				}
 			}
-			
+
 			else{
 				CommandInput.appendStringTo("You have entered invalid details, please try again.\n\n", Color.RED);
 			}
-
 		}
-
-
+		else if (choice.compareToIgnoreCase("N")==0){
+			CommandInput.appendStringTo("You have skipped Fortify.\n", Color.RED);
+		}
+		else{
+			CommandInput.appendStringTo("Invalid input. Try again.", Color.red);
+		}
 	}
 }
