@@ -33,7 +33,9 @@ public class Main {
 		while(CommandInput.checkIfDieEqual == "YES"){
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
-		
+		/*
+		Gameplay.combat(CommandInput.currentPlayer);
+
 		while(Data.unitsLeft==true){
 			if(Data.PLAYER_1_ARMIES != 0 || Data.PLAYER_2_ARMIES != 0){
 				CommandInput.placeUnits(CommandInput.currentPlayer);
@@ -45,30 +47,50 @@ public class Main {
 			}
 
 		}
-		
+
 		Gameplay.calculateReinforcements();
 		while(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
 			Screen.mainFrame.repaint();
 		}
-		
+
 		Gameplay.combat(CommandInput.currentPlayer);
-		
+		 */
+
 		while(true){
-			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter the three details.", Color.RED);
+			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies from\n", Color.RED);
 			String takeArmies = CommandInput.getCommand();
+			CommandInput.appendStringTo(Gameplay.setFromAbbreviation(takeArmies)+"\n", CommandInput.currentPlayerColour);
+			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies to\n", Color.RED);
 			String putArmies = CommandInput.getCommand();
+			CommandInput.appendStringTo(Gameplay.setFromAbbreviation(putArmies)+"\n", CommandInput.currentPlayerColour);
+			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter amount of armies to fortify\n", Color.RED);
 			int toMove = Integer.parseInt(CommandInput.getCommand());
-			Gameplay.setFromAbbreviation(takeArmies);
-			Gameplay.setFromAbbreviation(putArmies);
-			Country takingFrom = Gameplay.setCountry(takeArmies);
-			Country puttingTo = Gameplay.setCountry(putArmies);
-			System.out.println(takingFrom.getName());
+			CommandInput.appendStringTo( toMove+ " armies to fortify\n", Color.RED);
+			takeArmies = Gameplay.setFromAbbreviation(takeArmies);
+			putArmies = Gameplay.setFromAbbreviation(putArmies);
+
+			if(putArmies!=null && takeArmies!=null){
+				Country takingFrom = Gameplay.setCountry(takeArmies);
+				Country puttingTo = Gameplay.setCountry(putArmies);
+				Gameplay.Fortify(takingFrom, puttingTo, toMove );
+				Screen.mainFrame.repaint();
+
+
+				if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
+					CommandInput.currentPlayer = CommandInput.player2;
+				}
+				else if(CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
+					CommandInput.currentPlayer = CommandInput.player1;
+				}
+			}
 			
-			
-			Gameplay.Fortify(takingFrom, puttingTo, toMove );
-			Screen.mainFrame.repaint();
-			
+			else{
+				CommandInput.appendStringTo("You have entered invalid details, please try again.\n\n", Color.RED);
+			}
+
 		}
+
+
 	}
 }
