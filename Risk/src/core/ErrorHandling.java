@@ -67,6 +67,7 @@ public class ErrorHandling {
 							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 							Data.PLAYER_1_ARMIES-=numReinforcementsToPlace;
 							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " armies left.\n"), Color.BLUE);
+							Screen.mainFrame.repaint();
 							Data.neutralsFilled = false;
 							CommandInput.placeNeutrals(CommandInput.currentPlayer, "Neutral 1");
 							if(Data.PLAYER_2_ARMIES!=0){
@@ -75,6 +76,7 @@ public class ErrorHandling {
 							else{
 								CommandInput.currentPlayer = CommandInput.player1;
 							}
+							
 
 						}
 						else{
@@ -110,6 +112,7 @@ public class ErrorHandling {
 							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 							Data.PLAYER_2_ARMIES-=numReinforcementsToPlace;
 							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " armies left.\n"), Color.BLUE);
+							Screen.mainFrame.repaint();
 							Data.neutralsFilled = false;
 							CommandInput.placeNeutrals(CommandInput.currentPlayer, "Neutral 1");
 							if(Data.PLAYER_1_ARMIES!=0){
@@ -118,7 +121,7 @@ public class ErrorHandling {
 							else{
 								CommandInput.currentPlayer = CommandInput.player2;
 							}
-
+							
 						}
 						else{
 							CommandInput.appendStringTo("You do not have enough armies to place that many.\n", Color.RED);

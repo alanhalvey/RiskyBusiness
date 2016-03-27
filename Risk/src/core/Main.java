@@ -14,8 +14,9 @@ public class Main {
 	public static void main(String args[]) throws IOException{
 		Screen screen = new Screen();
 		CommandInput.run();
-		//Gameplay.combat(CommandInput.currentPlayer);
 		DisplayInfo();
+		Gameplay.combat(CommandInput.currentPlayer);
+		Screen.mainFrame.repaint();
 		PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
