@@ -27,8 +27,8 @@ class Dice {
 public class DiceRoll {
 	
 	static int i;
-	static String string1;
-	static String string2;
+	static String string1 = "-1";
+	static String string2 = "-1";
 	
 	private static Dice Player1Roll = new Dice();
 	private static Dice Player2Roll = new Dice();
@@ -78,22 +78,32 @@ public class DiceRoll {
 	
 	public static void combatDiceRoll(String currentPlayer, String attackingPlayer, String defendingPlayer, int numberOfUnitsToAttackWith, int numberOfUnitsToDefendWith){
 		
-		Color attackingPlayerColour = Color.ORANGE;
-		Color defendingPlayerColour = Color.ORANGE;
+		Color attackingPlayerColour = Gameplay.attackingPlayerColour;
+		Color defendingPlayerColour = Gameplay.defendingPlayerColour;
 
 		if(currentPlayer == CommandInput.player1){
 			attackingPlayer = CommandInput.player1;
 			attackingPlayerColour = CommandInput.player1Colour;
-			
-			defendingPlayer = CommandInput.player2;
-			defendingPlayerColour = CommandInput.player2Colour;
 		}
-		else{
+		if(currentPlayer == CommandInput.player2){
 			attackingPlayer = CommandInput.player2;
 			attackingPlayerColour = CommandInput.player2Colour;
-
-			defendingPlayer = CommandInput.player1;
-			defendingPlayerColour = CommandInput.player1Colour;
+		}
+		if(currentPlayer == "Neutral 1"){
+			attackingPlayer = "Neutral 1";
+			attackingPlayerColour = Color.BLACK;
+		}
+		if(currentPlayer == "Neutral 2"){
+			attackingPlayer = "Neutral 2";
+			attackingPlayerColour = Color.GREEN;
+		}
+		if(currentPlayer == "Neutral 3"){
+			attackingPlayer = "Neutral 3";
+			attackingPlayerColour = Color.RED;
+		}
+		if(currentPlayer == "Neutral 4"){
+			attackingPlayer = "Neutral 4";
+			attackingPlayerColour = Color.YELLOW;
 		}
 				
 		for(i=0; i<numberOfUnitsToAttackWith; i++){
@@ -119,7 +129,7 @@ public class DiceRoll {
 		for(i=0; i<numberOfUnitsToDefendWith; i++){
 			DefenderRoll.roll();
 			DefenderRolls[i] = getDefenderRollValue();
-			CommandInput.appendStringTo(defendingPlayer + " roll " + (i) + " = " + DefenderRolls[i] + "\n", defendingPlayerColour);			
+			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " roll " + (i) + " = " + DefenderRolls[i] + "\n", defendingPlayerColour);			
 			
 			if(i==0){
 				defenderHighestRoll = DefenderRolls[i];
@@ -142,26 +152,30 @@ public class DiceRoll {
 			CommandInput.appendStringTo(attackingPlayer + " second highest roll = " + attackerSecondHighestRoll  + "\n", attackingPlayerColour);
 		}
 		
-		CommandInput.appendStringTo(defendingPlayer + " highest roll = " + defenderHighestRoll + "\n", defendingPlayerColour);
+		CommandInput.appendStringTo(Gameplay.defendingPlayerString + " highest roll = " + defenderHighestRoll + "\n", defendingPlayerColour);
 		if(defenderSecondHighestRoll != 0){
-			CommandInput.appendStringTo(defendingPlayer + " second highest roll = " + defenderSecondHighestRoll  + "\n", defendingPlayerColour);
+			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " second highest roll = " + defenderSecondHighestRoll  + "\n", defendingPlayerColour);
 		}
 		
 		highestDiceRollWinner();
-		if((attackerSecondHighestRoll != 0) && (defenderSecondHighestRoll != 0)){
+		if((attackerSecondHighestRoll > 0) || (defenderSecondHighestRoll > 0)){
 			secondDiceRollWinner();
 		}
+		
 		if(string1 == "0"){
-			CommandInput.appendStringTo(attackingPlayer + " wins highest dice roll combat" + "\n", attackingPlayerColour);		
+			CommandInput.appendStringTo(attackingPlayer + " wins highest dice roll combat" + "\n", Color.BLACK);		
 			}
 		if(string1 == "1"){
-			CommandInput.appendStringTo(defendingPlayer + " wins highest dice roll combat" + "\n", defendingPlayerColour);
+			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " wins highest dice roll combat" + "\n", Color.BLACK);
 		}
 		if(string2 == "0"){
-			CommandInput.appendStringTo(attackingPlayer + " wins second highest dice roll combat" + "\n", attackingPlayerColour);		
+			CommandInput.appendStringTo(attackingPlayer + " wins second highest dice roll combat" + "\n", Color.BLACK);		
 			}
 		if(string2 == "1"){
-			CommandInput.appendStringTo(defendingPlayer + " wins second highest dice roll combat" + "\n", defendingPlayerColour);
+			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " wins second highest dice roll combat" + "\n", Color.BLACK);
+		}
+		if(string2 == "-1"){
+			CommandInput.appendStringTo("There was no second roll for each player" + "\n", Color.BLACK);
 		}
 	}
 	
@@ -178,16 +192,14 @@ public class DiceRoll {
 	
 	public static String secondDiceRollWinner(){
 			
+		if(attackerSecondHighestRoll > defenderSecondHighestRoll){
+			string2 = "0";
+		}
+		if(attackerSecondHighestRoll <= defenderSecondHighestRoll){
+			string2 = "1";
+		}	
 		
-			if(attackerSecondHighestRoll > defenderSecondHighestRoll){
-				string2 = "0";
-			}
-			if(attackerSecondHighestRoll <= defenderSecondHighestRoll){
-				string2 = "1";
-			}	
-		
-		return string2;
-		
+		return string2;	
 	}
 	
 	public static int getAttackerHighestRoll(){
