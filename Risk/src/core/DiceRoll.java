@@ -27,7 +27,8 @@ class Dice {
 public class DiceRoll {
 	
 	static int i;
-	static String string;
+	static String string1;
+	static String string2;
 	
 	private static Dice Player1Roll = new Dice();
 	private static Dice Player2Roll = new Dice();
@@ -41,8 +42,8 @@ public class DiceRoll {
 	private static int attackerHighestRoll;
 	private static int defenderHighestRoll;
 	
-	private static int attackerSecondHighestRoll;
-	private static int defenderSecondHighestRoll;
+	private static int attackerSecondHighestRoll = 0;
+	private static int defenderSecondHighestRoll = 0;
 	
 	public void rollDice(){
 			Player1Roll.roll();
@@ -98,29 +99,43 @@ public class DiceRoll {
 		for(i=0; i<numberOfUnitsToAttackWith; i++){
 			AttackerRoll.roll();		
 			AttackerRolls[i] = getAttackerRollValue();
-			//CommandInput.appendStringTo(attackingPlayer + " roll " + i + " = " + AttackerRolls[i] + "\n", attackingPlayerColour);
+			CommandInput.appendStringTo(attackingPlayer + " roll " + (i) + " = " + AttackerRolls[i] + "\n", attackingPlayerColour);
 			
 			if(i==0){
 				attackerHighestRoll = AttackerRolls[i];
 			}
-			if(i>0 &&(AttackerRolls[i] > attackerHighestRoll)){
+			else if(AttackerRolls[i] > attackerHighestRoll){
 				attackerSecondHighestRoll = attackerHighestRoll;
 				attackerHighestRoll = AttackerRolls[i];
+			}
+			else if((AttackerRolls[i] <= attackerHighestRoll) && (attackerSecondHighestRoll == 0)){
+				attackerSecondHighestRoll = AttackerRolls[i];
+			}
+			else if((AttackerRolls[i] > attackerSecondHighestRoll) && (AttackerRolls[i] <= attackerHighestRoll)){
+				attackerSecondHighestRoll = AttackerRolls[i];
 			}
 		}
 		System.out.println("");
 		for(i=0; i<numberOfUnitsToDefendWith; i++){
 			DefenderRoll.roll();
 			DefenderRolls[i] = getDefenderRollValue();
-			//CommandInput.appendStringTo(defendingPlayer + " roll " + i + " = " + DefenderRolls[i] + "\n", defendingPlayerColour);			
+			CommandInput.appendStringTo(defendingPlayer + " roll " + (i) + " = " + DefenderRolls[i] + "\n", defendingPlayerColour);			
+			
 			if(i==0){
 				defenderHighestRoll = DefenderRolls[i];
 			}
-			if((i>0) && (DefenderRolls[i] > defenderHighestRoll)){
+			else if(DefenderRolls[i] > defenderHighestRoll){
 				defenderSecondHighestRoll = defenderHighestRoll;
 				defenderHighestRoll = DefenderRolls[i];
 			}
+			else if(DefenderRolls[i] <= defenderHighestRoll){
+				defenderSecondHighestRoll = DefenderRolls[i];
+			}
 		}
+		System.out.println("ah = " + attackerHighestRoll);
+		System.out.println("ash = " + attackerSecondHighestRoll);		
+		System.out.println("dh = " + defenderHighestRoll);
+		System.out.println("dsh = " + defenderSecondHighestRoll);
 
 		CommandInput.appendStringTo(attackingPlayer + " highest roll = " + attackerHighestRoll  + "\n", attackingPlayerColour);
 		if(attackerSecondHighestRoll != 0){
@@ -132,24 +147,47 @@ public class DiceRoll {
 			CommandInput.appendStringTo(defendingPlayer + " second highest roll = " + defenderSecondHighestRoll  + "\n", defendingPlayerColour);
 		}
 		
-		combatDiceRollWinner();
-		
-		if(string == "0"){
-			CommandInput.appendStringTo(attackingPlayer + " wins combat" + "\n", attackingPlayerColour);		
+		highestDiceRollWinner();
+		if((attackerSecondHighestRoll != 0) && (defenderSecondHighestRoll != 0)){
+			secondDiceRollWinner();
+		}
+		if(string1 == "0"){
+			CommandInput.appendStringTo(attackingPlayer + " wins highest dice roll combat" + "\n", attackingPlayerColour);		
 			}
-		if(string == "1"){
-			CommandInput.appendStringTo(defendingPlayer + " wins combat" + "\n", defendingPlayerColour);
+		if(string1 == "1"){
+			CommandInput.appendStringTo(defendingPlayer + " wins highest dice roll combat" + "\n", defendingPlayerColour);
+		}
+		if(string2 == "0"){
+			CommandInput.appendStringTo(attackingPlayer + " wins second highest dice roll combat" + "\n", attackingPlayerColour);		
+			}
+		if(string2 == "1"){
+			CommandInput.appendStringTo(defendingPlayer + " wins second highest dice roll combat" + "\n", defendingPlayerColour);
 		}
 	}
 	
-	public static String combatDiceRollWinner(){
+	public static String highestDiceRollWinner(){
+		
 		if(attackerHighestRoll > defenderHighestRoll){
-			string = "0";
+			string1 = "0";
 		}
 		if(attackerHighestRoll <= defenderHighestRoll){
-			string = "1";
+			string1 = "1";
 		}
-		return string;
+		return string1;
+	}
+	
+	public static String secondDiceRollWinner(){
+			
+		
+			if(attackerSecondHighestRoll > defenderSecondHighestRoll){
+				string2 = "0";
+			}
+			if(attackerSecondHighestRoll <= defenderSecondHighestRoll){
+				string2 = "1";
+			}	
+		
+		return string2;
+		
 	}
 	
 	public static int getAttackerHighestRoll(){

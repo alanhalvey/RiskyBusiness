@@ -33,11 +33,9 @@ public class Main {
 		while(CommandInput.checkIfDieEqual == "YES"){
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
-
-		Gameplay.combat(CommandInput.currentPlayer);
 		
 		while(Data.unitsLeft==true){
-			if(Data.PLAYER_1_ARMIES !=0 || Data.PLAYER_2_ARMIES !=0){
+			if(Data.PLAYER_1_ARMIES != 0 || Data.PLAYER_2_ARMIES != 0){
 				CommandInput.placeUnits(CommandInput.currentPlayer);
 				Screen.mainFrame.repaint();
 			}
@@ -48,12 +46,13 @@ public class Main {
 
 		}
 		
-
 		Gameplay.calculateReinforcements();
 		while(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
 			Screen.mainFrame.repaint();
 		}
+		
+		Gameplay.combat(CommandInput.currentPlayer);
 		
 		while(true){
 			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter the three details.", Color.RED);
