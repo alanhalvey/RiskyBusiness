@@ -129,7 +129,7 @@ public class Main {
 			putArmies = Gameplay.setFromAbbreviation(putArmies);
 
 			if(putArmies!=null && takeArmies!=null){
-				System.out.println(" ");
+				System.out.println("test");
 				Country takingFrom = Gameplay.setCountry(takeArmies);
 				Country puttingTo = Gameplay.setCountry(putArmies);
 				Gameplay.Fortify(takingFrom, puttingTo, toMove );
@@ -138,6 +138,7 @@ public class Main {
 
 			else{
 				CommandInput.appendStringTo("You have entered invalid details, please try again.\n\n", Color.RED);
+				Fortify();
 			}
 		}
 		else if (choice.compareToIgnoreCase("N")==0){
