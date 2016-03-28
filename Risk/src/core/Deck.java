@@ -227,7 +227,7 @@ public class Deck {
 				case 36:
 				case 38:
 				case 40:
-					Player p = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,0,0, false);
+					Player p = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,9,0,false);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					if(u==1){
@@ -244,7 +244,7 @@ public class Deck {
 				case 37:
 				case 39:
 				case 41:
-					p = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour,0,0, false);
+					p = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour,9,0,false);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					if(u==1){
@@ -258,7 +258,7 @@ public class Deck {
 				case 20:
 				case 26:
 				case 32:
-					p = new Player("Neutral 1", Color.BLACK,0,0, false);
+					p = new Player("Neutral 1", Color.BLACK,6,0,false);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
@@ -269,7 +269,7 @@ public class Deck {
 				case 21:
 				case 27:
 				case 33:
-					p = new Player("Neutral 2", Color.GREEN, 0, 0, false);
+					p = new Player("Neutral 2", Color.GREEN, 6, 0,false);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
@@ -280,7 +280,7 @@ public class Deck {
 				case 22:
 				case 28:
 				case 34:
-					p = new Player("Neutral 3", Color.RED, 0, 0, false);
+					p = new Player("Neutral 3", Color.RED, 6, 0, false);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;
@@ -291,7 +291,7 @@ public class Deck {
 				case 23:
 				case 29:
 				case 35:
-					p = new Player("Neutral 4", Color.YELLOW,0,0, false);
+					p = new Player("Neutral 4", Color.YELLOW,6,0, false);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(p);
 					z++;

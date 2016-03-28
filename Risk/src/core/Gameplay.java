@@ -69,37 +69,7 @@ public class Gameplay {
 	}
 
 	static void calculateReinforcements() {
-		for(int i=0;i<42;i++){
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase(CommandInput.player1)==0){
-				numP1Territories++;
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories = numP1Territories;
-			}
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase(CommandInput.player2)==0){
-				numP2Territories++;
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories = numP2Territories;
-			}
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase("Neutral 1")==0){
-				numN1Territories++;
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories = numN1Territories;
-			}
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase("Neutral 2")==0){
-				numN2Territories++;
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories = numN2Territories;
 
-			}
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase("Neutral 3")==0){
-				numN3Territories++;
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories = numN3Territories;
-
-			}
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase("Neutral 4")==0){
-				numN4Territories++;
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories = numN4Territories;
-
-			}
-
-
-		}
 		for(int i = 0;i<42;i++){
 			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories<=9){
 				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements = 3;
@@ -305,9 +275,9 @@ public class Gameplay {
 		}
 	}
 
-	private static int getIndex(String countryToAttackWith2) {
+	static int getIndex(String countryToAttackWith2) {
 		int index = -1;
-		
+
 		for(int i=0;i<42;i++){
 			if (countryToAttackWith2.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith2.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation())==0){
 				index = Deck.countriesAfterShuffle[i].getIndex();
@@ -368,7 +338,7 @@ public class Gameplay {
 
 			CheckDefenderIntegerErrorInput(attackingPlayer, defendingPlayer);
 			System.out.println(" " + numberOfUnitsToDefendWith);
-		
+
 			if(count == 0){
 				if(numberOfUnitsToDefendWith < 1){
 					CommandInput.appendStringTo("You must defend with at least one army. Please pick how many armies to defend with again: \n", Color.RED);
@@ -462,7 +432,7 @@ public class Gameplay {
 				indexForReassignment=i;
 			}
 		}
-		
+
 		for(int i=0;i<42;i++){
 			if(name.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
 				System.out.println("found");
@@ -470,7 +440,7 @@ public class Gameplay {
 				Screen.mainFrame.repaint();
 			}
 		}
-		
+
 	}
 
 	static void CheckAttackerIntegerErrorInput(String attackingPlayer, String defendingPlayer){
@@ -503,12 +473,11 @@ public class Gameplay {
 
 	}
 	
-	
 	static void CheckAttackingPlayerEliminated(){
-		
-		
-		
-		
+
+
+
+
 	}
 }
 

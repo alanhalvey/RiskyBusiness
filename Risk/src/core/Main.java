@@ -15,9 +15,10 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		Gameplay.combat(CommandInput.currentPlayer);
+		//Gameplay.combat(CommandInput.currentPlayer);
 		Screen.mainFrame.repaint();
-		PlaceUnits();
+		//PlaceUnits();
+		Gameplay.calculateReinforcements();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
 			ChangePlayers();
@@ -73,17 +74,26 @@ public class Main {
 	}
 
 	private static void TurnSequence() {
+		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
 		PlaceReinforcements();
 		Combat();
 		Fortify();
 	}
 
 	private static void PlaceReinforcements() {
-		Gameplay.calculateReinforcements();
-		if(Gameplay.reinforcementsLeft(CommandInput.player1)==true || Gameplay.reinforcementsLeft(CommandInput.player2)==true){
+		if(Gameplay.reinforcementsLeft(CommandInput.player1)==true && CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
-			Screen.mainFrame.repaint();
 		}
+		else if(Gameplay.reinforcementsLeft(CommandInput.player2)==true && CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
+			Gameplay.placeReinforcements(CommandInput.currentPlayer);
+		}
+		else if(Gameplay.reinforcementsLeft(CommandInput.player1)!=true && CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
+			CommandInput.appendStringTo(CommandInput.currentPlayer+", you have no reinforcements left. Skipping placing reinforcements.\n", CommandInput.currentPlayerColour);
+		}
+		else if(Gameplay.reinforcementsLeft(CommandInput.player2)!=true && CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
+			CommandInput.appendStringTo(CommandInput.currentPlayer+", you have no reinforcements left. Skipping placing reinforcements.\n", CommandInput.currentPlayerColour);
+		}
+		Screen.mainFrame.repaint();
 	}
 
 	private static void Combat() {
