@@ -84,34 +84,34 @@ public class Gameplay {
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 
 		if(takeArmies.getOccupyingPlayer().fortified=true){
-		if(takeArmies.getPlayerArmies()<=1){
-			CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
-		}
-		else{
-			System.out.println("1");
-			for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
-				if(takeArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k])  == 0 || putArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k]) == 0 ){
-					System.out.println("2");
+			if(takeArmies.getPlayerArmies()<=1){
+				CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
+			}
+			else{
+				System.out.println("1");
+				for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
+					if(takeArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k])  == 0 || putArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k]) == 0 ){
+						System.out.println("2");
 
-					for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
-						System.out.println("3");
+						for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
+							System.out.println("3");
 
-						if(takeArmies.getAdjacent()[j]== k && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0){
-							System.out.println("4");
+							if(takeArmies.getAdjacent()[j]== k && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0){
+								System.out.println("4");
 
-							takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
-							putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
-							CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.\n", Color.RED);
-							CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.\n", Color.RED);
-							takeArmies.getOccupyingPlayer().fortified=false;
+								takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
+								putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
+								CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.\n", Color.RED);
+								CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.\n", Color.RED);
+								takeArmies.getOccupyingPlayer().fortified=false;
+							}
 						}
 					}
-				}
-				else{
-					System.out.println("this is not a counrty");
+					else{
+						System.out.println("this is not a counrty");
+					}
 				}
 			}
-		}
 		}
 		else{
 			System.out.println("you have already used your fortify");
@@ -164,7 +164,7 @@ public class Gameplay {
 		DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
 
 		InternalCombatLogic(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
-		
+
 		CheckPlayerEliminated();
 	}
 
@@ -371,7 +371,9 @@ public class Gameplay {
 	}
 
 	private static void InternalCombatLogic(String currentPlayer, String attackingPlayer, String defendingPlayer, int numberOfUnitsToAttackWith, int numberOfUnitsToDefendWith) {
-
+		for(int i=0;i<42;i++){
+			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
+		}
 		DiceRoll.combatDiceRoll(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
 		System.out.println("Attacking"+Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
 		System.out.println("Attacking with"+Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName()+ " " + Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getIndex());
@@ -433,6 +435,21 @@ public class Gameplay {
 		Screen.mainFrame.repaint();
 	}
 
+	private static void ReassignCountriesArmies(String string) {
+		int armiesToPass = 0;
+		for(int i=0;i<42;i++){
+			if(string.compareTo(Deck.countriesAfterShuffle[i].getName())==0){
+				armiesToPass = Deck.countriesAfterShuffle[i].getPlayerArmies();
+			}
+		}
+		for(int i=0;i<42;i++){
+			if(string.compareTo(Deck.countriesBeforeShuffle[i].getName())==0){
+				Deck.countriesBeforeShuffle[i].setPlayerArmies(armiesToPass);
+			}
+		}
+		
+	}
+
 	private static void ReassignArmies(String name) {
 		int indexForReassignment = 0;
 		for(int i=0;i<42;i++){
@@ -443,13 +460,16 @@ public class Gameplay {
 
 		for(int i=0;i<42;i++){
 			if(name.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
-				System.out.println("found");
+				System.out.println("got here");
 				Deck.countriesAfterShuffle[i].setPlayerArmies(Deck.countriesBeforeShuffle[indexForReassignment].getPlayerArmies());
 				Screen.mainFrame.repaint();
+				System.out.println(Deck.countriesAfterShuffle[i].getName() + " now has changed units.");
 			}
 		}
 
 	}
+
+	
 
 	static void CheckAttackerIntegerErrorInput(String attackingPlayer, String defendingPlayer){
 
@@ -480,16 +500,16 @@ public class Gameplay {
 		}
 
 	}
-	
+
 	static void CheckPlayerEliminated(){
-		
+
 		for(int i=0;i<42;i++){
-		if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
-			System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.");
-			break;
-		}
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
+				System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.");
+				break;
+			}
 		}	
-		
+
 
 
 
