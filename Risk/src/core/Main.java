@@ -15,9 +15,7 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		//Gameplay.combat(CommandInput.currentPlayer);
-		Screen.mainFrame.repaint();
-		//PlaceUnits();
+		PlaceUnits();
 		Gameplay.calculateReinforcements();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();

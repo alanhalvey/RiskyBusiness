@@ -186,7 +186,6 @@ public class CommandInput extends JPanel{
 					String country = getCommand();
 					boolean validCountry = countryCheck(country);
 					if(validCountry){
-						appendStringTo("Bad input. Try again.\n",Color.RED);
 						ErrorHandling.P1checkTerritories(country);
 					}
 					else{
@@ -201,7 +200,6 @@ public class CommandInput extends JPanel{
 					String country = getCommand();
 					boolean validCountry = countryCheck(country);
 					if(validCountry){
-						appendStringTo("Bad input. Try again.\n",Color.RED);
 						ErrorHandling.P2checkTerritories(country);
 					}
 					else{
@@ -232,9 +230,17 @@ public class CommandInput extends JPanel{
 	public static void placeNeutrals(String currentPlayer, String Neutral) {
 		appendStringTo(currentPlayer + ", which " + Neutral+ " country do you want to place units in\n", Color.BLACK);
 		String country = getCommand();
-		while(Data.neutralsFilled==false){
-			NeutralChecks(country, Neutral);
+		Boolean isCountry = countryCheck(country);
+		if(isCountry){
+			while(Data.neutralsFilled==false){
+				NeutralChecks(country, Neutral);
+			}
 		}
+		else{
+			appendStringTo("That is not a country. Try again.\n", Color.RED);
+			placeNeutrals(currentPlayer, Neutral);
+		}
+
 	}
 
 	//Function allows player 1 & 2 to assign neutral armies as specified in the brief for sprint 3
@@ -246,7 +252,21 @@ public class CommandInput extends JPanel{
 				if(currentNeutral.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 					CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of armies to place: \n", Color.BLACK);
 					String numToPlace = CommandInput.getCommand();
-					int numReinforcementsToPlace = Integer.parseInt(numToPlace);
+					
+					int numReinforcementsToPlace = 0;
+
+
+					if (numToPlace !=null && !"".equals(numToPlace) ){
+						try {
+							numReinforcementsToPlace = Integer.parseInt(numToPlace);
+						} catch (NumberFormatException e) {
+							CommandInput.appendStringTo("This is not a number.\n", Color.RED);
+							NeutralChecks(country, currentNeutral);
+						}
+					}
+					
+					
+					
 					int currentNeutralArmies = 0;
 
 					//current neutral armies variable is set based on which neutral is the current neutral!
