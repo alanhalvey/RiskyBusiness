@@ -483,13 +483,13 @@ public class Gameplay {
 	
 	static void CheckPlayerEliminated(){
 		
-	/*	for(int i=0;i<42;i++){
+		for(int i=0;i<42;i++){
 		if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
 			System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.");
 			break;
 		}
 		}	
-		*/
+		
 
 
 
