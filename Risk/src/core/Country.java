@@ -2,11 +2,10 @@
  * Alan Halvey - 14465722
  * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
- * 
  */
 package core;
-import java.awt.Color;
 
+//Country class contains all the information regarding a specific country, details as seen below.
 public class Country {
 	private String name;
 	private Player occupyingPlayer;
@@ -30,8 +29,6 @@ public class Country {
 		this.setIndex(index);
 	}
 
-
-
 	public Country(Country country) {
 		this.name = country.name;
 		this.occupyingPlayer = country.occupyingPlayer;
@@ -43,10 +40,8 @@ public class Country {
 		this.setAbbreviation(country.abbreviation);
 		this.setIndex(country.index);
 	}
-	private void setIndex(int index2) {
-		this.index = index2;
-		
-	}
+	
+	//Each required detail within the country class has an appropriate getter and/or setter.
 
 	public Player getOccupyingPlayer() {
 		return occupyingPlayer;
@@ -112,9 +107,11 @@ public class Country {
 		Adjacent = adjacent;
 	}
 
-
-
 	public int getIndex() {
 		return index;
 	}	
+	
+	private void setIndex(int index2) {
+		this.index = index2;
+	}
 }
