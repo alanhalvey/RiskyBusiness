@@ -20,8 +20,19 @@ public class Main {
 		PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
+			ChangePlayers();
 		}
 
+	}
+
+	private static void ChangePlayers() {
+		if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
+			CommandInput.currentPlayer = CommandInput.player2;
+		}
+		else{
+			CommandInput.currentPlayer = CommandInput.player1;
+		}
+		
 	}
 
 	private static void DisplayInfo() {
@@ -112,14 +123,6 @@ public class Main {
 				Country puttingTo = Gameplay.setCountry(putArmies);
 				Gameplay.Fortify(takingFrom, puttingTo, toMove );
 				Screen.mainFrame.repaint();
-
-
-				if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
-					CommandInput.currentPlayer = CommandInput.player2;
-				}
-				else if(CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
-					CommandInput.currentPlayer = CommandInput.player1;
-				}
 			}
 
 			else{

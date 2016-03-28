@@ -307,9 +307,13 @@ public class Gameplay {
 
 	private static int getIndex(String countryToAttackWith2) {
 		int index = -1;
+		
 		for(int i=0;i<42;i++){
 			if (countryToAttackWith2.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith2.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation())==0){
 				index = Deck.countriesAfterShuffle[i].getIndex();
+				System.out.println(Deck.countriesAfterShuffle[i].getName());
+				System.out.println(index);
+				System.out.println("\n\n");
 			}
 		}
 		return index;
@@ -364,7 +368,7 @@ public class Gameplay {
 
 			CheckDefenderIntegerErrorInput(attackingPlayer, defendingPlayer);
 			System.out.println(" " + numberOfUnitsToDefendWith);
-
+		
 			if(count == 0){
 				if(numberOfUnitsToDefendWith < 1){
 					CommandInput.appendStringTo("You must defend with at least one army. Please pick how many armies to defend with again: \n", Color.RED);
@@ -391,42 +395,44 @@ public class Gameplay {
 	private static void InternalCombatLogic(String currentPlayer, String attackingPlayer, String defendingPlayer, int numberOfUnitsToAttackWith, int numberOfUnitsToDefendWith) {
 
 		DiceRoll.combatDiceRoll(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
-
+		System.out.println("Attacking"+Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
+		System.out.println("Attacking with"+Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName()+ " " + Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getIndex());
+		// indexToAttack = 
 		if((DiceRoll.string1 == "0") && DiceRoll.string2 == "-1"){
 
 			CommandInput.appendStringTo(attackingPlayer + " wins one combat. " + attackingPlayer + " does not lose an army. " + defendingPlayerString + " loses one army.\n", Color.BLACK);
-			Deck.countriesAfterShuffle[getIndex(countryToAttack)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies()-1);
+			Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())-1);
 		}
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "-1"){
 
 			CommandInput.appendStringTo(defendingPlayerString + " wins one combat. " + defendingPlayerString + " does not lose an army. " + attackingPlayer + " loses one army.\n", Color.BLACK);
-			Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies()-1);
-
+			Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies())-1);
+			
 		}
 		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "0"){
 
 			CommandInput.appendStringTo( attackingPlayer + " wins both combats. " + attackingPlayer + " does not lose an army. " + defendingPlayerString + " loses two armies.\n", Color.BLACK);
-			Deck.countriesAfterShuffle[getIndex(countryToAttack)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies()-2);
+			Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())-2);
 
 		}
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "1"){
 
 			CommandInput.appendStringTo(defendingPlayerString + " wins both combats. " + defendingPlayerString + " does not lose an army. " + attackingPlayer + " loses two armies.\n", Color.BLACK);
-			Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies()-2);
+			Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies())-2);
 
 		}
 		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "1"){
 
 			CommandInput.appendStringTo(attackingPlayer + " and " + defendingPlayerString + " each win and lose a combat and both lose 1 army.\n", Color.BLACK);
-			Deck.countriesAfterShuffle[getIndex(countryToAttack)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies()-1);
-			Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies()-1);
+			Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())-1);
+			Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies())-1);
 
 		}
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "0"){
 
 			CommandInput.appendStringTo(attackingPlayer + " and " + defendingPlayerString + " each win and lose a combat and both lose 1 army.\n", Color.BLACK);
-			Deck.countriesAfterShuffle[getIndex(countryToAttack)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies()-1);
-			Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].setPlayerArmies(Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies()-1);
+			Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())-1);
+			Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies())-1);
 			
 		}
 		Screen.mainFrame.repaint();
