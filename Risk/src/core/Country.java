@@ -60,8 +60,8 @@ public class Country {
 		return playerArmies;
 	}
 
-	public void setPlayerArmies(int playerArmies) {
-		this.playerArmies = playerArmies;
+	public void setPlayerArmies(int playerArmies2) {
+		this.playerArmies = playerArmies2;
 	}
 
 	public String getName() {
