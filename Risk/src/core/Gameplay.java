@@ -83,6 +83,7 @@ public class Gameplay {
 
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 
+		if(takeArmies.getOccupyingPlayer().fortified=true){
 		if(takeArmies.getPlayerArmies()<=1){
 			CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
 		}
@@ -102,6 +103,7 @@ public class Gameplay {
 							putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
 							CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.\n", Color.RED);
 							CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.\n", Color.RED);
+							takeArmies.getOccupyingPlayer().fortified=false;
 						}
 					}
 				}
@@ -109,6 +111,10 @@ public class Gameplay {
 					System.out.println("this is not a counrty");
 				}
 			}
+		}
+		}
+		else{
+			System.out.println("you have already used your fortify");
 		}
 	}
 
@@ -158,6 +164,8 @@ public class Gameplay {
 		DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
 
 		InternalCombatLogic(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
+		
+		CheckPlayerEliminated();
 	}
 
 
@@ -473,8 +481,15 @@ public class Gameplay {
 
 	}
 	
-	static void CheckAttackingPlayerEliminated(){
-
+	static void CheckPlayerEliminated(){
+		
+	/*	for(int i=0;i<42;i++){
+		if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
+			System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.");
+			break;
+		}
+		}	
+		*/
 
 
 
