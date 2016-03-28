@@ -502,6 +502,14 @@ public class Gameplay {
 		}
 
 	}
+	
+	
+	static void CheckAttackingPlayerEliminated(){
+		
+		
+		
+		
+	}
 }
 
 
