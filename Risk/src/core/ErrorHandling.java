@@ -161,8 +161,18 @@ public class ErrorHandling {
 
 					if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 						CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of Reinforcements to place: \n", Color.BLACK);
-						String numToPlace = CommandInput.getCommand();						
-						int numReinforcementsToPlace = Integer.parseInt(numToPlace);
+						String numToPlace = CommandInput.getCommand();	
+						
+						int numReinforcementsToPlace = 0;
+						if (numToPlace !=null && !"".equals(numToPlace) ){
+					        try {
+					        	numReinforcementsToPlace = Integer.parseInt(numToPlace);
+					        } catch (NumberFormatException e) {
+					           CommandInput.appendStringTo("This is not a number.\n", Color.RED);
+					           placeReinforcementsErrorChecksP1(country);
+					        }
+					    }
+						
 						
 						if(numReinforcementsToPlace <= Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements){ //If you enter a number greater then the number of reinforcements you have left you won't enter this if statement 
 							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
@@ -203,7 +213,16 @@ public class ErrorHandling {
 				if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 					CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of Reinforcements to place: \n", Color.BLACK);
 					String numToPlace = CommandInput.getCommand();					
-					int numReinforcementsToPlace = Integer.parseInt(numToPlace);
+					int numReinforcementsToPlace = 0;
+					if (numToPlace !=null && !"".equals(numToPlace) ){
+				        try {
+				        	numReinforcementsToPlace = Integer.parseInt(numToPlace);
+				        } catch (NumberFormatException e) {
+				           CommandInput.appendStringTo("This is not a number.\n", Color.RED);
+				           placeReinforcementsErrorChecksP1(country);
+				           
+				        }
+				    }
 					
 					if(numReinforcementsToPlace <= Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements){ //If you enter a number greater then the number of reinforcements you have left you won't enter this if statement
 						int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();

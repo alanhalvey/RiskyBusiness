@@ -86,7 +86,7 @@ public class CommandInput extends JPanel{
 
 		// Adding the button and the action listener to the enter key and 
 		// the update caret follows the scroll bar to the bottom of the screen
-		 
+
 
 		JPanel finishedPanel = new JPanel();
 
@@ -94,7 +94,7 @@ public class CommandInput extends JPanel{
 		finishedPanel.add(scrollPane, BorderLayout.SOUTH);
 		finishedPanel.add(enterButton, BorderLayout.EAST);
 		finishedPanel.add(commandInputWindow);
-		
+
 		//adds all elements to the final panel and gets it ready to be aded to the frame in main.
 		add(finishedPanel);
 
@@ -133,7 +133,7 @@ public class CommandInput extends JPanel{
 		}
 		return command; //returns the user input (very important funcion)
 	}
-	
+
 	public static void updatePlayerColour(String currentPlayer){ //updates the current player colour in sync with the current player updation
 		if(currentPlayer == player1){
 			currentPlayerColour = player1Colour;
@@ -178,20 +178,53 @@ public class CommandInput extends JPanel{
 		}
 		else if(currentUnits!=0){
 			appendStringTo(currentPlayer + ", please type the country name to place units in: \n", Color.BLACK);
-			
+
 			if(Data.PLAYER_1_ARMIES != 0){
+
+
 				if(currentPlayer.compareTo(player1)==0){
 					String country = getCommand();
-					ErrorHandling.P1checkTerritories(country);
+					boolean validCountry = countryCheck(country);
+					if(validCountry){
+						appendStringTo("Bad input. Try again.\n",Color.RED);
+						ErrorHandling.P1checkTerritories(country);
+					}
+					else{
+						appendStringTo("Invalid input. Try again.\n",Color.RED);
+						placeUnits(currentPlayer);
+					}
 				}
 			}
-			
+
 			if(Data.PLAYER_2_ARMIES != 0){
 				if(currentPlayer.compareTo(player2)==0){
 					String country = getCommand();
-					ErrorHandling.P2checkTerritories(country);
+					boolean validCountry = countryCheck(country);
+					if(validCountry){
+						appendStringTo("Bad input. Try again.\n",Color.RED);
+						ErrorHandling.P2checkTerritories(country);
+					}
+					else{
+						appendStringTo("Invalid input. Try again.\n",Color.RED);
+						placeUnits(currentPlayer);
+					}
 				}
 			}	
+		}
+	}
+
+	public static boolean countryCheck(String country) {
+		int count = 0;
+		for(int i=0;i<42;i++){
+			if(country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation())==0){
+				count++;
+			}
+		}
+		if(count==0){
+			return false;
+		}
+		else{
+			return true;
 		}
 	}
 
@@ -313,7 +346,7 @@ public class CommandInput extends JPanel{
 	}
 
 	public static void randomPlayerGenerator(String player1, String player2){ // random generator for who plays first.
-		 
+
 		DiceRoll bothPlayers = new DiceRoll();
 		bothPlayers.rollDice();
 

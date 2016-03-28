@@ -47,7 +47,14 @@ public class Gameplay {
 			if(Gameplay.reinforcementsLeft(CommandInput.player1)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
 				String country = CommandInput.getCommand();
-				ErrorHandling.placeReinforcementsErrorChecksP1(country);
+				boolean countryCheck = CommandInput.countryCheck(country);
+				if(countryCheck){
+					ErrorHandling.placeReinforcementsErrorChecksP1(country);
+				}
+				else{
+					CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
+					placeReinforcements(currentPlayer);
+				}
 			}
 			else{
 				CommandInput.appendStringTo(currentPlayer + " has no reinforcements left, placing reinforcements.\n", Color.RED);
@@ -60,7 +67,14 @@ public class Gameplay {
 			if(Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
 				String country = CommandInput.getCommand();
-				ErrorHandling.placeReinforcementsErrorChecksP2(country);
+				boolean countryCheck = CommandInput.countryCheck(country);
+				if(countryCheck){
+					ErrorHandling.placeReinforcementsErrorChecksP2(country);
+				}
+				else{
+					CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
+					placeReinforcements(currentPlayer);
+				}
 			}
 			else{
 				CommandInput.appendStringTo(currentPlayer + " has no reinforcements left, skipping placing reinforcements.\n", Color.RED);
@@ -95,8 +109,7 @@ public class Gameplay {
 
 						for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
 							System.out.println("3");
-
-							if(takeArmies.getAdjacent()[j]== k && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0){
+							if(Map.arrayContains(takeArmies.getAdjacent(), k) && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0 && takeArmies.getOccupyingPlayer().fortified==true){
 								System.out.println("4");
 
 								takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
@@ -201,85 +214,97 @@ public class Gameplay {
 
 		CommandInput.appendStringTo(attackingPlayer + ", please enter which of your countries you wish to attack with: \n", Color.BLACK);
 		countryToAttackWith = CommandInput.getCommand();
+		boolean validCountryCheck = CommandInput.countryCheck(countryToAttackWith);
+		if(!validCountryCheck){
+			CommandInput.appendStringTo("That's not a country. Try again.\n", Color.RED);
+			PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
+		}
+		else{
+			int NumArmies = 0;
+			NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
 
-		int NumArmies = 0;
-		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
+			String didPickOccur = "NO";
 
-		String didPickOccur = "NO";
+			for(int i=0;i<42;i++){
+				if (countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
 
-		for(int i=0;i<42;i++){
-			if (countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
-
-				if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
-					if(NumArmies <= 1){
-						CommandInput.appendStringTo("You cannot attack using a country that contains less than 2 armies, please select another country to attack with: ", Color.RED);
-						combat(currentPlayer);
+					if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
+						if(NumArmies <= 1){
+							CommandInput.appendStringTo("You cannot attack using a country that contains less than 2 armies, please select another country to attack with: ", Color.RED);
+							combat(currentPlayer);
+						}
+						else{
+							CommandInput.appendStringTo("You have chose " + countryToAttackWith + " to attack with. \n", attackingPlayerColour);
+							didPickOccur = "YES";
+						}
 					}
+
 					else{
-						CommandInput.appendStringTo("You have chose " + countryToAttackWith + " to attack with. \n", attackingPlayerColour);
-						didPickOccur = "YES";
+						CommandInput.appendStringTo("You do not own this country\n", Color.RED);
 					}
-				}
-
-				else{
-					CommandInput.appendStringTo("You do not own this country\n", Color.RED);
 				}
 			}
-		}
-		if(didPickOccur == "NO"){
-			PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
+			if(didPickOccur == "NO"){
+				PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
+			}
 		}
 	}
 
 	static void PickCountryToAttack(String currentPlayer, String attackingPlayer, String defendingPlayer){
 		CommandInput.appendStringTo(attackingPlayer + ", please enter which country you wish to attack.\n", Color.BLACK);
 		countryToAttack = CommandInput.getCommand();
+		boolean validCountryCheck = CommandInput.countryCheck(countryToAttack);
+		if(!validCountryCheck){
+			CommandInput.appendStringTo("That's not a country. Try again.\n", Color.RED);
+			PickCountryToAttack(currentPlayer, attackingPlayer, defendingPlayer);
+		}
+		else{
+			String didPickOccur = "NO";
 
-		String didPickOccur = "NO";
+			for(int i=0;i<42;i++){
+				if (countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName()) == 0 || countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
+					int attackingCountryIndex = getIndex(countryToAttackWith);
+					if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)!=0){
+						if(Map.arrayContains(Deck.countriesAfterShuffle[i].getAdjacent(), attackingCountryIndex)){
+							CommandInput.appendStringTo("You have chosen to attack " + countryToAttack + "\n", attackingPlayerColour);
+							didPickOccur = "YES";
+							defendingPlayer = Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName;
+							defendingPlayerString = defendingPlayer;
 
-		for(int i=0;i<42;i++){
-			if (countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName()) == 0 || countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
-				int attackingCountryIndex = getIndex(countryToAttackWith);
-				if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)!=0){
-					if(Map.arrayContains(Deck.countriesAfterShuffle[i].getAdjacent(), attackingCountryIndex)){
-						CommandInput.appendStringTo("You have chosen to attack " + countryToAttack + "\n", attackingPlayerColour);
-						didPickOccur = "YES";
-						defendingPlayer = Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName;
-						defendingPlayerString = defendingPlayer;
-
-						if(defendingPlayer == CommandInput.player1){
-							defendingPlayerColour = CommandInput.player1Colour;
-						}
-						if(defendingPlayer == CommandInput.player2){
-							defendingPlayerColour = CommandInput.player2Colour;							
-						}
-						if(defendingPlayer == "Neutral 1"){
-							defendingPlayerColour = Color.BLACK;
-						}
-						if(defendingPlayer == "Neutral 2"){
-							defendingPlayerColour = Color.GREEN;							
-						}
-						if(defendingPlayer == "Neutral 3"){
-							defendingPlayerColour = Color.RED;
-						}
-						if(defendingPlayer == "Neutral 4"){
-							defendingPlayerColour = Color.YELLOW;
-						}
+							if(defendingPlayer == CommandInput.player1){
+								defendingPlayerColour = CommandInput.player1Colour;
+							}
+							if(defendingPlayer == CommandInput.player2){
+								defendingPlayerColour = CommandInput.player2Colour;							
+							}
+							if(defendingPlayer == "Neutral 1"){
+								defendingPlayerColour = Color.BLACK;
+							}
+							if(defendingPlayer == "Neutral 2"){
+								defendingPlayerColour = Color.GREEN;							
+							}
+							if(defendingPlayer == "Neutral 3"){
+								defendingPlayerColour = Color.RED;
+							}
+							if(defendingPlayer == "Neutral 4"){
+								defendingPlayerColour = Color.YELLOW;
+							}
 
 
+						}
+						else{
+							CommandInput.appendStringTo("You cannot attack this country, please select an adjacent country that you do not own. \n", Color.RED);
+						}	
 					}
 					else{
 						CommandInput.appendStringTo("You cannot attack this country, please select an adjacent country that you do not own. \n", Color.RED);
-					}	
-				}
-				else{
-					CommandInput.appendStringTo("You cannot attack this country, please select an adjacent country that you do not own. \n", Color.RED);
+					}
 				}
 			}
-		}
 
-		if(didPickOccur == "NO"){
-			PickCountryToAttack(currentPlayer, attackingPlayer, defendingPlayer);
+			if(didPickOccur == "NO"){
+				PickCountryToAttack(currentPlayer, attackingPlayer, defendingPlayer);
+			}
 		}
 	}
 
@@ -447,7 +472,7 @@ public class Gameplay {
 				Deck.countriesBeforeShuffle[i].setPlayerArmies(armiesToPass);
 			}
 		}
-		
+
 	}
 
 	private static void ReassignArmies(String name) {
@@ -469,7 +494,7 @@ public class Gameplay {
 
 	}
 
-	
+
 
 	static void CheckAttackerIntegerErrorInput(String attackingPlayer, String defendingPlayer){
 
@@ -480,7 +505,8 @@ public class Gameplay {
 				numberOfUnitsToAttackWith = Integer.parseInt(CommandInput.getCommand());	
 			}
 			catch(NumberFormatException exception){
-				CommandInput.appendStringTo("You entered the number incorrectly. Please enter it in Integer form (e.g 7, 3, 4) \n Please enter how many units you wish to attack with.\n", Color.BLACK);
+				CommandInput.appendStringTo("You entered the number incorrectly. Please enter it in Integer form (e.g 7, 3, 4) \n ",Color.BLACK);
+				CommandInput.appendStringTo("Please enter how many units you wish to attack with.\n", Color.BLACK);
 			}
 		}
 

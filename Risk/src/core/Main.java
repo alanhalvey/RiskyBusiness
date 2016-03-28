@@ -33,7 +33,7 @@ public class Main {
 		else{
 			CommandInput.currentPlayer = CommandInput.player1;
 		}
-		
+
 	}
 
 	private static void DisplayInfo() {
@@ -122,9 +122,26 @@ public class Main {
 			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies to\n", Color.RED);
 			String putArmies = CommandInput.getCommand();
 			CommandInput.appendStringTo(Gameplay.setFromAbbreviation(putArmies)+"\n", CommandInput.currentPlayerColour);
-			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter amount of armies to fortify\n", Color.RED);
-			int toMove = Integer.parseInt(CommandInput.getCommand());
-			CommandInput.appendStringTo( toMove+ " armies to fortify\n", Color.RED);
+			
+			
+			String numberToMove = "temp";
+			int numToMove = 0;
+			boolean gotNumber = false;
+			while (numberToMove!=null && gotNumber==false ){
+				try {
+					CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter amount of armies to fortify\n", CommandInput.currentPlayerColour);
+					numberToMove = CommandInput.getCommand();
+					numToMove= Integer.parseInt(numberToMove);
+					gotNumber=true;
+				} catch (NumberFormatException e) {
+					CommandInput.appendStringTo("This is not a number. Try again.\n", Color.RED);
+				}
+			}
+
+
+
+			
+			CommandInput.appendStringTo( numToMove+ " armies to fortify\n", Color.RED);
 			takeArmies = Gameplay.setFromAbbreviation(takeArmies);
 			putArmies = Gameplay.setFromAbbreviation(putArmies);
 
@@ -132,7 +149,9 @@ public class Main {
 				System.out.println("test");
 				Country takingFrom = Gameplay.setCountry(takeArmies);
 				Country puttingTo = Gameplay.setCountry(putArmies);
-				Gameplay.Fortify(takingFrom, puttingTo, toMove );
+				System.out.println(takingFrom.getName() + puttingTo.getName());
+				Gameplay.Fortify(takingFrom, puttingTo, numToMove );
+				System.out.println("test");
 				Screen.mainFrame.repaint();
 			}
 
