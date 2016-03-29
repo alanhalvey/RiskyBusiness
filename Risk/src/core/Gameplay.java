@@ -232,7 +232,7 @@ public class Gameplay {
 		}
 		else{
 			int NumArmies = 0;
-			NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
+			NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
 
 			String didPickOccur = "NO";
 
@@ -345,10 +345,6 @@ public class Gameplay {
 		CommandInput.appendStringTo(attackingPlayer + ", please enter how many units you wish to attack with.\n", Color.BLACK);
 		CheckAttackerIntegerErrorInput(attackingPlayer, defendingPlayer);
 		int NumArmies = 0;
-
-		for(int i=0;i<42;i++){
-			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
-		}
 		
 		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
 		System.out.println("" + NumArmies);
@@ -367,14 +363,14 @@ public class Gameplay {
 				CommandInput.appendStringTo("You can only attack with a maximum of 3 units", Color.RED);
 				count++;
 			}
+		}
 			if(count > 0){
 				AttackingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
 			}
 
 			if(count == 0){				
 				CommandInput.appendStringTo(attackingPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", attackingPlayerColour);
-			}
-		}	
+			}	
 	}
 
 	private static void DefendingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer) {
@@ -385,7 +381,7 @@ public class Gameplay {
 		
 		int NumArmies = 0;
 		int count = 0;
-		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies();
+		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies();
 		System.out.println("" + NumArmies);
 
 		if(NumArmies == 1){

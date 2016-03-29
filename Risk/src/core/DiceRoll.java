@@ -26,7 +26,7 @@ class Dice {
 } 
 
 //DiceRoll class allows the random player generator at the beginning of the game
-//It is also a crucial factor in decinding battles within the combat function, the risk/luck feature in the game.
+//It is also a crucial factor in deciding battles within the combat function, the risk/luck feature in the game.
 public class DiceRoll {
 	
 	static int i;
@@ -155,6 +155,13 @@ public class DiceRoll {
 			}
 		}
 
+		//System.out.println("ah = " + attackerHighestRoll);
+		//System.out.println("ash = " + attackerSecondHighestRoll);
+		//System.out.println("dh = " + defenderHighestRoll);
+		//System.out.println("dsh = " + defenderSecondHighestRoll);
+		
+		
+		
 		CommandInput.appendStringTo(attackingPlayer + " highest roll = " + attackerHighestRoll  + "\n", attackingPlayerColour);
 		if(attackerSecondHighestRoll != 0){ //if there was a second roll for the attacker
 			CommandInput.appendStringTo(attackingPlayer + " second highest roll = " + attackerSecondHighestRoll  + "\n", attackingPlayerColour);
