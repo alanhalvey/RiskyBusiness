@@ -215,6 +215,10 @@ public class Gameplay {
 
 	static void PickAttackingCountry(String currentPlayer, String attackingPlayer, String defendingPlayer){
 
+		for(int i=0;i<42;i++){
+			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
+		}
+		int count = 0;
 		CommandInput.appendStringTo(attackingPlayer + ", please enter which of your countries you wish to attack with: \n", Color.BLACK);
 		countryToAttackWith = CommandInput.getCommand();
 		boolean validCountryCheck = CommandInput.countryCheck(countryToAttackWith);
@@ -246,6 +250,9 @@ public class Gameplay {
 						CommandInput.appendStringTo("You do not own this country\n", Color.RED);
 					}
 				}
+			}
+			if(count>0){
+				PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
 			}
 			if(didPickOccur == "NO"){
 				PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
@@ -327,6 +334,10 @@ public class Gameplay {
 
 	static void AttackingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer){
 
+		for(int i=0;i<42;i++){
+			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
+		}
+		
 		CommandInput.appendStringTo(attackingPlayer + ", please enter how many units you wish to attack with.\n", Color.BLACK);
 		CheckAttackerIntegerErrorInput(attackingPlayer, defendingPlayer);
 		int NumArmies = 0;
@@ -360,6 +371,10 @@ public class Gameplay {
 
 	private static void DefendingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer) {
 
+		for(int i=0;i<42;i++){
+			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
+		}
+		
 		int NumArmies = 0;
 		int count = 0;
 		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttack)].getPlayerArmies();
@@ -388,12 +403,12 @@ public class Gameplay {
 					CommandInput.appendStringTo("You do not have that number of armies. Please pick how many armies to defend with again: \n", Color.RED);
 				}
 			}
-			if(count>0){
-				DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
-			}
-			if(count==0){
-				CommandInput.appendStringTo("You have chosen to defend with " + numberOfUnitsToDefendWith + " units. \n", defendingPlayerColour);
-			}
+		}
+		if(count>0){
+			DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
+		}
+		if(count==0){
+			CommandInput.appendStringTo("You have chosen to defend with " + numberOfUnitsToDefendWith + " units. \n", defendingPlayerColour);
 		}
 
 	}

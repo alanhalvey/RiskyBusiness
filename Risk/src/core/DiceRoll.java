@@ -120,7 +120,7 @@ public class DiceRoll {
 		for(i=0; i<numberOfUnitsToAttackWith; i++){ 
 			AttackerRoll.roll(); 		
 			AttackerRolls[i] = getAttackerRollValue();
-			CommandInput.appendStringTo(attackingPlayer + " roll " + (i) + " = " + AttackerRolls[i] + "\n", attackingPlayerColour);
+			CommandInput.appendStringTo(attackingPlayer + " roll " + (i + 1) + " = " + AttackerRolls[i] + "\n", attackingPlayerColour);
 			
 			if(i==0){ //if it is the first roll, then that roll is the highest roll.
 				attackerHighestRoll = AttackerRolls[i];
@@ -140,7 +140,7 @@ public class DiceRoll {
 		for(i=0; i<numberOfUnitsToDefendWith; i++){
 			DefenderRoll.roll();
 			DefenderRolls[i] = getDefenderRollValue();
-			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " roll " + (i) + " = " + DefenderRolls[i] + "\n", defendingPlayerColour);			
+			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " roll " + (i + 1) + " = " + DefenderRolls[i] + "\n", defendingPlayerColour);			
 			
 			//if else statements are slightly simpler in defenders case as there is only two rolls
 			if(i==0){ //if it is the first roll, then that roll is the highest roll.
@@ -166,7 +166,7 @@ public class DiceRoll {
 		}
 		
 		highestDiceRollWinner();
-		if((attackerSecondHighestRoll > 0) || (defenderSecondHighestRoll > 0)){ //If both players had a second roll, then the second highest rolls are compared and a winner given
+		if((attackerSecondHighestRoll > 0) && (defenderSecondHighestRoll > 0)){ //If both players had a second roll, then the second highest rolls are compared and a winner given
 			secondDiceRollWinner();
 		}
 		
