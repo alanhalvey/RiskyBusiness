@@ -540,6 +540,17 @@ public class Gameplay {
 
 
 	}
+	
+static void NoArmiesLeft(){
+		
+		for(int i =0; i<42;i++){
+			
+				if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
+					Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
+				}
+			}
+			
+		}
 }
 
 
