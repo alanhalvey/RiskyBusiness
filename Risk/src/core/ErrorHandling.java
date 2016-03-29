@@ -183,6 +183,7 @@ public class ErrorHandling {
 					if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 						CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of Reinforcements to place: \n", Color.BLACK);
 						String numToPlace = CommandInput.getCommand();	
+						CommandInput.appendStringTo(numToPlace+"\n", Color.BLACK);
 
 						int numReinforcementsToPlace = 0;
 						if (numToPlace !=null && !"".equals(numToPlace) ){
@@ -233,7 +234,8 @@ public class ErrorHandling {
 
 				if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 					CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of Reinforcements to place: \n", Color.BLACK);
-					String numToPlace = CommandInput.getCommand();					
+					String numToPlace = CommandInput.getCommand();	
+					CommandInput.appendStringTo(numToPlace+"\n", Color.BLACK);
 					int numReinforcementsToPlace = 0;
 					if (numToPlace !=null && !"".equals(numToPlace) ){
 						try {

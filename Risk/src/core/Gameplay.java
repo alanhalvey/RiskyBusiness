@@ -50,6 +50,7 @@ public class Gameplay {
 			if(Gameplay.reinforcementsLeft(CommandInput.player1)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
 				String country = CommandInput.getCommand();
+				CommandInput.appendStringTo(country+"\n.", Color.BLACK);
 				boolean countryCheck = CommandInput.countryCheck(country);
 				if(countryCheck){
 					ErrorHandling.placeReinforcementsErrorChecksP1(country);
@@ -70,6 +71,7 @@ public class Gameplay {
 			if(Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
 				String country = CommandInput.getCommand();
+				CommandInput.appendStringTo(country+"\n.", Color.BLACK);
 				boolean countryCheck = CommandInput.countryCheck(country);
 				if(countryCheck){
 					ErrorHandling.placeReinforcementsErrorChecksP2(country);
