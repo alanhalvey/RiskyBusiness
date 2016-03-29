@@ -312,6 +312,7 @@ public class CommandInput extends JPanel{
 							Data.neutralsFilled = true;
 							Data.NEUTRAL_4_ARMIES-=numReinforcementsToPlace;
 							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_4_ARMIES + " armies left.\n"), Color.BLUE);
+							Screen.mainFrame.repaint();
 							if(currentPlayer.compareTo(player1)==0){
 								currentPlayer=player2;
 								currentUnits = Data.PLAYER_2_ARMIES;
