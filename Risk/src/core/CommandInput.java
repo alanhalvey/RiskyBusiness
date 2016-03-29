@@ -234,11 +234,13 @@ public class CommandInput extends JPanel{
 		if(isCountry){
 			while(Data.neutralsFilled==false){
 				NeutralChecks(country, Neutral);
+				Screen.mainFrame.repaint();
 			}
 		}
 		else{
 			appendStringTo("That is not a country. Try again.\n", Color.RED);
 			placeNeutrals(currentPlayer, Neutral);
+			
 		}
 
 	}
@@ -294,6 +296,7 @@ public class CommandInput extends JPanel{
 							Data.NEUTRAL_1_ARMIES-=numReinforcementsToPlace;
 							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_1_ARMIES + " armies left.\n"), Color.BLUE);
 							nextNeutral = "Neutral 2";
+							
 						}
 						else if(currentNeutral.compareToIgnoreCase("Neutral 2")==0){
 							Data.NEUTRAL_2_ARMIES-=numReinforcementsToPlace;
@@ -330,6 +333,7 @@ public class CommandInput extends JPanel{
 								}
 							}
 						}
+						Screen.mainFrame.repaint();
 						if(currentNeutral.compareToIgnoreCase("Neutral 4")!=0){
 							placeNeutrals(currentPlayer, nextNeutral);
 						}

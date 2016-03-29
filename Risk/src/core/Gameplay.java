@@ -35,11 +35,14 @@ public class Gameplay {
 			if(player.compareToIgnoreCase(Deck.countriesAfterShuffle[k].getOccupyingPlayer().playerName)==0){
 				if(Deck.countriesAfterShuffle[k].getOccupyingPlayer().numReinforcements == 0){
 					result = false;
+					
 				}
 			}
 
 		}
+		
 		return result;
+		
 	}
 
 	static void placeReinforcements(String currentPlayer){
@@ -97,7 +100,7 @@ public class Gameplay {
 
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 
-		if(takeArmies.getOccupyingPlayer().fortified=true){
+		if(takeArmies.getOccupyingPlayer().fortified==true || putArmies.getOccupyingPlayer().fortified == true){
 			if(takeArmies.getPlayerArmies()<=1){
 				CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
 			}
@@ -121,7 +124,7 @@ public class Gameplay {
 						}
 					}
 					else{
-						System.out.println("this is not a counrty");
+						System.out.println("this is not a country");
 					}
 				}
 			}

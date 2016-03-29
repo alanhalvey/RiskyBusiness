@@ -74,6 +74,8 @@ public class Main {
 	private static void TurnSequence() {
 		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
 		PlaceReinforcements();
+		
+		
 		Combat();
 		Fortify();
 	}
@@ -81,18 +83,24 @@ public class Main {
 	private static void PlaceReinforcements() {
 		if(Gameplay.reinforcementsLeft(CommandInput.player1)==true && CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
+			
 		}
 		else if(Gameplay.reinforcementsLeft(CommandInput.player2)==true && CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
+		
 		}
 		else if(Gameplay.reinforcementsLeft(CommandInput.player1)!=true && CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
 			CommandInput.appendStringTo(CommandInput.currentPlayer+", you have no reinforcements left. Skipping placing reinforcements.\n", CommandInput.currentPlayerColour);
+		
 		}
 		else if(Gameplay.reinforcementsLeft(CommandInput.player2)!=true && CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
 			CommandInput.appendStringTo(CommandInput.currentPlayer+", you have no reinforcements left. Skipping placing reinforcements.\n", CommandInput.currentPlayerColour);
+			
+			
 		}
 		Screen.mainFrame.repaint();
 	}
+
 
 	private static void Combat() {
 		CommandInput.appendStringTo("Would you like to combat? (Y/N)\n", Color.RED);
@@ -131,6 +139,7 @@ public class Main {
 					numberToMove = CommandInput.getCommand();
 					numToMove= Integer.parseInt(numberToMove);
 					gotNumber=true;
+					
 				} catch (NumberFormatException e) {
 					CommandInput.appendStringTo("This is not a number. Try again.\n", Color.RED);
 				}

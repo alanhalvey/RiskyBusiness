@@ -21,10 +21,10 @@ public class Data{
 	public static int[] NEUTRAL_4_COUNTRIES = {27,28,29,30,31,41};
 	public static int PLAYER_1_ARMIES = 3;
 	public static int PLAYER_2_ARMIES = 3;
-	public static int NEUTRAL_1_ARMIES = 18;
-	public static int NEUTRAL_2_ARMIES = 18;
-	public static int NEUTRAL_3_ARMIES = 18;
-	public static int NEUTRAL_4_ARMIES = 18;
+	public static int NEUTRAL_1_ARMIES = 3;
+	public static int NEUTRAL_2_ARMIES = 3;
+	public static int NEUTRAL_3_ARMIES = 3;
+	public static int NEUTRAL_4_ARMIES = 3;
 	public static String currentInput ;
 	public static boolean P1ReinforcementsEmpty;
 	public static boolean P2ReinforcementsEmpty;
