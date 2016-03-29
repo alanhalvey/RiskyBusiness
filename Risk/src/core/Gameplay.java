@@ -126,8 +126,7 @@ public class Gameplay {
 						}
 					}
 					else{
-						CommandInput.appendStringTo("this is not a country",Color.black);
-						
+						System.out.println("this is not a country");
 					}
 				}
 			}

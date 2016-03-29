@@ -15,8 +15,7 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		PlaceUnits();
-		Gameplay.calculateReinforcements();
+		//PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
 			ChangePlayers();
@@ -73,6 +72,7 @@ public class Main {
 
 	private static void TurnSequence() {
 		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
+		Gameplay.calculateReinforcements();
 		PlaceReinforcements();
 		Combat();
 		Fortify();
