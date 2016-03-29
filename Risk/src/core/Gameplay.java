@@ -126,7 +126,7 @@ public class Gameplay {
 						}
 					}
 					else{
-						System.out.println("this is not a country");
+						CommandInput.appendStringTo("this is not a country",Color.black);
 						
 					}
 				}
@@ -186,6 +186,8 @@ public class Gameplay {
 		InternalCombatLogic(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
 
 		CheckPlayerEliminated();
+		
+		NoArmiesLeft();
 	}
 
 
@@ -553,26 +555,25 @@ public class Gameplay {
 
 		for(int i=0;i<42;i++){
 			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
-				System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.");
+				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.", Color.BLACK);
 				break;
 			}
+		}
 		}	
 
 
-
-
-	}
-	
-static void NoArmiesLeft(){
 		
-		for(int i =0; i<42;i++){
+	static void NoArmiesLeft(){
 			
-				if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
-					Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
+			for(int i =0; i<42;i++){
+				
+					if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
+						Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
+						CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + "has zero armies in place", Color.BLACK);
+					}
 				}
+				
 			}
-			
-		}
 }
 
 
