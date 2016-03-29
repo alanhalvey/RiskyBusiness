@@ -240,7 +240,7 @@ public class CommandInput extends JPanel{
 		else{
 			appendStringTo("That is not a country. Try again.\n", Color.RED);
 			placeNeutrals(currentPlayer, Neutral);
-			
+
 		}
 
 	}
@@ -254,7 +254,7 @@ public class CommandInput extends JPanel{
 				if(currentNeutral.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)==0){
 					CommandInput.appendStringTo(CommandInput.currentPlayer + ", please type the number of armies to place: \n", Color.BLACK);
 					String numToPlace = CommandInput.getCommand();
-					
+
 					int numReinforcementsToPlace = 0;
 
 
@@ -266,9 +266,9 @@ public class CommandInput extends JPanel{
 							NeutralChecks(country, currentNeutral);
 						}
 					}
-					
-					
-					
+
+
+
 					int currentNeutralArmies = 0;
 
 					//current neutral armies variable is set based on which neutral is the current neutral!
@@ -284,66 +284,74 @@ public class CommandInput extends JPanel{
 					if(currentNeutral.compareToIgnoreCase("Neutral 4")==0){
 						currentNeutralArmies = Data.NEUTRAL_4_ARMIES;
 					}
+					if(currentNeutralArmies>=0){
+						if(numReinforcementsToPlace <= currentNeutralArmies && numReinforcementsToPlace >= 0 && numReinforcementsToPlace <= 3){
+							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
+							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
+							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 
-					if(numReinforcementsToPlace <= currentNeutralArmies && numReinforcementsToPlace > 0 && numReinforcementsToPlace <= 3){
-						int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
-						Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
-						CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
+							String nextNeutral = "";
+							//Series of if statements corresponding to each neutral player. Calculates reinforcement placings etc.
+							if(currentNeutral.compareToIgnoreCase("Neutral 1")==0){
+								Data.NEUTRAL_1_ARMIES-=numReinforcementsToPlace;
+								CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_1_ARMIES + " armies left.\n"), Color.BLUE);
+								nextNeutral = "Neutral 2";
 
-						String nextNeutral = "";
-						//Series of if statements corresponding to each neutral player. Calculates reinforcement placings etc.
-						if(currentNeutral.compareToIgnoreCase("Neutral 1")==0){
-							Data.NEUTRAL_1_ARMIES-=numReinforcementsToPlace;
-							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_1_ARMIES + " armies left.\n"), Color.BLUE);
-							nextNeutral = "Neutral 2";
-							
-						}
-						else if(currentNeutral.compareToIgnoreCase("Neutral 2")==0){
-							Data.NEUTRAL_2_ARMIES-=numReinforcementsToPlace;
-							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_2_ARMIES + " armies left.\n"), Color.BLUE);
-							nextNeutral = "Neutral 3";
-						}
-						else if(currentNeutral.compareToIgnoreCase("Neutral 3")==0){
-							Data.NEUTRAL_3_ARMIES-=numReinforcementsToPlace;
-							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_3_ARMIES + " armies left.\n"), Color.BLUE);
-							nextNeutral = "Neutral 4";
-						}
-						else if(currentNeutral.compareToIgnoreCase("Neutral 4")==0){
-							Data.neutralsFilled = true;
-							Data.NEUTRAL_4_ARMIES-=numReinforcementsToPlace;
-							CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_4_ARMIES + " armies left.\n"), Color.BLUE);
+							}
+							else if(currentNeutral.compareToIgnoreCase("Neutral 2")==0){
+								Data.NEUTRAL_2_ARMIES-=numReinforcementsToPlace;
+								CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_2_ARMIES + " armies left.\n"), Color.BLUE);
+								nextNeutral = "Neutral 3";
+							}
+							else if(currentNeutral.compareToIgnoreCase("Neutral 3")==0){
+								Data.NEUTRAL_3_ARMIES-=numReinforcementsToPlace;
+								CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_3_ARMIES + " armies left.\n"), Color.BLUE);
+								nextNeutral = "Neutral 4";
+							}
+							else if(currentNeutral.compareToIgnoreCase("Neutral 4")==0){
+								Data.neutralsFilled = true;
+								Data.NEUTRAL_4_ARMIES-=numReinforcementsToPlace;
+								CommandInput.appendStringTo((currentNeutral + " now has "+ Data.NEUTRAL_4_ARMIES + " armies left.\n"), Color.BLUE);
+								Screen.mainFrame.repaint();
+								if(currentPlayer.compareTo(player1)==0){
+									currentPlayer=player2;
+									currentUnits = Data.PLAYER_2_ARMIES;
+									if(currentUnits!=0){
+										placeUnits(currentPlayer);
+									}
+									else{
+										break;
+									}
+								}
+								if(currentPlayer.compareTo(player2)==0){
+									currentPlayer=player1;
+									currentUnits = Data.PLAYER_1_ARMIES;
+									if(currentUnits!=0){
+										placeUnits(currentPlayer);
+									}
+									else{
+										break;
+									}
+								}
+							}
 							Screen.mainFrame.repaint();
-							if(currentPlayer.compareTo(player1)==0){
-								currentPlayer=player2;
-								currentUnits = Data.PLAYER_2_ARMIES;
-								if(currentUnits!=0){
-									placeUnits(currentPlayer);
-								}
-								else{
-									break;
-								}
+							if(currentNeutral.compareToIgnoreCase("Neutral 4")!=0){
+								placeNeutrals(currentPlayer, nextNeutral);
 							}
-							if(currentPlayer.compareTo(player2)==0){
-								currentPlayer=player1;
-								currentUnits = Data.PLAYER_1_ARMIES;
-								if(currentUnits!=0){
-									placeUnits(currentPlayer);
-								}
-								else{
-									break;
-								}
-							}
-						}
-						Screen.mainFrame.repaint();
-						if(currentNeutral.compareToIgnoreCase("Neutral 4")!=0){
-							placeNeutrals(currentPlayer, nextNeutral);
-						}
 
 
+						}
+						else{
+							CommandInput.appendStringTo("Invalid input.\n", Color.RED);
+							if(currentNeutralArmies==0){
+								CommandInput.appendStringTo(currentNeutral + " has no armies left, please enter 0 to proceed.\n", Color.RED);
+							}
+							NeutralChecks(country, currentNeutral);
+						}
 					}
 					else{
-						CommandInput.appendStringTo("Invalid input.\n", Color.RED);
-						NeutralChecks(country, currentNeutral);
+						CommandInput.appendStringTo(currentNeutral + " has no armies left, please enter 0 to proceed.\n", Color.RED);
+						placeNeutrals(currentPlayer, currentNeutral);
 					}
 				}
 				else{
