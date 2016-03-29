@@ -75,9 +75,17 @@ public class ErrorHandling {
 							}
 						}
 
+						if(numReinforcementsToPlace > 3){
+							CommandInput.appendStringTo("You cannot place more than 3 armies\n", Color.RED);
+							P1checkTerritories(country);
+						}
+						
+						else if(numReinforcementsToPlace <= 0){
+							CommandInput.appendStringTo("You cannot place 0 or less armies\n", Color.RED);
+							P1checkTerritories(country);
+						}
 
-
-						if(numReinforcementsToPlace <= Data.PLAYER_1_ARMIES){ //If you enter more reinforcements then you actually have, then you ain't getting into this if statement
+						else if(numReinforcementsToPlace <= Data.PLAYER_1_ARMIES){ //If you enter more reinforcements then you actually have, then you ain't getting into this if statement
 							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
 							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
@@ -134,7 +142,17 @@ public class ErrorHandling {
 							}
 						}
 
-						if(numReinforcementsToPlace <= Data.PLAYER_2_ARMIES){ //If you enter more reinforcements then you actually have, then you ain't getting into this if statement
+						if(numReinforcementsToPlace > 3){
+							CommandInput.appendStringTo("You cannot place more than 3 armies\n", Color.RED);
+							P2checkTerritories(country);
+						}
+						
+						else if(numReinforcementsToPlace <= 0){
+							CommandInput.appendStringTo("You cannot place 0 or less armies\n", Color.RED);
+							P2checkTerritories(country);
+						}
+						
+						else if(numReinforcementsToPlace <= Data.PLAYER_2_ARMIES){ //If you enter more reinforcements then you actually have, then you ain't getting into this if statement
 							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
 							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);

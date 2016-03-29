@@ -285,7 +285,7 @@ public class CommandInput extends JPanel{
 						currentNeutralArmies = Data.NEUTRAL_4_ARMIES;
 					}
 
-					if(numReinforcementsToPlace <= currentNeutralArmies){
+					if(numReinforcementsToPlace <= currentNeutralArmies && numReinforcementsToPlace > 0 && numReinforcementsToPlace <= 3){
 						int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 						Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
 						CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
@@ -342,7 +342,7 @@ public class CommandInput extends JPanel{
 
 					}
 					else{
-						CommandInput.appendStringTo("You do not have enough armies to place that many.\n", Color.RED);
+						CommandInput.appendStringTo("Invalid input.\n", Color.RED);
 						NeutralChecks(country, currentNeutral);
 					}
 				}
