@@ -15,7 +15,7 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		PlaceUnits();
+		//PlaceUnits();
 		Gameplay.calculateReinforcements();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
@@ -109,7 +109,7 @@ public class Main {
 		}
 
 	}
-	private static void Fortify() {
+	public static void Fortify() {
 		CommandInput.appendStringTo("Would you like to Fortify? (Y/N)\n", Color.RED);
 		String choice = CommandInput.getCommand();
 

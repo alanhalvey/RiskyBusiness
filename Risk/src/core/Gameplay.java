@@ -100,7 +100,7 @@ public class Gameplay {
 
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 
-		if(takeArmies.getOccupyingPlayer().fortified==true || putArmies.getOccupyingPlayer().fortified == true){
+		if(takeArmies.getOccupyingPlayer().fortified==true && putArmies.getOccupyingPlayer().fortified == true){
 			if(takeArmies.getPlayerArmies()<=1){
 				CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
 			}
@@ -125,12 +125,14 @@ public class Gameplay {
 					}
 					else{
 						System.out.println("this is not a country");
+						
 					}
 				}
 			}
 		}
 		else{
-			System.out.println("you have already used your fortify");
+			CommandInput.appendStringTo("you have already used your fortify.\n", Color.RED);
+			Main.Fortify();
 		}
 	}
 
@@ -342,7 +344,11 @@ public class Gameplay {
 		CheckAttackerIntegerErrorInput(attackingPlayer, defendingPlayer);
 		int NumArmies = 0;
 
-		NumArmies = Deck.countriesAfterShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
+		for(int i=0;i<42;i++){
+			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
+		}
+		
+		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
 		System.out.println("" + NumArmies);
 		int count = 0;
 		if(count == 0){
