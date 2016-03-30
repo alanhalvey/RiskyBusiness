@@ -554,7 +554,7 @@ public class Gameplay {
 
 		for(int i=0;i<42;i++){
 			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
-				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.", Color.BLACK);
+				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.\n", Color.BLACK);
 				break;
 			}
 		}
@@ -568,7 +568,7 @@ public class Gameplay {
 				
 					if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
 						Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
-						CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + "has zero armies in place", Color.BLACK);
+						CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + "has zero armies in place\n", Color.BLACK);
 					}
 				}
 				

@@ -16,6 +16,7 @@ public class Country {
 	private int continent;
 	private String abbreviation;
 	private int index;
+
 	
 	public Country(String name, Player occupyingPlayer, int playerArmies,int x, int y, int[] Adjacent, int continentIds, String abbreviation, int index){
 		this.setName(name);

@@ -54,6 +54,10 @@ public class Data{
 			"E Australia","New Guinea","W Australia","Indonesia",
 			"Venezuela","Peru","Brazil","Argentina",
 			"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar"};  // for reference
+	public static final String[] CARD_TYPE ={"Cavalry","Artillary","Artillary","Infantry","Cavalry","Artillary","Infantry","Cavalry",
+			"Infantry","Cavalry","Infantry","Cavalry","Artillary","Cavalry","Infantry","Artillary","Infantry","Infantry","Artillary",
+			"Infantry","Cavalry","Cavalry","Cavalry","Artillary","Infantry","Artillary","Artillary","Cavalry","Infantry","Cavalry",
+			"Artillary","Cavalry","Artillary","Cavalry","Artillary","Infantry","Cavalry","Infantry","Artillary","Infantry","Artillary","Infantry"};
 	public final static int[][] ADJACENT = { 
 			{4,1,5,6,3,2},    // 0
 			{4,5,0},
