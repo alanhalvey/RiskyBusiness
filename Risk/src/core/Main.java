@@ -15,7 +15,7 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		//PlaceUnits();
+		PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
 			ChangePlayers();
@@ -76,6 +76,30 @@ public class Main {
 		PlaceReinforcements();
 		Combat();
 		Fortify();
+		InsigniaExchange();
+	}
+
+	private static void InsigniaExchange() {
+		int currentPlayerTerritoryCards = Gameplay.getTerritoryCards(CommandInput.currentPlayer);
+		
+		if(currentPlayerTerritoryCards >= 3 && currentPlayerTerritoryCards<5){
+			CommandInput.appendStringTo("Would you like to exhange some territory cards? (Y/N)\n", Color.RED);
+			String choice = CommandInput.getCommand();
+			if(choice.compareTo("Y")==0){
+				Gameplay.Exchange(CommandInput.currentPlayer);
+				CommandInput.appendStringTo("You now have " + currentPlayerTerritoryCards + " territory cards left", Color.RED);
+			}
+			else if(choice.compareTo("N")==0){
+				CommandInput.appendStringTo("You have skipped exchange of territory cards.\n", Color.RED);
+			}
+			else{
+				CommandInput.appendStringTo("Invalid input. Try again\n", Color.RED);
+				InsigniaExchange();
+			}
+		}
+			
+		
+
 	}
 
 	private static void PlaceReinforcements() {
@@ -120,8 +144,8 @@ public class Main {
 			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies to\n", Color.RED);
 			String putArmies = CommandInput.getCommand();
 			CommandInput.appendStringTo(Gameplay.setFromAbbreviation(putArmies)+"\n", CommandInput.currentPlayerColour);
-			
-			
+
+
 			String numberToMove = "temp";
 			int numToMove = 0;
 			boolean gotNumber = false;
@@ -138,7 +162,7 @@ public class Main {
 
 
 
-			
+
 			CommandInput.appendStringTo( numToMove+ " armies to fortify\n", Color.RED);
 			takeArmies = Gameplay.setFromAbbreviation(takeArmies);
 			putArmies = Gameplay.setFromAbbreviation(putArmies);
