@@ -15,6 +15,7 @@ public class Player {
 	int numTerritoryCards;
 	boolean fortified = true;
 	
+	
 	public Player(String playerName, Color playerColor, int numTerritories, int numReinforcements, boolean fortified ){
 		this.playerName = playerName;
 		this.playerColor = playerColor;

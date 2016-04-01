@@ -27,5 +27,8 @@ public class TerritoryCard {
 	public String getCardName(){
 		return cardType;
 	}
+	public Player getPlayer(){
+		return cardOwner;
+	}
 	
 }

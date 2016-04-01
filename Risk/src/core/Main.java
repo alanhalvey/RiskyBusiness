@@ -15,7 +15,7 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		PlaceUnits();
+		//PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
 			ChangePlayers();
@@ -73,21 +73,21 @@ public class Main {
 	private static void TurnSequence() {
 		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
 		Gameplay.calculateReinforcements();
-		PlaceReinforcements();
-		Combat();
-		Fortify();
+		//PlaceReinforcements();
+		//Combat();
+		//Fortify();
 		InsigniaExchange();
 	}
 
 	private static void InsigniaExchange() {
-		int currentPlayerTerritoryCards = Gameplay.getTerritoryCards(CommandInput.currentPlayer);
+		int currentPlayerTerritoryCards = 4;//Gameplay.getTerritoryCards(CommandInput.currentPlayer);
 		
 		if(currentPlayerTerritoryCards >= 3 && currentPlayerTerritoryCards<5){
 			CommandInput.appendStringTo("Would you like to exhange some territory cards? (Y/N)\n", Color.RED);
 			String choice = CommandInput.getCommand();
 			if(choice.compareTo("Y")==0){
-				Gameplay.Exchange(CommandInput.currentPlayer);
-				CommandInput.appendStringTo("You now have " + currentPlayerTerritoryCards + " territory cards left", Color.RED);
+				currentPlayerTerritoryCards =Gameplay.Exchange(CommandInput.currentPlayer, currentPlayerTerritoryCards);
+				CommandInput.appendStringTo("You now have " + currentPlayerTerritoryCards + " territory cards left\n", Color.RED);
 			}
 			else if(choice.compareTo("N")==0){
 				CommandInput.appendStringTo("You have skipped exchange of territory cards.\n", Color.RED);

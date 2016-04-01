@@ -35,14 +35,14 @@ public class Gameplay {
 			if(player.compareToIgnoreCase(Deck.countriesAfterShuffle[k].getOccupyingPlayer().playerName)==0){
 				if(Deck.countriesAfterShuffle[k].getOccupyingPlayer().numReinforcements == 0){
 					result = false;
-					
+
 				}
 			}
 
 		}
-		
+
 		return result;
-		
+
 	}
 
 	static void placeReinforcements(String currentPlayer){
@@ -185,7 +185,7 @@ public class Gameplay {
 		InternalCombatLogic(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
 
 		CheckPlayerEliminated();
-		
+
 		NoArmiesLeft();
 	}
 
@@ -342,11 +342,11 @@ public class Gameplay {
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
 		}
-		
+
 		CommandInput.appendStringTo(attackingPlayer + ", please enter how many units you wish to attack with.\n", Color.BLACK);
 		CheckAttackerIntegerErrorInput(attackingPlayer, defendingPlayer);
 		int NumArmies = 0;
-		
+
 		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
 		System.out.println("" + NumArmies);
 		int count = 0;
@@ -365,13 +365,13 @@ public class Gameplay {
 				count++;
 			}
 		}
-			if(count > 0){
-				AttackingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
-			}
+		if(count > 0){
+			AttackingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
+		}
 
-			if(count == 0){				
-				CommandInput.appendStringTo(attackingPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", attackingPlayerColour);
-			}	
+		if(count == 0){				
+			CommandInput.appendStringTo(attackingPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", attackingPlayerColour);
+		}	
 	}
 
 	private static void DefendingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer) {
@@ -379,7 +379,7 @@ public class Gameplay {
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
 		}
-		
+
 		int NumArmies = 0;
 		int count = 0;
 		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies();
@@ -558,21 +558,118 @@ public class Gameplay {
 				break;
 			}
 		}
-		}	
+	}	
 
 
-		
+
 	static void NoArmiesLeft(){
-			
-			for(int i =0; i<42;i++){
-				
-					if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
-						Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
-						CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + "has zero armies in place\n", Color.BLACK);
-					}
-				}
-				
+
+		for(int i =0; i<42;i++){
+
+			if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
+				Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
+				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + "has zero armies in place\n", Color.BLACK);
 			}
+		}
+
+	}
+
+	public static int Exchange(String currentPlayer, int currentPlayerTerritoryCards) {
+		Color playerColor;
+		if(currentPlayer.compareTo(CommandInput.player1)==0){
+			playerColor = Color.BLUE;
+		}
+		else{
+			playerColor = Color.MAGENTA;
+		}
+		String input;
+		CommandInput.appendStringTo(CommandInput.currentPlayer+" ,please enter the first letters of the three insignias you wish to exchange\n." ,playerColor);
+		CommandInput.appendStringTo("The options are: 'aaa', 'ccc', 'iii' or one of each insignia.\n", playerColor);
+		do{
+			input = CommandInput.getCommand();
+			if(input.length()!=3 || (getInsigniaValue(input)==0)){
+				CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
+			}
+			if(InsigniaChecks(input)==false){
+				CommandInput.appendStringTo("You don't have enough territory cards with those insignias.", Color.RED);
+			}
+
+		}while(input.length()!=3 || getInsigniaValue(input)==0);
+
+		int additionalReinforcements = 0;
+
+
+		currentPlayerTerritoryCards-=3;
+
+
+		if(getInsigniaValue(input) == 1){
+			additionalReinforcements = 8;
+		}
+		else if(getInsigniaValue(input)==2){
+			additionalReinforcements = 6;
+		}
+		else if(getInsigniaValue(input)==3){
+			additionalReinforcements = 4;
+		}
+		else if(getInsigniaValue(input)==4){
+			additionalReinforcements = 10;
+		}
+
+		CommandInput.appendStringTo(CommandInput.currentPlayer+", you have gained "+additionalReinforcements+" additional reinforcements.\n", playerColor);
+		return currentPlayerTerritoryCards;
+	}
+
+	private static boolean InsigniaChecks(String input) {
+		int artilleryCount = 0;
+		int cavalryCount = 0;
+		int infantryCount = 0;
+		for(int i =0;i<42;i++){
+			//if currentPlayer = TerritoryCard[i]->cardOwner and has card has insignia artillery
+			artilleryCount++;
+			//if currentPlayer = TerritoryCard[i]->cardOwner and has card has insignia cavalry
+			cavalryCount++;
+			//if currentPlayer = TerritoryCard[i]->cardOwner and has card has insignia infantry
+			infantryCount++;
+		}
+		if(getInsigniaValue(input)==1 && artilleryCount>=3){
+			return true;
+		}
+		if(getInsigniaValue(input)==2 && cavalryCount>=3){
+			return true;
+		}
+		if(getInsigniaValue(input)==3 && infantryCount>=3){
+			return true;
+		}
+		if(getInsigniaValue(input)==4 && infantryCount >= 1 && artilleryCount >= 1 && cavalryCount >= 1){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	private static int getInsigniaValue(String input) {
+
+		if(input.compareToIgnoreCase("aaa")==0 ){
+			return 1;
+
+		}
+		if(input.compareToIgnoreCase("ccc")==0 ){
+			return 2;
+
+		}
+		if(input.compareToIgnoreCase("iii")==0 ){
+			return 3;
+		}
+		if(input.compareToIgnoreCase("ica")==0 || input.compareTo("cia")==0 || input.compareTo("aic")==0 ){
+			return 4;
+		}
+		else{
+			System.out.println("it was false");
+			return 0;
+		}
+
+	}
 }
 
 
