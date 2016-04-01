@@ -15,6 +15,7 @@ public class Deck {
 	public static int z =0;
 	public static Country[] countriesBeforeShuffle = new Country[42];
 	public static Country[] countriesAfterShuffle = new Country[42];
+	public static TerritoryCard[] territoryCards = new TerritoryCard[42];
 	protected int MAX_CARD_AMOUNT = 42;
 	public static ArrayList<String> player1Countries = new ArrayList<String>();
 	public static ArrayList<String> player2Countries = new ArrayList<String>();
@@ -300,4 +301,5 @@ public class Deck {
 			}
 		}
 	}
+
 }

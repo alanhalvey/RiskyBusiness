@@ -3,6 +3,7 @@ package core;
 public class TerritoryCard {
 	private String countryName;
 	private String cardType;
+	private Player cardOwner;
 	
 	
 	public TerritoryCard(String countryName, String cardName){

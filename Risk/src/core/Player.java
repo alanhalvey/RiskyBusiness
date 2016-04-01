@@ -12,6 +12,7 @@ public class Player {
 	Color playerColor;
 	int numTerritories;
 	int numReinforcements;
+	int numTerritoryCards;
 	boolean fortified = true;
 	
 	public Player(String playerName, Color playerColor, int numTerritories, int numReinforcements, boolean fortified ){
