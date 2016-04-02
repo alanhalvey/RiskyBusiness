@@ -1,16 +1,16 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TerritoryCard {
 	private String countryName;
 	private String cardType;
 	private Player cardOwner;
 	
-	public static TerritoryCard[] territoryCardsBeforeShuffle = new TerritoryCard[42];
+	public static ArrayList<TerritoryCard> territoryCardsShuffled = new ArrayList<TerritoryCard>();
 	
-	public static TerritoryCard[] territoryCardsAfterShuffle = new TerritoryCard[42];
-	ArrayList<String> Territorydeck = new ArrayList<>(42);
+	
 	String card = new String();
 	int MAX_CARD_AMOUNT = 42;
 	
@@ -20,7 +20,11 @@ public class TerritoryCard {
 		this.cardType=cardName;
 		this.cardOwner=cardOwner;
 	}
-
+	private TerritoryCard TerritoryCard(Player cardOwner) {
+		this.cardOwner=cardOwner;
+		return null;
+	}
+	
 
 	public void setCountryName(String countryName){
 		this.countryName = countryName;
@@ -47,43 +51,39 @@ public class TerritoryCard {
 	
 
 
-private void getTerritoryCards(){
-	for(int i=0;i<MAX_CARD_AMOUNT;i++){
-		Territorydeck.add(Data.CARD_TYPE[i]);
-	}
-}
 
 
-public String TerritorycardsLeft() {
-	return Territorydeck.size()+1 + " Cards left";
-}
-
-public String dealTerritoryCards() {
-	if(Territorydeck.isEmpty()== true){
-		System.out.println("Deck is now empty");
-	}
-
-	else{   
-		int j=0; 
-		card = Territorydeck.get(j);
-		Territorydeck.remove(j);
-	}
-	return card;	
-}
-
-
-private void FillTerritoryCards(){
+private void  FillTerritoryCards(){
 	Player z =null;
 	for(int i = 0;i<MAX_CARD_AMOUNT;i++){
-		territoryCardsBeforeShuffle[i] = new TerritoryCard(Data.COUNTRY_NAMES[i],Data.CARD_TYPE[i],z);
-	}
+		territoryCardsShuffled.add(new TerritoryCard(Data.COUNTRY_NAMES[i],Data.CARD_TYPE[i],z));
+		}
+	
 }
 
 
 public static void shuffledTerrirtoryDeck() {
 	
-	
-	
+		Collections.shuffle(territoryCardsShuffled);	
+	 
 
 }
+
+public void dealCard(Player currentOwner){
+	int k=0;
+	if(k<=MAX_CARD_AMOUNT-1){
+		
+		territoryCardsShuffled.get(k);
+		territoryCardsShuffled.add(k, TerritoryCard(currentOwner));
+		k++;
+	}
+	else{
+		System.out.println("No cards left.\n");
+	}
+	
+	
+}
+
+
+
 }
