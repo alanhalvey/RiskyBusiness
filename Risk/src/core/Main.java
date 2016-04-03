@@ -15,6 +15,8 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
+		//Gameplay.combat(CommandInput.currentPlayer);
+		
 		//PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence();
@@ -45,8 +47,8 @@ public class Main {
 			}	
 		}
 
-		CommandInput.appendStringTo(CommandInput.player1 + " owns the following countries: \n" + Deck.player1Countries + "\n", CommandInput.player1Colour);
-		CommandInput.appendStringTo(CommandInput.player2 + " owns the following countries: \n" + Deck.player2Countries + "\n", CommandInput.player2Colour);
+		//CommandInput.appendStringTo(CommandInput.player1 + " owns the following countries: \n" + Deck.player1Countries + "\n", Color.BLACK);
+		//CommandInput.appendStringTo(CommandInput.player2 + " owns the following countries: \n" + Deck.player2Countries + "\n", Color.BLACK);
 
 		CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		while(CommandInput.checkIfDieEqual == "YES"){

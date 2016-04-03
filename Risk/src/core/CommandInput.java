@@ -374,8 +374,8 @@ public class CommandInput extends JPanel{
 		DiceRoll bothPlayers = new DiceRoll();
 		bothPlayers.rollDice();
 
-		appendStringTo(player1 + " rolled a " + DiceRoll.getPlayer1RollValue() + "\n", player1Colour);
-		appendStringTo(player2 + " rolled a " + DiceRoll.getPlayer2RollValue() + "\n", player2Colour);
+		appendStringTo(player1 + " rolled a " + DiceRoll.getPlayer1RollValue() + "\n", Color.BLACK);
+		appendStringTo(player2 + " rolled a " + DiceRoll.getPlayer2RollValue() + "\n", Color.BLACK);
 
 		checkIfDieEqual = "NO";
 
