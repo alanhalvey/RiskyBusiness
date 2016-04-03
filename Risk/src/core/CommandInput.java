@@ -2,7 +2,6 @@
  * Alan Halvey - 14465722
  * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
- * 
  */
 package core;
 import java.awt.BorderLayout;
@@ -211,6 +210,7 @@ public class CommandInput extends JPanel{
 		}
 	}
 
+	//checks if the country name or abbreviation exists 
 	public static boolean countryCheck(String country) {
 		int count = 0;
 		for(int i=0;i<42;i++){
@@ -240,9 +240,7 @@ public class CommandInput extends JPanel{
 		else{
 			appendStringTo("That is not a country. Try again.\n", Color.RED);
 			placeNeutrals(currentPlayer, Neutral);
-
 		}
-
 	}
 
 	//Function allows player 1 & 2 to assign neutral armies as specified in the brief for sprint 3
@@ -257,7 +255,6 @@ public class CommandInput extends JPanel{
 
 					int numReinforcementsToPlace = 0;
 
-
 					if (numToPlace !=null && !"".equals(numToPlace) ){
 						try {
 							numReinforcementsToPlace = Integer.parseInt(numToPlace);
@@ -266,8 +263,6 @@ public class CommandInput extends JPanel{
 							NeutralChecks(country, currentNeutral);
 						}
 					}
-
-
 
 					int currentNeutralArmies = 0;
 
@@ -338,8 +333,6 @@ public class CommandInput extends JPanel{
 							if(currentNeutral.compareToIgnoreCase("Neutral 4")!=0){
 								placeNeutrals(currentPlayer, nextNeutral);
 							}
-
-
 						}
 						else{
 							CommandInput.appendStringTo("Invalid input.\n", Color.RED);
@@ -359,9 +352,7 @@ public class CommandInput extends JPanel{
 					placeNeutrals(currentPlayer, currentNeutral);
 				}
 			}
-
 		}
-
 	}
 
 	//getters for player 1 string, player 2 string, player 1 colour and player 2 colour.
