@@ -39,6 +39,7 @@ public class DiceRoll {
 
 	private static int[] AttackerRolls = new int[3]; //Attacker has 3 rolls max
 	private static int[] DefenderRolls = new int[2]; //Defender has 2 rolls max
+	private static String tempRolls = new String();
 	
 	private static int attackerHighestRoll; //holds the attackers highest roll
 	private static int defenderHighestRoll; //holds the defenders highest roll
@@ -118,10 +119,10 @@ public class DiceRoll {
 		for(i=0; i<numberOfUnitsToAttackWith; i++){ 
 			AttackerRoll.roll(); 		
 			AttackerRolls[i] = getAttackerRollValue();
-			CommandInput.appendStringTo(attackingPlayer + " roll " + (i + 1) + " = " + AttackerRolls[i] + "\n", attackingPlayerColour);
 			
 			if(i==0){ //if it is the first roll, then that roll is the highest roll.
 				attackerHighestRoll = AttackerRolls[i];
+				tempRolls = "[" + AttackerRolls[i];
 			}
 			else if(AttackerRolls[i] > attackerHighestRoll){ //if the latest roll is greater than the highest roll, the previous roll becomes the 2nd highest roll, and the latest roll becomes the highest roll
 				attackerSecondHighestRoll = attackerHighestRoll;
@@ -134,15 +135,21 @@ public class DiceRoll {
 				attackerSecondHighestRoll = AttackerRolls[i];
 			}
 		}
+		
+		for(i=1; i<numberOfUnitsToAttackWith; i++){
+			tempRolls += ", " + AttackerRolls[i];
+		}
+			CommandInput.appendStringTo(attackingPlayer + " rolled " + tempRolls + "]\n", attackingPlayerColour);		
+		
 		System.out.println("");
 		for(i=0; i<numberOfUnitsToDefendWith; i++){
 			DefenderRoll.roll();
 			DefenderRolls[i] = getDefenderRollValue();
-			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " roll " + (i + 1) + " = " + DefenderRolls[i] + "\n", defendingPlayerColour);			
 			
 			//if else statements are slightly simpler in defenders case as there is only two rolls
 			if(i==0){ //if it is the first roll, then that roll is the highest roll.
 				defenderHighestRoll = DefenderRolls[i];
+				tempRolls = "[" + DefenderRolls[i];
 			}
 			else if(DefenderRolls[i] > defenderHighestRoll){ //if the latest roll is greater than the highest roll, the previous roll becomes the 2nd highest roll, and the latest roll becomes the highest roll
 				defenderSecondHighestRoll = defenderHighestRoll;
@@ -153,6 +160,12 @@ public class DiceRoll {
 			}
 		}
 
+		for(i=1; i<numberOfUnitsToDefendWith; i++){
+			tempRolls += ", " + DefenderRolls[i];
+		}
+			CommandInput.appendStringTo(Gameplay.defendingPlayerString + " rolled " + tempRolls + "]\n", defendingPlayerColour);		
+		
+		
 		//System.out.println("ah = " + attackerHighestRoll);
 		//System.out.println("ash = " + attackerSecondHighestRoll);
 		//System.out.println("dh = " + defenderHighestRoll);
