@@ -2,10 +2,8 @@
  * Alan Halvey - 14465722
  * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
- * 
  */
 package core;
-
 import java.awt.Color;
 
 public class Gameplay {
@@ -28,24 +26,21 @@ public class Gameplay {
 	static Color attackingPlayerColour = Color.ORANGE;
 	static Color defendingPlayerColour = Color.ORANGE;
 
-
 	public static boolean reinforcementsLeft(String player){
 		boolean result = true;
 		for(int k = 0;k<42;k++){
 			if(player.compareToIgnoreCase(Deck.countriesAfterShuffle[k].getOccupyingPlayer().playerName)==0){
 				if(Deck.countriesAfterShuffle[k].getOccupyingPlayer().numReinforcements == 0){
 					result = false;
-
 				}
 			}
-
 		}
-
 		return result;
-
 	}
 
+	//Function allows players to place their reinforcements, with error handling.
 	static void placeReinforcements(String currentPlayer){
+	//if the current player is player 1 ..
 		if(currentPlayer.compareTo(CommandInput.player1)==0){
 			if(Gameplay.reinforcementsLeft(CommandInput.player1)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
@@ -66,7 +61,7 @@ public class Gameplay {
 			}
 		}
 
-
+	//If the current player is player 2 ..
 		if(currentPlayer.compareTo(CommandInput.player2)==0){
 			if(Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
@@ -87,8 +82,8 @@ public class Gameplay {
 		}	
 	}
 
+	//calculates the reinforcements each player has to place
 	static void calculateReinforcements() {
-
 		for(int i = 0;i<42;i++){
 			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories<=9){
 				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements = 3;
@@ -97,11 +92,10 @@ public class Gameplay {
 				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements = Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories / 3;
 			}
 		}
-
 	}
 
+	//Function allowing the fortification between territories for a player. Once per go.
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
-
 		if(takeArmies.getOccupyingPlayer().fortified==true && putArmies.getOccupyingPlayer().fortified == true){
 			if(takeArmies.getPlayerArmies()<=1){
 				CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
@@ -148,7 +142,6 @@ public class Gameplay {
 
 	}
 
-
 	public static String setFromAbbreviation(String country) {
 		for(int i = 0;i<42;i++){
 			if(country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation())==0){
@@ -157,7 +150,6 @@ public class Gameplay {
 			if(country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
 				return Deck.countriesAfterShuffle[i].getName();
 			}
-
 		}
 		return null;
 	}
@@ -171,6 +163,7 @@ public class Gameplay {
 		return null;
 	}
 
+	//Central point for combat function, calls 8 different sub functions.
 	public static void combat(String currentPlayer){
 		SortingPlayersForCombat(currentPlayer);
 
@@ -190,6 +183,7 @@ public class Gameplay {
 	}
 
 
+	//Sorts players into attacking and defending players based on the current player variable
 	public static void SortingPlayersForCombat(String currentPlayer){
 
 		if(currentPlayer == CommandInput.player1){
@@ -218,8 +212,8 @@ public class Gameplay {
 		}
 	}
 
+	//Function gets player to pick which country he wishes to attack with
 	static void PickAttackingCountry(String currentPlayer, String attackingPlayer, String defendingPlayer){
-
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
 		}
@@ -265,6 +259,7 @@ public class Gameplay {
 		}
 	}
 
+	//Allows attacking player to pick which country, adjacent to his attacking country, that he wishes to attack
 	static void PickCountryToAttack(String currentPlayer, String attackingPlayer, String defendingPlayer){
 		CommandInput.appendStringTo(attackingPlayer + ", please enter which country you wish to attack.\n", Color.BLACK);
 		countryToAttack = CommandInput.getCommand();
@@ -304,8 +299,6 @@ public class Gameplay {
 							if(defendingPlayer == "Neutral 4"){
 								defendingPlayerColour = Color.YELLOW;
 							}
-
-
 						}
 						else{
 							CommandInput.appendStringTo("You cannot attack this country, please select an adjacent country that you do not own. \n", Color.RED);
@@ -323,6 +316,7 @@ public class Gameplay {
 		}
 	}
 
+	//Gets the index of the country 
 	static int getIndex(String countryToAttackWith2) {
 		int index = -1;
 
@@ -337,8 +331,8 @@ public class Gameplay {
 		return index;
 	}
 
+	//Fucntion containing some of the battle decisions attacking players make during combat
 	static void AttackingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer){
-
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
 		}
@@ -374,12 +368,12 @@ public class Gameplay {
 		}	
 	}
 
+		//Fucntion containing some of the battle decisions defending players make during combat
 	private static void DefendingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer) {
-
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
 		}
-
+		
 		int NumArmies = 0;
 		int count = 0;
 		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies();
@@ -415,9 +409,9 @@ public class Gameplay {
 		if(count==0){
 			CommandInput.appendStringTo("You have chosen to defend with " + numberOfUnitsToDefendWith + " units. \n", defendingPlayerColour);
 		}
-
 	}
 
+	//Contains some of the dice roll combat logic and deals with it accordingly. Uses Dice Roll class.
 	private static void InternalCombatLogic(String currentPlayer, String attackingPlayer, String defendingPlayer, int numberOfUnitsToAttackWith, int numberOfUnitsToDefendWith) {
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
@@ -495,7 +489,6 @@ public class Gameplay {
 				Deck.countriesBeforeShuffle[i].setPlayerArmies(armiesToPass);
 			}
 		}
-
 	}
 
 	private static void ReassignArmies(String name) {
@@ -518,9 +511,8 @@ public class Gameplay {
 	}
 
 
-
+//Deals with incorrect user input for attacking player
 	static void CheckAttackerIntegerErrorInput(String attackingPlayer, String defendingPlayer){
-
 		numberOfUnitsToAttackWith = -1234;
 
 		while(numberOfUnitsToAttackWith == -1234 ){
@@ -535,6 +527,8 @@ public class Gameplay {
 
 	}
 
+	
+//Deals with incorrect user input for defending player
 	static void CheckDefenderIntegerErrorInput(String attackingPlayer, String defendingPlayer){
 
 		numberOfUnitsToDefendWith = -1234;
@@ -550,8 +544,8 @@ public class Gameplay {
 
 	}
 
+	//Checks if a player has been eliminated
 	static void CheckPlayerEliminated(){
-
 		for(int i=0;i<42;i++){
 			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
 				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + "has been eliminated from the game.\n", Color.BLACK);
