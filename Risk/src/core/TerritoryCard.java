@@ -7,6 +7,7 @@ public class TerritoryCard {
 	private String countryName;
 	private String cardType;
 	private Player cardOwner;
+	private static Boolean areCardsShuffled = false;
 	
 	public static ArrayList<TerritoryCard> territoryCardsShuffled = new ArrayList<TerritoryCard>();
 	
@@ -20,7 +21,7 @@ public class TerritoryCard {
 		this.cardType=cardName;
 		this.cardOwner=cardOwner;
 	}
-	private TerritoryCard TerritoryCard(Player cardOwner) {
+	public TerritoryCard TerritoryCard(Player cardOwner) {
 		this.cardOwner=cardOwner;
 		return null;
 	}
@@ -62,15 +63,16 @@ private void  FillTerritoryCards(){
 }
 
 
-public static void shuffledTerrirtoryDeck() {
-	
-		Collections.shuffle(territoryCardsShuffled);	
-	 
 
-}
 
 public void dealCard(Player currentOwner){
 	int k=0;
+		
+	if(areCardsShuffled == false){
+		FillTerritoryCards();
+		shuffleTerrirtoryDeck();
+	
+	
 	if(k<=MAX_CARD_AMOUNT-1){
 		
 		territoryCardsShuffled.get(k);
@@ -80,10 +82,29 @@ public void dealCard(Player currentOwner){
 	else{
 		System.out.println("No cards left.\n");
 	}
+	}
+	else{
+		if(k<=MAX_CARD_AMOUNT-1){
+			
+			territoryCardsShuffled.get(k);
+			territoryCardsShuffled.add(k, TerritoryCard(currentOwner));
+			k++;
+		}
+		else{
+			System.out.println("No cards left.\n");
+		}	
+	}
+}	
 	
+
+private static void shuffleTerrirtoryDeck(){
 	
+	Collections.shuffle(territoryCardsShuffled);	
+	areCardsShuffled=true;
+ 
+
+
+
+
 }
-
-
-
 }

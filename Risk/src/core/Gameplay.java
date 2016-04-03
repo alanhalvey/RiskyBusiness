@@ -613,12 +613,12 @@ public class Gameplay {
 		int cavalryCount = 0;
 		int infantryCount = 0;
 		for(int i =0;i<42;i++){
-			//if currentPlayer = TerritoryCard[i]->cardOwner and has card has insignia artillery
-			artilleryCount++;
-			//if currentPlayer = TerritoryCard[i]->cardOwner and has card has insignia cavalry
-			cavalryCount++;
-			//if currentPlayer = TerritoryCard[i]->cardOwner and has card has insignia infantry
-			infantryCount++;
+			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  input.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
+				artilleryCount++;}
+			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  input.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
+				cavalryCount++;}
+			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  input.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
+				infantryCount++;}
 		}
 		if(getInsigniaValue(input)==1 && artilleryCount>=3){
 			return true;
