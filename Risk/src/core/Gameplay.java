@@ -384,7 +384,7 @@ public class Gameplay {
 			numberOfUnitsToDefendWith = 1;
 		}
 		else{
-			CommandInput.appendStringTo(defendingPlayerString + ", " + attackingPlayer + " has attacked your country, " + countryToAttack + ", using " + numberOfUnitsToAttackWith + " units. Please specify how many units you wish to defend with: \n", defendingPlayerColour);
+			CommandInput.appendStringTo(defendingPlayerString + ", " + attackingPlayer + " has attacked your country, " + countryToAttack + ", using " + numberOfUnitsToAttackWith + " units. Please specify how many units you wish to defend with: \n", Color.BLACK);
 
 			CheckDefenderIntegerErrorInput(attackingPlayer, defendingPlayer);
 			System.out.println(" " + numberOfUnitsToDefendWith);
