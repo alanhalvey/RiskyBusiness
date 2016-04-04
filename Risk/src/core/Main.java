@@ -15,7 +15,11 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		//Gameplay.combat(CommandInput.currentPlayer);
+		
+	/*	for(int i=0; i<7; i++){
+			Gameplay.combat(CommandInput.currentPlayer);
+			ChangePlayers();
+		}*/
 		
 		//PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){

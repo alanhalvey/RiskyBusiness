@@ -19,6 +19,15 @@ public class Deck {
 	protected int MAX_CARD_AMOUNT = 42;
 	public static ArrayList<String> player1Countries = new ArrayList<String>();
 	public static ArrayList<String> player2Countries = new ArrayList<String>();
+	
+	static Player player1 = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,9,0,true);
+	static Player player2 = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour,9,0,true);
+	static Player neutral1 = new Player("Neutral 1", Color.BLACK,6,0,true);
+	static Player neutral2 = new Player("Neutral 2", Color.GREEN,6,0,true);
+	static Player neutral3 = new Player("Neutral 3", Color.RED,6,0,true);
+	static Player neutral4 = new Player("Neutral 4", Color.YELLOW,6,0,true);
+
+
 
 	private String[] temp = new String[MAX_CARD_AMOUNT];
 	private int cardUsed;
@@ -58,7 +67,7 @@ public class Deck {
 		PupulateCountries();
 
 		deck.getCards();
-		deck.shuffle();
+		//deck.shuffle();
 		for(int i =0;i<42;i++){
 			String result= deck.deal();
 			//System.out.println(result);
@@ -207,12 +216,12 @@ public class Deck {
 	private static void PupulateCountries() {
 		for(int i=0;i<42;i++){
 			Player p = null;
-			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 1, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i], "Abb",i );
+			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 2, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i], "Abb",i );
 			System.out.println(countriesBeforeShuffle[i].getIndex());
 		}
 	}
 
-	private static void Reassign(String result) {
+	public static void Reassign(String result) {
 		if(z==42){
 			z=0;
 		}
@@ -228,9 +237,9 @@ public class Deck {
 				case 36:
 				case 38:
 				case 40:
-					Player p = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,9,0,true);
+					Player player1 = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,9,0,true);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					countriesAfterShuffle[z].setOccupyingPlayer(player1);
 					if(u==1){
 						player1Countries.add(result);
 						}
@@ -245,9 +254,9 @@ public class Deck {
 				case 37:
 				case 39:
 				case 41:
-					p = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour,9,0,true);
+					player2 = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour,9,0,true);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					countriesAfterShuffle[z].setOccupyingPlayer(player2);
 					if(u==1){
 					player2Countries.add(result);
 					}
@@ -259,9 +268,9 @@ public class Deck {
 				case 20:
 				case 26:
 				case 32:
-					p = new Player("Neutral 1", Color.BLACK,6,0,true);
+					neutral1 = new Player("Neutral 1", Color.BLACK,6,0,true);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					countriesAfterShuffle[z].setOccupyingPlayer(neutral1);
 					z++;
 					break;
 				case 3:
@@ -270,9 +279,9 @@ public class Deck {
 				case 21:
 				case 27:
 				case 33:
-					p = new Player("Neutral 2", Color.GREEN, 6, 0,true);
+					neutral2 = new Player("Neutral 2", Color.GREEN, 6, 0,true);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					countriesAfterShuffle[z].setOccupyingPlayer(neutral2);
 					z++;
 					break;
 				case 4:
@@ -281,9 +290,9 @@ public class Deck {
 				case 22:
 				case 28:
 				case 34:
-					p = new Player("Neutral 3", Color.RED, 6, 0, true);
+					neutral3 = new Player("Neutral 3", Color.RED, 6, 0, true);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					countriesAfterShuffle[z].setOccupyingPlayer(neutral3);
 					z++;
 					break;
 				case 5:
@@ -292,9 +301,9 @@ public class Deck {
 				case 23:
 				case 29:
 				case 35:
-					p = new Player("Neutral 4", Color.YELLOW,6,0, true);
+					neutral4 = new Player("Neutral 4", Color.YELLOW,6,0, true);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
-					countriesAfterShuffle[z].setOccupyingPlayer(p);
+					countriesAfterShuffle[z].setOccupyingPlayer(neutral4);
 					z++;
 					break;
 				}

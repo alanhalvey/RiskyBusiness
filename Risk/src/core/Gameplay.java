@@ -5,6 +5,7 @@
  */
 package core;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Gameplay {
 	static int numP1Territories;
@@ -26,6 +27,8 @@ public class Gameplay {
 	static Color attackingPlayerColour = Color.ORANGE;
 	static Color defendingPlayerColour = Color.ORANGE;
 
+	static Player attackingPlayerP = new Player (attackingPlayer, attackingPlayerColour, getAttackingPlayerTerritoryNumber(attackingPlayer), 0, true);
+
 	public static boolean reinforcementsLeft(String player){
 		boolean result = true;
 		for(int k = 0;k<42;k++){
@@ -40,7 +43,7 @@ public class Gameplay {
 
 	//Function allows players to place their reinforcements, with error handling.
 	static void placeReinforcements(String currentPlayer){
-	//if the current player is player 1 ..
+		//if the current player is player 1 ..
 		if(currentPlayer.compareTo(CommandInput.player1)==0){
 			if(Gameplay.reinforcementsLeft(CommandInput.player1)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
@@ -61,7 +64,7 @@ public class Gameplay {
 			}
 		}
 
-	//If the current player is player 2 ..
+		//If the current player is player 2 ..
 		if(currentPlayer.compareTo(CommandInput.player2)==0){
 			if(Gameplay.reinforcementsLeft(CommandInput.player2)==true){
 				CommandInput.appendStringTo(currentPlayer + ", please type the country name to place Reinforcements in: \n", Color.BLACK);
@@ -367,12 +370,12 @@ public class Gameplay {
 		}	
 	}
 
-		//Fucntion containing some of the battle decisions defending players make during combat
+	//Fucntion containing some of the battle decisions defending players make during combat
 	private static void DefendingPlayerBattleDecisions(String currentPlayer, String attackingPlayer, String defendingPlayer) {
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
 		}
-		
+
 		int NumArmies = 0;
 		int count = 0;
 		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies();
@@ -424,14 +427,26 @@ public class Gameplay {
 			CommandInput.appendStringTo(attackingPlayer + " wins one combat.\n" + attackingPlayer + " does not lose an army.\n" + defendingPlayerString + " loses one army.\n", Color.BLACK);
 			Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())-1);
 			System.out.println(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName() + " now has this many armies: " + Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies()) ;
-			Screen.mainFrame.repaint();
+
+
+			if((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())==0){
+				takeOverCountry(attackingPlayer, defendingPlayer, countryToAttackWith, countryToAttack);
+			}
+
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
+			Screen.mainFrame.repaint();
 		}
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "-1"){
 
 			CommandInput.appendStringTo(defendingPlayerString + " wins one combat.\n" + defendingPlayerString + " does not lose an army.\n" + attackingPlayer + " loses one army.\n", Color.BLACK);
 			Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies())-1);
 			System.out.println(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName() + " now has this many armies: " + Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies()) ;
+
+
+			if((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())==0){
+				takeOverCountry(attackingPlayer, defendingPlayer, countryToAttackWith, countryToAttack);
+			}
+
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
 			Screen.mainFrame.repaint();
 		}
@@ -476,16 +491,59 @@ public class Gameplay {
 		Screen.mainFrame.repaint();
 	}
 
+	private static void takeOverCountry(String attackingPlayer, String defendingPlayer, String countryToAttackWith, String countryToAttack) {
+		for(int i=0;i<42;i++){
+			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
+		}
+
+		attackingPlayerP = new Player(attackingPlayer, attackingPlayerColour, getAttackingPlayerTerritoryNumber(attackingPlayer), 0, true);
+		if(attackingPlayerP.playerName == CommandInput.player1){
+			attackingPlayerP = Deck.player1;
+		}
+		if(attackingPlayerP.playerName == CommandInput.player2){
+			attackingPlayerP = Deck.player2;
+		}
+		System.out.println("country to attack before = " + Deck.countriesAfterShuffle[getIndex(countryToAttack)].getOccupyingPlayer().playerName);
+
+		for(int i=0; i<42; i++){
+			if(Deck.countriesAfterShuffle[i].getName().compareTo(countryToAttack)==0 || Deck.countriesAfterShuffle[i].getAbbreviation().compareToIgnoreCase(countryToAttack)==0){
+				Deck.countriesAfterShuffle[i].setOccupyingPlayer(attackingPlayerP);
+			}
+
+		}
+		System.out.println("country to attack after = " + Deck.countriesAfterShuffle[getIndex(countryToAttack)].getOccupyingPlayer().playerName);
+
+		Deck.countriesAfterShuffle[getIndex(countryToAttack)].setPlayerArmies(10);
+
+		Screen.mainFrame.repaint();
+	}
+
+	private static int getAttackingPlayerTerritoryNumber(String attackingPlayer){
+		int attackingPlayerTerritories = 0;
+		if(attackingPlayer==CommandInput.player1){
+			attackingPlayerTerritories = numP1Territories;
+		}
+		if(attackingPlayer==CommandInput.player2){
+			attackingPlayerTerritories = numP2Territories;
+		}
+
+		return attackingPlayerTerritories;
+	}
+
 	private static void ReassignCountriesArmies(String string) {
 		int armiesToPass = 0;
+		Player playerToPass = null;
 		for(int i=0;i<42;i++){
 			if(string.compareTo(Deck.countriesAfterShuffle[i].getName())==0){
 				armiesToPass = Deck.countriesAfterShuffle[i].getPlayerArmies();
+				playerToPass = Deck.countriesAfterShuffle[i].getOccupyingPlayer();
 			}
 		}
 		for(int i=0;i<42;i++){
 			if(string.compareTo(Deck.countriesBeforeShuffle[i].getName())==0){
 				Deck.countriesBeforeShuffle[i].setPlayerArmies(armiesToPass);
+				Deck.countriesBeforeShuffle[i].setOccupyingPlayer(playerToPass);
+
 			}
 		}
 	}
@@ -557,7 +615,7 @@ public class Gameplay {
 
 			if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
 				Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
-				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + "has zero armies in place\n", Color.BLACK);
+				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + " has zero armies in place\n", Color.BLACK);
 			}
 		}
 
