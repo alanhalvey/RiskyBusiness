@@ -69,10 +69,11 @@ public class CommandInput extends JPanel{
 		commandInputWindow.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
 		setLayout(new BorderLayout());
 		add(commandInputWindow, BorderLayout.CENTER);
-
+		outputWindow.setBackground(Color.lightGray);
 		outputWindow.setEditable(false);
 		scrollPane=new JScrollPane(outputWindow);
-
+		commandInputWindow.setBackground(Color.lightGray);
+	
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setPreferredSize(new Dimension(250, 480));

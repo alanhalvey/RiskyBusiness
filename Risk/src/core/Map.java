@@ -51,6 +51,8 @@ public class Map extends JPanel {
 			drawCountryNames(g2d, i, x, y);
 		}
 		drawKey(g2d);
+		drawStats(g2d);
+		Screen.mainFrame.repaint();
 	}
 
 	private void drawKey(Graphics2D g2d){
@@ -89,7 +91,26 @@ public class Map extends JPanel {
 			g2d.drawString("Neutral 4", (int)key.x+20, (int)key.y+10);
 		}
 	}
+	
+	private void drawStats(Graphics2D g2d){
+		g2d.setColor(Color.lightGray);
+		g2d.fillRect(5, 610, 800 , 80 );
+		if(CommandInput.currentPlayer!=""){
+			
+			g2d.setFont(new Font("default", Font.BOLD, 14));
+			g2d.setColor(CommandInput.player1Colour);
+			Ellipse2D.Double key = new Ellipse2D.Double(20,635,10,10);
+			g2d.fill(key);
+			g2d.drawString("Player Stats:",  20, 625);
+			g2d.drawString(CommandInput.getPlayer1() +": Num of Territories: (" + Deck.player1.numTerritories + ") Number of Reinforcements: (" + Deck.player1.numReinforcements +") Number of Territory Cards: (" + Deck.player1.numTerritoryCards+")" ,  (int)key.x+20, (int)key.y+10);
+			g2d.setColor(CommandInput.player2Colour);
+			key = new Ellipse2D.Double(20,670,10,10);
+			g2d.fill(key);
+			g2d.drawString(CommandInput.getPlayer2() +": Num of Territories: (" + Deck.player2.numTerritories + ") Number of Reinforcements: (" + Deck.player2.numReinforcements +") Number of Territory Cards: (" + Deck.player2.numTerritoryCards+ ")" , (int)key.x+20, (int)key.y+10);
+			
+		}
 
+	}
 	private void drawNumArmies(Graphics2D g2d, int i) {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("default", Font.BOLD, 12));

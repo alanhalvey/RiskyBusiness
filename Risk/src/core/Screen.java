@@ -38,14 +38,16 @@ public class Screen extends JFrame{
 
 		bankgroundPanel.setSize(1380,700);
 		bankgroundPanel.setLocation(0, 0);
-		bankgroundPanel.setBackground(Color.WHITE);
+		bankgroundPanel.setBackground(Color.lightGray);
 
 		mapPanel.setSize(1380,700);
+		
 		mapPanel.setLocation(0, 0);
 		mapPanel.setLayout((LayoutManager) new BoxLayout(mapPanel, BoxLayout.PAGE_AXIS));
 		mapPanel.add(fullMap);
 
 		inputOutputPanel.setSize(300, 550);
+		inputOutputPanel.setBackground(Color.lightGray);
 		inputOutputPanel.setLocation(1000, 100);
 		inputOutputPanel.add(inputScreenTitle);
 		inputOutputPanel.add(commandInputPanel); 
