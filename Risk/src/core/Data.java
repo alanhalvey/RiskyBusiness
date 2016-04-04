@@ -37,6 +37,8 @@ public class Data{
 	public static int Neutral_3_Pool[] = new int[6];
 	public static int Neutral_4_Pool[] = new int[6];
 	public static boolean keepPlacingUnits = true;
+	public static int numberOfDeals = 0;
+	public static int exchangeIndex = 0;
 	
 	public static final int NUM_PLAYERS = 2;
 	public static final int NUM_NEUTRALS = 4;

@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,7 +14,7 @@ public class TerritoryCard {
 	
 	
 	String card = new String();
-	int MAX_CARD_AMOUNT = 42;
+	static int MAX_CARD_AMOUNT = 42;
 	
 	
 	public TerritoryCard(String countryName, String cardName, Player cardOwner){
@@ -54,10 +55,11 @@ public class TerritoryCard {
 
 
 
-private void  FillTerritoryCards(){
-	Player z =null;
+public static void  FillTerritoryCards(){
+	Player z = new Player ("temp", Color.WHITE, 0, 0, false);
 	for(int i = 0;i<MAX_CARD_AMOUNT;i++){
 		territoryCardsShuffled.add(new TerritoryCard(Data.COUNTRY_NAMES[i],Data.CARD_TYPE[i],z));
+		System.out.println(territoryCardsShuffled.get(i).getCardName());
 		}
 	
 }
@@ -65,46 +67,17 @@ private void  FillTerritoryCards(){
 
 
 
-public void dealCard(Player currentOwner){
-	int k=0;
-		
-	if(areCardsShuffled == false){
-		FillTerritoryCards();
-		shuffleTerrirtoryDeck();
-	
-	
-	if(k<=MAX_CARD_AMOUNT-1){
-		
-		territoryCardsShuffled.get(k);
-		territoryCardsShuffled.add(k, TerritoryCard(currentOwner));
-		k++;
-	}
-	else{
-		System.out.println("No cards left.\n");
-	}
-	}
-	else{
-		if(k<=MAX_CARD_AMOUNT-1){
-			
-			territoryCardsShuffled.get(k);
-			territoryCardsShuffled.add(k, TerritoryCard(currentOwner));
-			k++;
-		}
-		else{
-			System.out.println("No cards left.\n");
-		}	
-	}
-}	
+
 	
 
-private static void shuffleTerrirtoryDeck(){
-	
+public static void shuffleTerrirtoryDeck(){
 	Collections.shuffle(territoryCardsShuffled);	
-	areCardsShuffled=true;
- 
-
-
-
-
+	setAreCardsShuffled(true);
+}
+public static Boolean getAreCardsShuffled() {
+	return areCardsShuffled;
+}
+public static void setAreCardsShuffled(Boolean areCardsShuffled) {
+	TerritoryCard.areCardsShuffled = areCardsShuffled;
 }
 }

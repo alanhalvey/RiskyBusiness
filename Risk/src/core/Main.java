@@ -15,14 +15,22 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
-		
-	/*	for(int i=0; i<7; i++){
+
+		/*
+		for(int i=0; i<7; i++){
 			Gameplay.combat(CommandInput.currentPlayer);
 			ChangePlayers();
-		}*/
-		
+		}
+		*/
+
+
+		//Gameplay.combat(CommandInput.currentPlayer);
+		TerritoryCard.FillTerritoryCards();
+		Gameplay.calculateReinforcements();
 		//PlaceUnits();
+		TerritoryCard.shuffleTerrirtoryDeck();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
+			Gameplay.calculateReinforcements();
 			TurnSequence();
 			ChangePlayers();
 		}
@@ -78,34 +86,78 @@ public class Main {
 
 	private static void TurnSequence() {
 		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
-		Gameplay.calculateReinforcements();
-		//PlaceReinforcements();
+
+		PlaceReinforcements();
 		//Combat();
 		//Fortify();
 		InsigniaExchange();
 	}
 
 	private static void InsigniaExchange() {
-		int currentPlayerTerritoryCards = 4;//Gameplay.getTerritoryCards(CommandInput.currentPlayer);
-		
-		if(currentPlayerTerritoryCards >= 3 && currentPlayerTerritoryCards<5){
-			CommandInput.appendStringTo("Would you like to exhange some territory cards? (Y/N)\n", Color.RED);
-			String choice = CommandInput.getCommand();
-			if(choice.compareTo("Y")==0){
-				currentPlayerTerritoryCards =Gameplay.Exchange(CommandInput.currentPlayer, currentPlayerTerritoryCards);
+		if(Data.exchangeIndex<Data.NUM_COUNTRIES){
+			if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
+				TerritoryCard.territoryCardsShuffled.get(Data.exchangeIndex).setCardOwner(Deck.player1);
+			}
+			if(CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
+				TerritoryCard.territoryCardsShuffled.get(Data.exchangeIndex).setCardOwner(Deck.player2);
+			}
+			Data.exchangeIndex++;
+		}
+
+
+		int counts[] = Gameplay.getCounts();
+		int artillary = counts[0];
+		int cavalry = counts[1];
+		int infantry = counts[2];
+
+		CommandInput.appendStringTo("artillary: "+artillary+ ", cavalry: "+cavalry+", infantry: "+ infantry+"\n", Color.RED);
+
+
+
+		int currentPlayerTerritoryCards = countCards(CommandInput.currentPlayer);
+		CommandInput.appendStringTo(CommandInput.currentPlayer +",  you have " + currentPlayerTerritoryCards + " territory cards.\n", Color.black);
+		if(artillary>= 3 || cavalry>=3 || infantry>=3 || (artillary>=1 && cavalry>=1 && infantry>=1)){
+			if(currentPlayerTerritoryCards<3){
+				CommandInput.appendStringTo("You don't have enough territory cards to exchange.\n", Color.RED);
+			}
+
+			if(currentPlayerTerritoryCards >= 3 && currentPlayerTerritoryCards<5){
+				CommandInput.appendStringTo("Would you like to exhange some territory cards? (Y/N)\n", Color.RED);
+				String choice = CommandInput.getCommand();
+				if(choice.compareTo("Y")==0){
+					currentPlayerTerritoryCards =Gameplay.Exchange(CommandInput.currentPlayer, currentPlayerTerritoryCards);
+					CommandInput.appendStringTo("You now have " + currentPlayerTerritoryCards + " territory cards left\n", Color.RED);
+				}
+				else if(choice.compareTo("N")==0){
+					CommandInput.appendStringTo("You have skipped exchange of territory cards.\n", Color.RED);
+				}
+				else{
+					CommandInput.appendStringTo("Invalid input. Try again\n", Color.RED);
+					InsigniaExchange();
+				}
+			}
+			else if (currentPlayerTerritoryCards >= 5){
+				CommandInput.appendStringTo("You have greater than 5 territory cards, you must exchange.\n", Color.red);
+				currentPlayerTerritoryCards =Gameplay.Exchange(CommandInput.player1, currentPlayerTerritoryCards);
 				CommandInput.appendStringTo("You now have " + currentPlayerTerritoryCards + " territory cards left\n", Color.RED);
 			}
-			else if(choice.compareTo("N")==0){
-				CommandInput.appendStringTo("You have skipped exchange of territory cards.\n", Color.RED);
-			}
-			else{
-				CommandInput.appendStringTo("Invalid input. Try again\n", Color.RED);
-				InsigniaExchange();
+		}
+		else{
+			CommandInput.appendStringTo("You don't have enough cards with the required insignias to exchange.\n", Color.RED);
+		}
+
+
+
+	}
+
+	private static int countCards(String currentPlayer) {
+		int count = 0;
+		for(int i=0;i<TerritoryCard.territoryCardsShuffled.size();i++){
+			if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(currentPlayer)==0){
+				count++;
 			}
 		}
-			
-		
-
+		return count;
 	}
 
 	private static void PlaceReinforcements() {

@@ -19,14 +19,7 @@ public class Deck {
 	protected int MAX_CARD_AMOUNT = 42;
 	public static ArrayList<String> player1Countries = new ArrayList<String>();
 	public static ArrayList<String> player2Countries = new ArrayList<String>();
-	
-	static Player player1 = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,9,0,true);
-	static Player player2 = new Player (CommandInput.getPlayer2(), CommandInput.player2Colour,9,0,true);
-	static Player neutral1 = new Player("Neutral 1", Color.BLACK,6,0,true);
-	static Player neutral2 = new Player("Neutral 2", Color.GREEN,6,0,true);
-	static Player neutral3 = new Player("Neutral 3", Color.RED,6,0,true);
-	static Player neutral4 = new Player("Neutral 4", Color.YELLOW,6,0,true);
-
+	static Player player1,player2,neutral1,neutral2,neutral3,neutral4;
 
 
 	private String[] temp = new String[MAX_CARD_AMOUNT];
@@ -67,7 +60,7 @@ public class Deck {
 		PupulateCountries();
 
 		deck.getCards();
-		//deck.shuffle();
+		deck.shuffle();
 		for(int i =0;i<42;i++){
 			String result= deck.deal();
 			//System.out.println(result);
@@ -216,12 +209,12 @@ public class Deck {
 	private static void PupulateCountries() {
 		for(int i=0;i<42;i++){
 			Player p = null;
-			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 2, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i], "Abb",i );
+			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 1, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i], "Abb",i );
 			System.out.println(countriesBeforeShuffle[i].getIndex());
 		}
 	}
 
-	public static void Reassign(String result) {
+	private static void Reassign(String result) {
 		if(z==42){
 			z=0;
 		}
@@ -237,7 +230,7 @@ public class Deck {
 				case 36:
 				case 38:
 				case 40:
-					Player player1 = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,9,0,true);
+					player1 = new Player (CommandInput.getPlayer1(), CommandInput.player1Colour,9,0,true);
 					countriesAfterShuffle[z] = new Country( countriesBeforeShuffle[i]);
 					countriesAfterShuffle[z].setOccupyingPlayer(player1);
 					if(u==1){

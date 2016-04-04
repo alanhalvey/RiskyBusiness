@@ -5,7 +5,6 @@
  */
 package core;
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 public class Gameplay {
 	static int numP1Territories;
@@ -26,7 +25,6 @@ public class Gameplay {
 
 	static Color attackingPlayerColour = Color.ORANGE;
 	static Color defendingPlayerColour = Color.ORANGE;
-
 	static Player attackingPlayerP = new Player (attackingPlayer, attackingPlayerColour, getAttackingPlayerTerritoryNumber(attackingPlayer), 0, true);
 
 	public static boolean reinforcementsLeft(String player){
@@ -530,23 +528,23 @@ public class Gameplay {
 		return attackingPlayerTerritories;
 	}
 
-	private static void ReassignCountriesArmies(String string) {
+	static void ReassignCountriesArmies(String string) {
 		int armiesToPass = 0;
 		Player playerToPass = null;
 		for(int i=0;i<42;i++){
 			if(string.compareTo(Deck.countriesAfterShuffle[i].getName())==0){
 				armiesToPass = Deck.countriesAfterShuffle[i].getPlayerArmies();
-				playerToPass = Deck.countriesAfterShuffle[i].getOccupyingPlayer();
+				playerToPass= Deck.countriesAfterShuffle[i].getOccupyingPlayer();
 			}
 		}
 		for(int i=0;i<42;i++){
 			if(string.compareTo(Deck.countriesBeforeShuffle[i].getName())==0){
 				Deck.countriesBeforeShuffle[i].setPlayerArmies(armiesToPass);
 				Deck.countriesBeforeShuffle[i].setOccupyingPlayer(playerToPass);
-
 			}
 		}
 	}
+
 
 	private static void ReassignArmies(String name) {
 		int indexForReassignment = 0;
@@ -615,7 +613,7 @@ public class Gameplay {
 
 			if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
 				Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
-				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + " has zero armies in place\n", Color.BLACK);
+				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + "has zero armies in place\n", Color.BLACK);
 			}
 		}
 
@@ -641,43 +639,91 @@ public class Gameplay {
 				CommandInput.appendStringTo("You don't have enough territory cards with those insignias.", Color.RED);
 			}
 
-		}while(input.length()!=3 || getInsigniaValue(input)==0);
+		}while(input.length()!=3 || getInsigniaValue(input)==0 || InsigniaChecks(input)==false);
 
 		int additionalReinforcements = 0;
 
 
 		currentPlayerTerritoryCards-=3;
 
+		additionalReinforcements = 0;
 
-		if(getInsigniaValue(input) == 1){
-			additionalReinforcements = 8;
-		}
-		else if(getInsigniaValue(input)==2){
-			additionalReinforcements = 6;
-		}
-		else if(getInsigniaValue(input)==3){
-			additionalReinforcements = 4;
-		}
-		else if(getInsigniaValue(input)==4){
-			additionalReinforcements = 10;
+		if(Data.numberOfDeals==14){
+			Data.numberOfDeals=0;
 		}
 
-		CommandInput.appendStringTo(CommandInput.currentPlayer+", you have gained "+additionalReinforcements+" additional reinforcements.\n", playerColor);
+		if(Data.numberOfDeals<=3){
+			additionalReinforcements=4;
+			for(int i=0;i<Data.numberOfDeals;i++){
+				additionalReinforcements+= 2;
+			}
+		}
+		if(Data.numberOfDeals>3){
+			additionalReinforcements=10;
+			for(int i= 3 ; i<Data.numberOfDeals;i++){
+				additionalReinforcements+=5;
+			}
+		}
+		Data.numberOfDeals++;
+		CommandInput.appendStringTo((additionalReinforcements + "additional reinforcements\n"),Color.RED);
+
+
+		int removedCardsCount = 0;
+		boolean artillaryRemoved = false;
+		boolean cavalryRemoved = false;
+		boolean infantryRemoved = false;
+
+		for(int i=0;i<42;i++){
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.currentPlayer)==0){
+				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements+=additionalReinforcements;
+			}
+		}
+		for(int i=0;i< TerritoryCard.territoryCardsShuffled.size();i++){
+			if(removedCardsCount <3){
+				if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(CommandInput.currentPlayer)==0 && getInsigniaValue(input)==1 && TerritoryCard.territoryCardsShuffled.get(i).getCardName().compareToIgnoreCase("artillary")==0){
+					TerritoryCard.territoryCardsShuffled.remove(i);
+					removedCardsCount++;
+				}
+				if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(CommandInput.currentPlayer)==0 && getInsigniaValue(input)==2 && TerritoryCard.territoryCardsShuffled.get(i).getCardName().compareToIgnoreCase("cavalry")==0){
+					TerritoryCard.territoryCardsShuffled.remove(i);
+					removedCardsCount++;
+				}
+				if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(CommandInput.currentPlayer)==0 && getInsigniaValue(input)==3 && TerritoryCard.territoryCardsShuffled.get(i).getCardName().compareToIgnoreCase("infantry")==0){
+					TerritoryCard.territoryCardsShuffled.remove(i);	
+					removedCardsCount++;
+				}
+				if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(CommandInput.currentPlayer)==0 && getInsigniaValue(input)==4 && TerritoryCard.territoryCardsShuffled.get(i).getCardName().compareToIgnoreCase("artillary")==0 && !(artillaryRemoved)){
+					TerritoryCard.territoryCardsShuffled.remove(i);
+					removedCardsCount++;	
+					artillaryRemoved = true;
+				}
+				if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(CommandInput.currentPlayer)==0 && getInsigniaValue(input)==4 && TerritoryCard.territoryCardsShuffled.get(i).getCardName().compareToIgnoreCase("cavalry")==0 && !(cavalryRemoved)){
+					TerritoryCard.territoryCardsShuffled.remove(i);
+					removedCardsCount++;
+					cavalryRemoved = true;
+				}
+				if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(CommandInput.currentPlayer)==0 && getInsigniaValue(input)==4 && TerritoryCard.territoryCardsShuffled.get(i).getCardName().compareToIgnoreCase("infantry")==0 && !(infantryRemoved)){
+					TerritoryCard.territoryCardsShuffled.remove(i);
+					removedCardsCount++;	
+					infantryRemoved = true;
+				}
+			}
+
+		}
+
 		return currentPlayerTerritoryCards;
 	}
 
-	private static boolean InsigniaChecks(String input) {
-		int artilleryCount = 0;
-		int cavalryCount = 0;
-		int infantryCount = 0;
-		for(int i =0;i<42;i++){
-			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  input.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
-				artilleryCount++;}
-			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  input.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
-				cavalryCount++;}
-			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  input.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
-				infantryCount++;}
-		}
+	public static boolean InsigniaChecks(String input) {
+		int[] counts = new int[3];
+		counts = getCounts();
+
+		int artilleryCount = counts[0];
+
+		int cavalryCount = counts[1];
+		int infantryCount = counts[2];
+
+
 		if(getInsigniaValue(input)==1 && artilleryCount>=3){
 			return true;
 		}
@@ -695,6 +741,24 @@ public class Gameplay {
 		}
 	}
 
+	static int[] getCounts() {
+		int[] counts = {0,0,0};
+		for(int i =0;i<TerritoryCard.territoryCardsShuffled.size();i++){
+			System.out.println(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName);
+
+			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  ("Artillary").compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
+				counts[0]++;
+				System.out.println(counts[0] + " artillery");}
+			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  ("cavalry").compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
+				counts[1]++;
+				System.out.println(counts[1] + " cavalry");}
+			if (CommandInput.currentPlayer.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName) == 0 &&  ("infantry").compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getCardName()) == 0){	
+				counts[2]++;
+				System.out.println(counts[2] + " infantry");}
+		}
+		return counts;
+	}
+
 	private static int getInsigniaValue(String input) {
 
 		if(input.compareToIgnoreCase("aaa")==0 ){
@@ -708,7 +772,7 @@ public class Gameplay {
 		if(input.compareToIgnoreCase("iii")==0 ){
 			return 3;
 		}
-		if(input.compareToIgnoreCase("ica")==0 || input.compareTo("cia")==0 || input.compareTo("aic")==0 ){
+		if(input.compareToIgnoreCase("ica")==0 || input.compareTo("cia")==0 || input.compareTo("aic")==0 || input.compareTo("cai")==0 || input.compareTo("aci")==0 || input.compareTo("iac")==0 ){
 			return 4;
 		}
 		else{
@@ -719,3 +783,6 @@ public class Gameplay {
 	}
 
 }
+
+
+
