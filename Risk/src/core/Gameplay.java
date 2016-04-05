@@ -187,7 +187,7 @@ public class Gameplay {
 
 		CheckPlayerEliminated();
 
-		NoArmiesLeft();
+		
 	}
 
 	//Sorts players into attacking and defending players based on the current player variable
@@ -662,17 +662,7 @@ public class Gameplay {
 		}
 	}	
 
-	static void NoArmiesLeft(){
-
-		for(int i =0; i<42;i++){
-
-			if(Deck.countriesAfterShuffle[i].getPlayerArmies()==0){
-				Deck.countriesAfterShuffle[i].setOccupyingPlayer(null);
-				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getName() + " has zero armies in place\n", Color.BLACK);
-			}
-		}
-
-	}
+	
 
 	public static int Exchange(String currentPlayer, int currentPlayerTerritoryCards) {
 		Color playerColor;
