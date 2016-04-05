@@ -133,7 +133,7 @@ public class Gameplay {
 		}
 		else{
 			CommandInput.appendStringTo("you have already used your fortify.\n", Color.RED);
-			Main.Fortify();
+			TurnSequence.Fortify();
 		}
 	}
 

@@ -154,8 +154,8 @@ public class Data{
 			{547,432},        // 40
 			{586,545}
 	};
-	public static final boolean Player1Wins = false;	
-	public static final boolean Player2Wins = false;
+	public static boolean Player1Wins = false;	
+	public static boolean Player2Wins = false;
 	public static int[][] getCountryCoord() {
 		return COUNTRY_COORD;
 	}
