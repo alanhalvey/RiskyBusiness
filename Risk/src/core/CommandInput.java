@@ -73,7 +73,7 @@ public class CommandInput extends JPanel{
 
 		outputWindow.setEditable(false);
 		scrollPane=new JScrollPane(outputWindow);
-		commandInputWindow.setBackground(Color.lightGray);
+		
 
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

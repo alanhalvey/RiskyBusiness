@@ -104,11 +104,11 @@ public class Map extends JPanel {
 			Ellipse2D.Double key = new Ellipse2D.Double(20,620,10,10);
 			g2d.fill(key);
 			g2d.drawString("Player Stats:",  20, 600);
-			g2d.drawString(CommandInput.getPlayer1() +": Num of Territories: (" + Deck.calculateTerritories(CommandInput.getPlayer1()) + ") Number of Reinforcements: (" + Deck.player1.numReinforcements +") Number of Territory Cards: (" + Deck.player1.numTerritoryCards+")" ,  (int)key.x+20, (int)key.y+10);
+			g2d.drawString(CommandInput.getPlayer1() +": Num of Territories: (" + Deck.calculateTerritories(CommandInput.getPlayer1()) + ") Number of Reinforcements: (" + Deck.player1.numReinforcements +") Number of Territory Cards: (" + Deck.calculateTerritoryCards(CommandInput.player1)+")" ,  (int)key.x+20, (int)key.y+10);
 			g2d.setColor(CommandInput.player2Colour);
 			key = new Ellipse2D.Double(20,640,10,10);
 			g2d.fill(key);
-			g2d.drawString(CommandInput.getPlayer2() +": Num of Territories: (" + Deck.calculateTerritories(CommandInput.getPlayer2()) + ") Number of Reinforcements: (" + Deck.player2.numReinforcements +") Number of Territory Cards: (" + Deck.player2.numTerritoryCards+ ")" , (int)key.x+20, (int)key.y+10);
+			g2d.drawString(CommandInput.getPlayer2() +": Num of Territories: (" + Deck.calculateTerritories(CommandInput.getPlayer2()) + ") Number of Reinforcements: (" + Deck.player2.numReinforcements +") Number of Territory Cards: (" + Deck.calculateTerritoryCards(CommandInput.player2)+ ")" , (int)key.x+20, (int)key.y+10);
 			
 		}
 

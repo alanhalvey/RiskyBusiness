@@ -315,5 +315,16 @@ public class Deck {
 		return ret;
 		
 	}
+	
+	public static int calculateTerritoryCards(String player){
+		int tot = 0;
+		
+		for(int i=0;i<42;i++){
+			if (player.compareToIgnoreCase(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName)==0){
+				tot++;
+			}
+		}
+		return tot;
+	}
 
 }

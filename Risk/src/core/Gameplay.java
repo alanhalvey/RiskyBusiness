@@ -104,7 +104,7 @@ public class Gameplay {
 
 	//Function allowing the fortification between territories for a player. Once per go.
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
-		if(takeArmies.getOccupyingPlayer().fortified==true && putArmies.getOccupyingPlayer().fortified == true){
+		//if(takeArmies.getOccupyingPlayer().fortified==true && putArmies.getOccupyingPlayer().fortified == true){
 			if(takeArmies.getPlayerArmies()<=1){
 				CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
 			}
@@ -133,11 +133,11 @@ public class Gameplay {
 				}
 			}
 		}
-		else{
+		/*else{
 			CommandInput.appendStringTo("you have already used your fortify.\n", Color.RED);
 			TurnSequence.Fortify();
-		}
-	}
+		}*/
+	//}
 
 	public static void skip(){
 
