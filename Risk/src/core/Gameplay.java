@@ -651,9 +651,13 @@ public class Gameplay {
 	//Checks if a player has been eliminated
 	static void CheckPlayerEliminated(){
 		for(int i=0;i<42;i++){
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0){
-				CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + " has been eliminated from the game.\n", Color.BLACK);
-				break;
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0 && Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase(Deck.player1.playerName)==0){
+				Data.Player2Wins=true;
+				//CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + " has been eliminated from the game.\n", Color.BLACK);
+				
+			}
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0 && Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase(Deck.player2.playerName)==0){
+				Data.Player1Wins=true;
 			}
 		}
 	}	

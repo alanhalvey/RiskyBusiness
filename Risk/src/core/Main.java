@@ -22,10 +22,11 @@ public class Main {
 			TurnSequence.TurnSequence();
 			TurnSequence.ChangePlayers();
 		}
-		if(Data.Player1Wins){
+		if(Data.Player1Wins = true){
+			
 			TurnSequence.DisplayWinner(CommandInput.getPlayer1());
 		}
-		if(Data.Player2Wins){
+		if(Data.Player2Wins = true){
 			TurnSequence.DisplayWinner(CommandInput.getPlayer1());
 		}
 	}
