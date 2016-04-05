@@ -15,7 +15,6 @@ public class TurnSequence {
 	public static void TurnSequencePreparations(){
 		DisplayInfo();
 		TerritoryCard.FillTerritoryCards();
-		Gameplay.calculateReinforcements();
 		TerritoryCard.shuffleTerrirtoryDeck();
 	}
 
@@ -57,9 +56,11 @@ public class TurnSequence {
 	}
 
 	public static void TurnSequence() {
-		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
 		Gameplay.calculateReinforcements();
-		PlaceReinforcements();
+		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
+		while(Gameplay.reinforcementsLeft(CommandInput.currentPlayer)==true){
+			PlaceReinforcements();
+		}
 		Combat();
 		Fortify();
 		InsigniaExchange();

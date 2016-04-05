@@ -91,11 +91,13 @@ public class Gameplay {
 	//calculates the reinforcements each player has to place
 	static void calculateReinforcements() {
 		for(int i = 0;i<42;i++){
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories<=9){
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements = 3;
-			}
-			else{
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements = Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories / 3;
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.currentPlayer)==0){
+				if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories<=9 ){
+					Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements += 3;
+				}
+				else{
+					Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements += Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories / 3;
+				}
 			}
 		}
 	}

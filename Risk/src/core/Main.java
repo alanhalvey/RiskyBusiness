@@ -17,10 +17,7 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		TurnSequence.TurnSequencePreparations();
-		for(int i=0; i<1; i++){
-			TurnSequence.Combat();
-		}
-		TurnSequence.PlaceUnits();
+		//TurnSequence.PlaceUnits();
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence.TurnSequence();
 			TurnSequence.ChangePlayers();
