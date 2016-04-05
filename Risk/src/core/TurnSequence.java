@@ -155,7 +155,7 @@ public class TurnSequence {
 		CommandInput.appendStringTo("Would you like to combat? (Y/N)\n", Color.RED);
 		String choice = CommandInput.getCommand();
 		if(choice.compareToIgnoreCase("Y")==0){
-			Gameplay.combat(CommandInput.currentPlayer);
+			Combat.combat(CommandInput.currentPlayer);
 			CombatAgain();
 		}
 		else if (choice.compareToIgnoreCase("N")==0){
@@ -172,7 +172,7 @@ public class TurnSequence {
 		CommandInput.appendStringTo("Would you like to combat again? (Y/N)\n", Color.RED);
 		String choice = CommandInput.getCommand();
 		if(choice.compareToIgnoreCase("Y")==0){
-			Gameplay.combat(CommandInput.currentPlayer);
+			Combat.combat(CommandInput.currentPlayer);
 			count++;
 		}
 		else if (choice.compareToIgnoreCase("N")==0){

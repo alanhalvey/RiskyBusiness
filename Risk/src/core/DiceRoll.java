@@ -88,9 +88,9 @@ public class DiceRoll {
 		int defenderSecondHighestRoll = 0; // holds the defenders second highest roll
 		
 		@SuppressWarnings("unused")
-		Color attackingPlayerColour = Gameplay.attackingPlayerColour;
+		Color attackingPlayerColour = Combat.attackingPlayerColour;
 		@SuppressWarnings("unused")
-		Color defendingPlayerColour = Gameplay.defendingPlayerColour;
+		Color defendingPlayerColour = Combat.defendingPlayerColour;
 
 		//Set the attacking player and their respective colour. 
 		if(currentPlayer == CommandInput.player1){
@@ -150,7 +150,7 @@ public class DiceRoll {
 		for(i=1; i<numberOfUnitsToDefendWith; i++){
 			tempRolls += ", " + DefenderRolls[i];
 		}
-		CommandInput.appendStringTo(Gameplay.defendingPlayerString + " rolled " + tempRolls + "]\n", Color.BLACK);		
+		CommandInput.appendStringTo(Combat.defendingPlayerString + " rolled " + tempRolls + "]\n", Color.BLACK);		
 
 		System.out.println("ah = " + attackerHighestRoll);
 		System.out.println("ash = " + attackerSecondHighestRoll);
