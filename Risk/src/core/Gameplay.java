@@ -778,7 +778,7 @@ public class Gameplay {
 				}
 			}
 		}
-
+		Data.alreadyExchanged=false;
 		return currentPlayerTerritoryCards;
 	}
 

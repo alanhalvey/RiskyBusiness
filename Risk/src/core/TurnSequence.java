@@ -67,7 +67,8 @@ public class TurnSequence {
 	}
 
 	private static void InsigniaExchange() {
-		if(Data.exchangeIndex<Data.NUM_COUNTRIES){
+		
+		if(Data.exchangeIndex<Data.NUM_COUNTRIES && !(Data.alreadyExchanged)){
 			if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
 				TerritoryCard.territoryCardsShuffled.get(Data.exchangeIndex).setCardOwner(Deck.player1);
 			}
@@ -97,15 +98,16 @@ public class TurnSequence {
 			if(currentPlayerTerritoryCards >= 3 && currentPlayerTerritoryCards<5){
 				CommandInput.appendStringTo("Would you like to exhange some territory cards? (Y/N)\n", Color.RED);
 				String choice = CommandInput.getCommand();
-				if(choice.compareTo("Y")==0){
+				if(choice.compareToIgnoreCase("Y")==0){
 					currentPlayerTerritoryCards =Gameplay.Exchange(CommandInput.currentPlayer, currentPlayerTerritoryCards);
 					CommandInput.appendStringTo("You now have " + currentPlayerTerritoryCards + " territory cards left\n", Color.RED);
 				}
-				else if(choice.compareTo("N")==0){
+				else if(choice.compareToIgnoreCase("N")==0){
 					CommandInput.appendStringTo("You have skipped exchange of territory cards.\n", Color.RED);
 				}
 				else{
 					CommandInput.appendStringTo("Invalid input. Try again\n", Color.RED);
+					Data.alreadyExchanged = true;
 					InsigniaExchange();
 				}
 			}

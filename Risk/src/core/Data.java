@@ -156,6 +156,7 @@ public class Data{
 	};
 	public static boolean Player1Wins = false;	
 	public static boolean Player2Wins = false;
+	public static boolean alreadyExchanged = false;
 	public static int[][] getCountryCoord() {
 		return COUNTRY_COORD;
 	}
