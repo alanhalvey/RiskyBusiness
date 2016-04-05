@@ -115,4 +115,5 @@ public class Country {
 	private void setIndex(int index2) {
 		this.index = index2;
 	}
+
 }

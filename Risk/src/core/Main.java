@@ -10,18 +10,17 @@ import java.io.IOException;
 
 public class Main {
 
+	static String choice = "";
+
 	@SuppressWarnings("unused")
 	public static void main(String args[]) throws IOException{
 		Screen screen = new Screen();
 		CommandInput.run();
 		DisplayInfo();
 
-		/*
-		for(int i=0; i<7; i++){
-			Gameplay.combat(CommandInput.currentPlayer);
-			ChangePlayers();
-		}
-		*/
+	/*	for(int i=0; i<1; i++){
+			Main.Combat();
+		}*/
 
 
 		//Gameplay.combat(CommandInput.currentPlayer);
@@ -178,9 +177,10 @@ public class Main {
 
 	private static void Combat() {
 		CommandInput.appendStringTo("Would you like to combat? (Y/N)\n", Color.RED);
-		String choice = CommandInput.getCommand();
+		choice = CommandInput.getCommand();
 		if(choice.compareToIgnoreCase("Y")==0){
 			Gameplay.combat(CommandInput.currentPlayer);
+			CombatAgain();
 		}
 		else if (choice.compareToIgnoreCase("N")==0){
 			CommandInput.appendStringTo("You have skipped combat\n", Color.RED);
@@ -189,8 +189,28 @@ public class Main {
 			CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
 			Combat();
 		}
-
 	}
+
+	private static void CombatAgain(){
+		int count = 0;
+		CommandInput.appendStringTo("Would you like to combat again? (Y/N)\n", Color.RED);
+		choice = CommandInput.getCommand();
+		if(choice.compareToIgnoreCase("Y")==0){
+			Gameplay.combat(CommandInput.currentPlayer);
+			count++;
+		}
+		else if (choice.compareToIgnoreCase("N")==0){
+			CommandInput.appendStringTo("You have skipped combat\n", Color.RED);
+		}
+		else{
+			CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
+			count++;
+		}
+		if(count>0){
+			CombatAgain();
+		}
+	}
+
 	public static void Fortify() {
 		CommandInput.appendStringTo("Would you like to Fortify? (Y/N)\n", Color.RED);
 		String choice = CommandInput.getCommand();

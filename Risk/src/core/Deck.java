@@ -19,6 +19,7 @@ public class Deck {
 	protected int MAX_CARD_AMOUNT = 42;
 	public static ArrayList<String> player1Countries = new ArrayList<String>();
 	public static ArrayList<String> player2Countries = new ArrayList<String>();
+	
 	static Player player1,player2,neutral1,neutral2,neutral3,neutral4;
 
 

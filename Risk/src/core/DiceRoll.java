@@ -204,6 +204,8 @@ public class DiceRoll {
 	
 	public static String highestDiceRollWinner(){ //attacker and defender highest rolls compared
 		
+		//attackerHighestRoll = 6;
+		
 		if(attackerHighestRoll > defenderHighestRoll){
 			string1 = "0";
 		}
