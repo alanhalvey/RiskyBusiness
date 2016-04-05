@@ -305,4 +305,15 @@ public class Deck {
 		}
 	}
 
+	public static int calculateTerritories(String player) {
+		int ret =0;
+		for(int i =0;i<42;i++){
+			if(player.compareTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.toString())==0){
+				ret++;
+			}
+		}
+		return ret;
+		
+	}
+
 }
