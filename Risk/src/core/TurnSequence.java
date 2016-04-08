@@ -64,21 +64,10 @@ public class TurnSequence {
 		Combat();
 		Fortify();
 		InsigniaExchange();
+		Data.alreadyExchanged = false;
 	}
 
 	private static void InsigniaExchange() {
-		
-		if(Data.exchangeIndex<Data.NUM_COUNTRIES && !(Data.alreadyExchanged)){
-			if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
-				TerritoryCard.territoryCardsShuffled.get(Data.exchangeIndex).setCardOwner(Deck.player1);
-			}
-			if(CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
-				TerritoryCard.territoryCardsShuffled.get(Data.exchangeIndex).setCardOwner(Deck.player2);
-			}
-			Data.exchangeIndex++;
-		}
-
-
 		int counts[] = Gameplay.getCounts();
 		int artillary = counts[0];
 		int cavalry = counts[1];

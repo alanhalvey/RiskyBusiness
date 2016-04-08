@@ -18,6 +18,13 @@ public class Main {
 		CommandInput.run();
 		TurnSequence.TurnSequencePreparations();
 		//TurnSequence.PlaceUnits();
+		
+		
+		for(int i =0;i<42;i++){
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.player1)!=0){
+				Deck.countriesAfterShuffle[i].setPlayerArmies(10);
+			}
+		}
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence.TurnSequence();
 			TurnSequence.ChangePlayers();

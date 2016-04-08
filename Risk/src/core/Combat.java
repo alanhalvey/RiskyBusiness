@@ -308,7 +308,6 @@ public class Combat {
 			Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies())-1);
 			System.out.println(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName() + " now has this many armies: " + Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies()) ;
 
-
 			if((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())==0){
 				takeOverCountry(attackingPlayer, defendingPlayer, countryToAttackWith, countryToAttack);
 			}
@@ -322,7 +321,6 @@ public class Combat {
 			Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())-2);
 			System.out.println(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName() + " now has this many armies: " + Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies()) ;
 
-
 			if((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())==0){
 				takeOverCountry(attackingPlayer, defendingPlayer, countryToAttackWith, countryToAttack);
 			}
@@ -335,7 +333,6 @@ public class Combat {
 			CommandInput.appendStringTo(defendingPlayerString + " wins both combats.\n" + defendingPlayerString + " does not lose an army.\n" + attackingPlayer + " loses two armies.\n", Color.BLACK);
 			Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].setPlayerArmies((Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies())-2);
 			System.out.println(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName() + " now has this many armies: " + Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies()) ;
-
 
 			if((Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies())==0){
 				takeOverCountry(attackingPlayer, defendingPlayer, countryToAttackWith, countryToAttack);
@@ -432,6 +429,19 @@ public class Combat {
 
 		}
 		Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies(numberOfUnitsToMoveInWith);
+		if(Data.exchangeIndex<Data.NUM_COUNTRIES && !(Data.alreadyExchanged)){
+			if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
+				TerritoryCard.territoryCardsShuffled.get(Data.exchangeIndex).setCardOwner(Deck.player1);
+			}
+			if(CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
+				TerritoryCard.territoryCardsShuffled.get(Data.exchangeIndex).setCardOwner(Deck.player2);
+			}
+			Data.exchangeIndex++;
+			Data.alreadyExchanged =true;
+			CommandInput.appendStringTo(CommandInput.currentPlayer + ", you have gained a territory card.\n", Color.RED);
+			int cards = TurnSequence.countCards(CommandInput.currentPlayer);
+			CommandInput.appendStringTo("You now have " + cards + " territory cards.\n." , Color.RED);
+		}
 		Screen.mainFrame.repaint();
 	}
 

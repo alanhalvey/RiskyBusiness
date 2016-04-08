@@ -210,7 +210,7 @@ public class Deck {
 	private static void PupulateCountries() {
 		for(int i=0;i<42;i++){
 			Player p = null;
-			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 3, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i], "Abb",i );
+			countriesBeforeShuffle[i] = new Country(Data.COUNTRY_NAMES[i], p, 1, Data.getCountryCoord()[i][0], Data.getCountryCoord()[i][1], Data.ADJACENT[i], Data.CONTINENT_IDS[i], "Abb",i );
 			System.out.println(countriesBeforeShuffle[i].getIndex());
 		}
 	}
