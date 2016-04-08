@@ -7,12 +7,15 @@ package core;
 import java.awt.Color;
 
 public class Gameplay {
-	
+
 	public static boolean reinforcementsLeft(String player){
 		boolean result = true;
 		for(int k = 0;k<42;k++){
 			if(player.compareToIgnoreCase(Deck.countriesAfterShuffle[k].getOccupyingPlayer().playerName)==0){
-				if(Deck.countriesAfterShuffle[k].getOccupyingPlayer().numReinforcements == 0){
+				if(player.compareTo(CommandInput.getPlayer2())==0 && Deck.player2.numReinforcements ==0){
+					result = false;
+				}
+				if(player.compareTo(CommandInput.getPlayer1())==0 && Deck.player1.numReinforcements ==0){
 					result = false;
 				}
 			}
@@ -68,11 +71,21 @@ public class Gameplay {
 	static void calculateReinforcements() {
 		for(int i = 0;i<42;i++){
 			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.currentPlayer)==0){
-				if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories<=9 ){
-					Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements += 3;
+				if(Deck.calculateTerritories(CommandInput.currentPlayer) <=9 ){
+					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
+						Deck.player1.numReinforcements = 3;
+					}
+					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer2())==0){
+						Deck.player2.numReinforcements = 3;
+					}
 				}
-				else{
-					Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements += Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories / 3;
+				else if(Deck.calculateTerritories(CommandInput.currentPlayer) > 9){
+					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
+						Deck.player1.numReinforcements = Deck.calculateTerritories(CommandInput.currentPlayer) / 3;
+					}
+					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer2())==0){
+						Deck.player2.numReinforcements = Deck.calculateTerritories(CommandInput.currentPlayer) / 3;
+					}
 				}
 			}
 		}
@@ -81,35 +94,35 @@ public class Gameplay {
 	//Function allowing the fortification between territories for a player. Once per go.
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 		//if(takeArmies.getOccupyingPlayer().fortified==true && putArmies.getOccupyingPlayer().fortified == true){
-			if(takeArmies.getPlayerArmies()<=1){
-				CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
-			}
-			else{
-				System.out.println("1");
-				for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
-					if(takeArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k])  == 0 || putArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k]) == 0 ){
-						System.out.println("2");
+		if(takeArmies.getPlayerArmies()<=1){
+			CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
+		}
+		else{
+			System.out.println("1");
+			for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
+				if(takeArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k])  == 0 || putArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k]) == 0 ){
+					System.out.println("2");
 
-						for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
-							System.out.println("3");
-							if(Map.arrayContains(takeArmies.getAdjacent(), k) && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0 && takeArmies.getOccupyingPlayer().fortified==true){
-								System.out.println("4");
+					for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
+						System.out.println("3");
+						if(Map.arrayContains(takeArmies.getAdjacent(), k) && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0 && takeArmies.getOccupyingPlayer().fortified==true){
+							System.out.println("4");
 
-								takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
-								putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
-								CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.\n", Color.RED);
-								CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.\n", Color.RED);
-								takeArmies.getOccupyingPlayer().fortified=false;
-							}
+							takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
+							putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
+							CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.\n", Color.RED);
+							CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.\n", Color.RED);
+							takeArmies.getOccupyingPlayer().fortified=false;
 						}
 					}
-					else{
-						System.out.println("this is not a country");
-					}
+				}
+				else{
+					System.out.println("this is not a country");
 				}
 			}
 		}
-		/*else{
+	}
+	/*else{
 			CommandInput.appendStringTo("you have already used your fortify.\n", Color.RED);
 			TurnSequence.Fortify();
 		}*/
@@ -148,7 +161,7 @@ public class Gameplay {
 	}
 
 
-	
+
 
 	public static int Exchange(String currentPlayer, int currentPlayerTerritoryCards) {
 		Color playerColor;

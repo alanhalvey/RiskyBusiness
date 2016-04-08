@@ -42,7 +42,7 @@ public class Combat {
 		DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
 
 		InternalCombatLogic(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
-
+		
 		CheckPlayerEliminated();
 	}
 
@@ -300,7 +300,7 @@ public class Combat {
 			}
 
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
-			Screen.mainFrame.repaint();
+			  
 		}
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "-1"){
 
@@ -313,7 +313,7 @@ public class Combat {
 			}
 
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
-			Screen.mainFrame.repaint();
+			  
 		}
 		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "0"){
 
@@ -326,7 +326,7 @@ public class Combat {
 			}
 
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
-			Screen.mainFrame.repaint();
+			  
 		}
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "1"){
 
@@ -339,7 +339,7 @@ public class Combat {
 			}
 
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
-			Screen.mainFrame.repaint();
+			  
 		}
 		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "1"){
 
@@ -355,7 +355,7 @@ public class Combat {
 
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
-			Screen.mainFrame.repaint();
+			  
 		}
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "0"){
 
@@ -371,9 +371,9 @@ public class Combat {
 
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
-			Screen.mainFrame.repaint();
+			  
 		}
-		Screen.mainFrame.repaint();
+		  
 	}
 
 	private static void takeOverCountry(String attackingPlayer, String defendingPlayer, String countryToAttackWith, String countryToAttack) {
@@ -442,7 +442,7 @@ public class Combat {
 			int cards = TurnSequence.countCards(CommandInput.currentPlayer);
 			CommandInput.appendStringTo("You now have " + cards + " territory cards.\n." , Color.RED);
 		}
-		Screen.mainFrame.repaint();
+		  
 	}
 
 	//Deals with incorrect user input for attacking player
@@ -508,7 +508,7 @@ public class Combat {
 			if(name.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
 				System.out.println("got here");
 				Deck.countriesAfterShuffle[i].setPlayerArmies(Deck.countriesBeforeShuffle[indexForReassignment].getPlayerArmies());
-				Screen.mainFrame.repaint();
+				  
 				System.out.println(Deck.countriesAfterShuffle[i].getName() + " now has changed units.");
 			}
 		}
@@ -555,15 +555,21 @@ public class Combat {
 
 	//Checks if a player has been eliminated
 	static void CheckPlayerEliminated(){
+		int count1 = 0;
+		int count2 = 0;
 		for(int i=0;i<42;i++){
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0 && Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase(Deck.player1.playerName)==0){
-				Data.Player2Wins=true;
-				//CommandInput.appendStringTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName + " has been eliminated from the game.\n", Color.BLACK);
-
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(Deck.player1.playerName)==0){
+				count1++;
 			}
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numTerritories == 0 && Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareToIgnoreCase(Deck.player2.playerName)==0){
-				Data.Player1Wins=true;
+			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(Deck.player2.playerName)==0){
+				count2++;
 			}
+		}
+		if(count1 ==0){
+			Data.Player2Wins = true;
+		}
+		if(count2 ==0){
+			Data.Player1Wins = true;
 		}
 	}	
 

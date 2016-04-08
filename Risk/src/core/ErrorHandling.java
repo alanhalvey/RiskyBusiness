@@ -91,7 +91,7 @@ public class ErrorHandling {
 							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 							Data.PLAYER_1_ARMIES-=numReinforcementsToPlace;
 							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_1_ARMIES + " armies left.\n"), Color.BLUE);
-							Screen.mainFrame.repaint();
+							  
 							Data.neutralsFilled = false;
 							CommandInput.placeNeutrals(CommandInput.currentPlayer, "Neutral 1");
 
@@ -158,7 +158,7 @@ public class ErrorHandling {
 							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 							Data.PLAYER_2_ARMIES-=numReinforcementsToPlace;
 							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Data.PLAYER_2_ARMIES + " armies left.\n"), Color.BLUE);
-							Screen.mainFrame.repaint();
+							  
 							Data.neutralsFilled = false;
 							CommandInput.placeNeutrals(CommandInput.currentPlayer, "Neutral 1");
 
@@ -214,17 +214,13 @@ public class ErrorHandling {
 						}
 
 
-						if(numReinforcementsToPlace <= Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements){ //If you enter a number greater then the number of reinforcements you have left you won't enter this if statement 
+						if(numReinforcementsToPlace <= Deck.player1.numReinforcements){ //If you enter a number greater then the number of reinforcements you have left you won't enter this if statement 
 							int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 							Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
 							CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 
-							for(int k = 0;k<42;k++){
-								if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[k].getOccupyingPlayer().playerName)==0){
-									Deck.countriesAfterShuffle[k].getOccupyingPlayer().numReinforcements-=numReinforcementsToPlace;
-								}
-							}
-							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements + " Reinforcements left.\n"), Color.BLUE);
+							Deck.player1.numReinforcements-=numReinforcementsToPlace;
+							CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Deck.player1.numReinforcements + " Reinforcements left.\n"), Color.BLUE);
 
 						}
 						else{
@@ -265,21 +261,17 @@ public class ErrorHandling {
 						}
 					}
 
-					if(numReinforcementsToPlace <= Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements){ //If you enter a number greater then the number of reinforcements you have left you won't enter this if statement
+					if(numReinforcementsToPlace <= Deck.player2.numReinforcements){ //If you enter a number greater then the number of reinforcements you have left you won't enter this if statement
 						int currentUnits = Deck.countriesAfterShuffle[i].getPlayerArmies();
 						Deck.countriesAfterShuffle[i].setPlayerArmies(currentUnits+numReinforcementsToPlace);
 						CommandInput.appendStringTo((Deck.countriesAfterShuffle[i].getName()+" now has "+Deck.countriesAfterShuffle[i].getPlayerArmies() + " units\n"), Color.BLACK);
 						System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements);
 
-						for(int k = 0;k<42;k++){
-							if(CommandInput.currentPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[k].getOccupyingPlayer().playerName)==0){
-								Deck.countriesAfterShuffle[k].getOccupyingPlayer().numReinforcements-=numReinforcementsToPlace;
-							}
-						}
+						Deck.player2.numReinforcements-=numReinforcementsToPlace;
 
 						System.out.println(Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements);
 
-						CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements + " Reinforcements left.\n"), Color.MAGENTA);
+						CommandInput.appendStringTo((CommandInput.currentPlayer + " now has "+ Deck.player2.numReinforcements + " Reinforcements left.\n"), Color.MAGENTA);
 					}
 					else{
 						CommandInput.appendStringTo("You do not have enough Reinforcements to place that many.\n", Color.RED);

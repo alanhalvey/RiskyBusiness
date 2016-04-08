@@ -24,8 +24,12 @@ public class Player {
 		this.fortified = fortified;
 	}	
 	
-	public void setnumTerritories(){
-		this.numTerritories = numTerritories;
+	public void setnumTerritories(int numTerritories2){
+		this.numTerritories = numTerritories2;
+	}
+	
+	public int calculateTerritories(String playerName2){
+		return Deck.calculateTerritories(playerName2);
 	}
 	
 	public int getnumTerritories(){

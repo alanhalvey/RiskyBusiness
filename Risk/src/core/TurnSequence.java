@@ -24,7 +24,7 @@ public class TurnSequence {
 		while(flag){
 			//if the both users have put in their name
 			if ((CommandInput.getPlayer2().length() >= 3) && (CommandInput.getPlayer2().length() <= 10)){
-				Screen.mainFrame.repaint();
+
 				Deck.shuffledDeck();
 				flag = false;
 			}	
@@ -44,7 +44,7 @@ public class TurnSequence {
 		while(Data.unitsLeft==true){
 			if(Data.PLAYER_1_ARMIES != 0 || Data.PLAYER_2_ARMIES != 0){
 				CommandInput.placeUnits(CommandInput.currentPlayer);
-				Screen.mainFrame.repaint();
+
 			}
 			else{
 				CommandInput.appendStringTo("No units left to place\n", Color.RED);
@@ -62,9 +62,11 @@ public class TurnSequence {
 			PlaceReinforcements();
 		}
 		Combat();
-		Fortify();
-		InsigniaExchange();
-		Data.alreadyExchanged = false;
+		if(!(Data.Player1Wins || Data.Player2Wins)){
+			Fortify();
+			InsigniaExchange();
+			Data.alreadyExchanged = false;
+		}
 	}
 
 	private static void InsigniaExchange() {
@@ -137,7 +139,7 @@ public class TurnSequence {
 		else if(Gameplay.reinforcementsLeft(CommandInput.player2)!=true && CommandInput.currentPlayer.compareTo(CommandInput.player2)==0){
 			CommandInput.appendStringTo(CommandInput.currentPlayer+", you have no reinforcements left. Skipping placing reinforcements.\n", CommandInput.currentPlayerColour);
 		}
-		Screen.mainFrame.repaint();
+
 	}
 
 	public static void Combat() {
@@ -145,7 +147,8 @@ public class TurnSequence {
 		String choice = CommandInput.getCommand();
 		if(choice.compareToIgnoreCase("Y")==0){
 			Combat.combat(CommandInput.currentPlayer);
-			CombatAgain();
+			if(!(Data.Player1Wins || Data.Player2Wins))
+				CombatAgain();
 		}
 		else if (choice.compareToIgnoreCase("N")==0){
 			CommandInput.appendStringTo("You have skipped combat\n", Color.RED);
@@ -217,7 +220,7 @@ public class TurnSequence {
 				System.out.println(takingFrom.getName() + puttingTo.getName());
 				Gameplay.Fortify(takingFrom, puttingTo, numToMove );
 				System.out.println("test");
-				Screen.mainFrame.repaint();
+
 			}
 
 			else{

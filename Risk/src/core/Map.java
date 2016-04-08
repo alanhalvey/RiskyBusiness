@@ -52,7 +52,7 @@ public class Map extends JPanel {
 		}
 		drawKey(g2d);
 		drawStats(g2d);
-		Screen.mainFrame.repaint();
+		  
 	}
 
 	private void drawKey(Graphics2D g2d){
