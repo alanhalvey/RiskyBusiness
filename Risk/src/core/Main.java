@@ -16,8 +16,13 @@ public class Main {
 	public static void main(String args[]) throws IOException{
 		Screen screen = new Screen();
 		CommandInput.run();
+		
+		
 		TurnSequence.TurnSequencePreparations();
 		//TurnSequence.PlaceUnits();
+		
+		
+		
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence.TurnSequence();
 			TurnSequence.ChangePlayers();

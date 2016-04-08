@@ -571,6 +571,7 @@ public class Combat {
 		if(count2 ==0){
 			Data.Player1Wins = true;
 		}
+
 	}	
 
 

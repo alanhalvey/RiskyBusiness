@@ -147,8 +147,9 @@ public class TurnSequence {
 		String choice = CommandInput.getCommand();
 		if(choice.compareToIgnoreCase("Y")==0){
 			Combat.combat(CommandInput.currentPlayer);
-			if(!(Data.Player1Wins || Data.Player2Wins))
+			if(!(Data.Player1Wins || Data.Player2Wins)){
 				CombatAgain();
+			}
 		}
 		else if (choice.compareToIgnoreCase("N")==0){
 			CommandInput.appendStringTo("You have skipped combat\n", Color.RED);
@@ -174,7 +175,7 @@ public class TurnSequence {
 			CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
 			count++;
 		}
-		if(count>0){
+		if(count>0 && !(Data.Player1Wins || Data.Player2Wins)){
 			CombatAgain();
 		}
 	}

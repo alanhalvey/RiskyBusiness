@@ -94,9 +94,10 @@ public class Gameplay {
 	//Function allowing the fortification between territories for a player. Once per go.
 	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 		//if(takeArmies.getOccupyingPlayer().fortified==true && putArmies.getOccupyingPlayer().fortified == true){
-		if(takeArmies.getPlayerArmies()<=1){
+		if(takeArmies.getPlayerArmies()<=1 ){
 			CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
 		}
+		
 		else{
 			System.out.println("1");
 			for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
