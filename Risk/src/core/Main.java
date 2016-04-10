@@ -2,7 +2,6 @@
  * Alan Halvey - 14465722
  * Alan Holmes - 14719591
  * Greg Sloggett - 14522247
- * 
  */
 package core;
 import java.awt.Color;
@@ -17,11 +16,8 @@ public class Main {
 		Screen screen = new Screen();
 		CommandInput.run();
 		
-		
 		TurnSequence.TurnSequencePreparations();
-		//TurnSequence.PlaceUnits();
-		
-		
+		//TurnSequence.PlaceUnits();		
 		
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence.TurnSequence();
@@ -35,5 +31,3 @@ public class Main {
 		}
 	}
 }
-
-	
