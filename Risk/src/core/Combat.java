@@ -34,12 +34,15 @@ public class Combat {
 		
 		int count = 0;
 		
+		//Deals with case where players have only 1 army in 
+		//each country they own and therefore cannot attack.
 		if(Deck.calculateTerritories(CommandInput.currentPlayer) == Deck.calculateArmies(CommandInput.currentPlayer)){
 			CommandInput.appendStringTo("You can not combat as you do not have more than 1 army in any country.\n", Color.RED);
 			count=1;
 		}
 
 		if(count == 0){
+		
 		SortingPlayersForCombat(currentPlayer);
 
 		PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
@@ -54,11 +57,12 @@ public class Combat {
 		
 		}
 		
-		
 		CheckPlayerEliminated();
 		
 	}
 
+	//Sorts which player is attacking player and assigns appropriate colours.
+	//Also has cases for neutrals, but are not used here as they are passive in our game!
 	public static void SortingPlayersForCombat(String currentPlayer){
 
 		if(currentPlayer == CommandInput.player1){
@@ -89,9 +93,11 @@ public class Combat {
 
 	//Function gets player to pick which country he wishes to attack with
 	static void PickAttackingCountry(String currentPlayer, String attackingPlayer, String defendingPlayer){
+		
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
 		}
+		
 		int count = 0;
 		String didPickOccur = "NO";
 
@@ -99,6 +105,8 @@ public class Combat {
 		countryToAttackWith = CommandInput.getCommand();
 
 		boolean validCountryCheck = CommandInput.countryCheck(countryToAttackWith);
+		
+		//if input is not a country
 		if(!validCountryCheck){
 			CommandInput.appendStringTo("That's not a country. Try again.\n", Color.RED);
 			count++;
@@ -109,6 +117,7 @@ public class Combat {
 			int NumArmies = 0;
 			NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getPlayerArmies();
 
+			//Dealing with some errors and correct cases
 			for(int i=0;i<42;i++){
 				if (countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0 || countryToAttackWith.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
 
@@ -131,6 +140,7 @@ public class Combat {
 
 		}
 
+		//Recalls the pickAttackingCountry if it was not satisfied or had an incorrect input.
 		if(count>0 || didPickOccur == "NO"){
 			PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
 		}
@@ -138,12 +148,15 @@ public class Combat {
 
 	//Allows attacking player to pick which country, adjacent to his attacking country, that he wishes to attack
 	static void PickCountryToAttack(String currentPlayer, String attackingPlayer, String defendingPlayer){
+		
 		CommandInput.appendStringTo(attackingPlayer + " (ATTACK), Enter country to attack:\n", Color.BLACK);
 		countryToAttack = CommandInput.getCommand();
 		boolean validCountryCheck = CommandInput.countryCheck(countryToAttack);
+		
 		int count = 0;
 		String didPickOccur = "NO";
 
+		//if input is not a country
 		if(!validCountryCheck){
 			CommandInput.appendStringTo("That's not a country. Try again.\n", Color.RED);
 			count++;
@@ -153,14 +166,19 @@ public class Combat {
 
 			for(int i=0;i<42;i++){
 				if (countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName()) == 0 || countryToAttack.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation()) == 0){
+					
 					int attackingCountryIndex = getIndex(countryToAttackWith);
+					
 					if(attackingPlayer.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName)!=0){
+						
 						if(Map.arrayContains(Deck.countriesAfterShuffle[i].getAdjacent(), attackingCountryIndex)){
 							CommandInput.appendStringTo("You have chosen to attack " + countryToAttack + "\n", attackingPlayerColour);
 							didPickOccur = "YES";
 							defendingPlayer = Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName;
 							defendingPlayerString = defendingPlayer;
 
+							//Sets defending player colours. Also deals with neutrals here which are used
+							//even though they are passive in our sprint they still must defend.
 							if(defendingPlayer == CommandInput.player1){
 								defendingPlayerColour = CommandInput.player1Colour;
 							}
@@ -190,12 +208,14 @@ public class Combat {
 				}
 			}
 		}
+		
+		//Recalls the PickCountryToAttack Function if it was not satisfied or had an incorrect input.
 		if(didPickOccur == "NO" || count > 0){
 			PickCountryToAttack(currentPlayer, attackingPlayer, defendingPlayer);
 		}
 	}
 
-	//Gets the index of the country 
+	//Gets the index of the country to attack with
 	static int getIndex(String countryToAttackWith2) {
 		int index = -1;
 
@@ -238,10 +258,12 @@ public class Combat {
 				count++;
 			}
 		}
+		//Recalls the AttackingPlayerBattleDecisions Function if it was not satisfied or had an incorrect input.
 		if(count > 0){
 			AttackingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
 		}
 
+		//if it was satisfied this prints..
 		if(count == 0){				
 			CommandInput.appendStringTo(attackingPlayer + " uses " + countryToAttackWith + " to attack " + countryToAttack + " and uses " + numberOfUnitsToAttackWith + " armies to battle. \n", attackingPlayerColour);
 		}	
@@ -258,6 +280,7 @@ public class Combat {
 		NumArmies = Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getPlayerArmies();
 		System.out.println("" + NumArmies);
 
+		//If you only have 1 army in your defending country then you do not get to choose how many countries to defend with.
 		if(NumArmies == 1){
 			CommandInput.appendStringTo(defendingPlayer + " (DEFEND), you only have one army in " + countryToAttack + ", so you do not get to choose how many armies to defend with:\n", defendingPlayerColour);
 			numberOfUnitsToDefendWith = 1;
@@ -268,6 +291,7 @@ public class Combat {
 			CheckDefenderIntegerErrorInput(attackingPlayer, defendingPlayer);
 			System.out.println(" " + numberOfUnitsToDefendWith);
 
+			//some error checks
 			if(count == 0){
 				if(numberOfUnitsToDefendWith < 1){
 					CommandInput.appendStringTo("You must defend with at least one army.\n", Color.RED);
@@ -283,9 +307,13 @@ public class Combat {
 				}
 			}
 		}
+		
+		//Recalls the DefendingPlayerBattleDecisions Function if it was not satisfied or had an incorrect input.
 		if(count>0){
 			DefendingPlayerBattleDecisions(currentPlayer, attackingPlayer, defendingPlayer);
 		}
+		
+		//if it's satisfied this prints
 		if(count==0){
 			CommandInput.appendStringTo(defendingPlayerString + ", you have chosen to defend with " + numberOfUnitsToDefendWith + " units. \n", defendingPlayerColour);
 		}
@@ -299,7 +327,13 @@ public class Combat {
 		DiceRoll.combatDiceRoll(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
 		System.out.println("Attacking"+Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
 		System.out.println("Attacking with"+Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName()+ " " + Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getIndex());
-		// indexToAttack = 
+
+		//Series of if statements to deal with each possibility of dice roll.
+		//Each case deals with number of armies lost/maintained and calls the 
+		//function that deals with the taking over of a country if the defending 
+		//player loses all his countries.
+		
+		//if attacking player rolls highest roll and there was no second roll for both players
 		if((DiceRoll.string1 == "0") && DiceRoll.string2 == "-1"){
 
 			CommandInput.appendStringTo(attackingPlayer + " wins one combat.\n" + attackingPlayer + " does not lose an army.\n" + defendingPlayerString + " loses one army.\n", Color.BLACK);
@@ -314,6 +348,7 @@ public class Combat {
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
 			  
 		}
+		//if defending player rolls highest roll and there was no second roll for both players
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "-1"){
 
 			CommandInput.appendStringTo(defendingPlayerString + " wins one combat.\n" + defendingPlayerString + " does not lose an army.\n" + attackingPlayer + " loses one army.\n", Color.BLACK);
@@ -327,6 +362,8 @@ public class Combat {
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
 			  
 		}
+		
+		//if attacking player wins both the highest and second highest dice roll
 		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "0"){
 
 			CommandInput.appendStringTo( attackingPlayer + " wins both combats.\n" + attackingPlayer + " does not lose an army.\n" + defendingPlayerString + " loses two armies.\n", Color.BLACK);
@@ -340,6 +377,8 @@ public class Combat {
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttack)].getName());
 			  
 		}
+		
+		//if defending player wins both the highest and second highest dice rolls
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "1"){
 
 			CommandInput.appendStringTo(defendingPlayerString + " wins both combats.\n" + defendingPlayerString + " does not lose an army.\n" + attackingPlayer + " loses two armies.\n", Color.BLACK);
@@ -353,6 +392,8 @@ public class Combat {
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
 			  
 		}
+		
+		//If attacker wins highest dice roll and defender wins second highest dice roll.
 		else if((DiceRoll.string1 == "0") && DiceRoll.string2 == "1"){
 
 			CommandInput.appendStringTo(attackingPlayer + " and " + defendingPlayerString + " each win and lose a combat and both lose 1 army.\n", Color.BLACK);
@@ -369,6 +410,8 @@ public class Combat {
 			ReassignArmies(Deck.countriesBeforeShuffle[getIndex(countryToAttackWith)].getName());
 			  
 		}
+		
+		//If defender wins highest dice roll and attacker wins second highest dice roll.
 		else if((DiceRoll.string1 == "1") && DiceRoll.string2 == "0"){
 
 			CommandInput.appendStringTo(attackingPlayer + " and " + defendingPlayerString + " each win and lose a combat and both lose 1 army.\n", Color.BLACK);
@@ -388,6 +431,8 @@ public class Combat {
 		  
 	}
 
+	//Fucntion that allows attacking player to take over a country if the defending player 
+	//runs out of armies. allows specification of how many countries to move in with.
 	private static void takeOverCountry(String attackingPlayer, String defendingPlayer, String countryToAttackWith, String countryToAttack) {
 		for(int i=0;i<42;i++){
 			ReassignCountriesArmies(Data.COUNTRY_NAMES[i]);
@@ -422,6 +467,7 @@ public class Combat {
 
 			System.out.println("number of units to move in with = " + numberOfUnitsToMoveInWith);
 
+			//Some error handling 
 			if(numberOfUnitsToMoveInWith >= numberOfArmiesInAttackingCountry){
 				CommandInput.appendStringTo("You do not have enough armies for this move. You must have at least 1 remaining army in your country.", Color.RED);
 				count = 1;
@@ -440,6 +486,8 @@ public class Combat {
 			}
 
 		}
+		
+		//Dealing with territory cards affected by this taking over of countries
 		Deck.countriesBeforeShuffle[getIndex(countryToAttack)].setPlayerArmies(numberOfUnitsToMoveInWith);
 		if(Data.exchangeIndex<Data.NUM_COUNTRIES && !(Data.alreadyExchanged)){
 			if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
@@ -472,6 +520,7 @@ public class Combat {
 		}
 	}
 
+	//gets the number of territories in an attacking players country when called (used in some different logic calls)
 	private static int getAttackingPlayerTerritoryNumber(String attackingPlayer){
 		int attackingPlayerTerritories = 0;
 		if(attackingPlayer==CommandInput.player1){
