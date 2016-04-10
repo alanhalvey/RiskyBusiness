@@ -69,22 +69,29 @@ public class Gameplay {
 
 	//calculates the reinforcements each player has to place
 	static void calculateReinforcements() {
+		boolean alreadyAdded = false;
 		for(int i = 0;i<42;i++){
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.currentPlayer)==0){
-				if(Deck.calculateTerritories(CommandInput.currentPlayer) <=9 ){
-					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
-						Deck.player1.numReinforcements = 3;
+			if(alreadyAdded == false){
+				if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.currentPlayer)==0){
+					if(Deck.calculateTerritories(CommandInput.currentPlayer) <=9 ){
+						if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
+							Deck.player1.numReinforcements += 3;
+							alreadyAdded = true;
+						}
+						if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer2())==0){
+							Deck.player2.numReinforcements += 3;
+							alreadyAdded = true;
+						}
 					}
-					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer2())==0){
-						Deck.player2.numReinforcements = 3;
-					}
-				}
-				else if(Deck.calculateTerritories(CommandInput.currentPlayer) > 9){
-					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
-						Deck.player1.numReinforcements = Deck.calculateTerritories(CommandInput.currentPlayer) / 3;
-					}
-					if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer2())==0){
-						Deck.player2.numReinforcements = Deck.calculateTerritories(CommandInput.currentPlayer) / 3;
+					else if(Deck.calculateTerritories(CommandInput.currentPlayer) > 9){
+						if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
+							Deck.player1.numReinforcements+= Deck.calculateTerritories(CommandInput.currentPlayer) / 3;
+							alreadyAdded = true;
+						}
+						if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer2())==0){
+							Deck.player2.numReinforcements += Deck.calculateTerritories(CommandInput.currentPlayer) / 3;
+							alreadyAdded = true;
+						}
 					}
 				}
 			}
@@ -97,7 +104,7 @@ public class Gameplay {
 		if(takeArmies.getPlayerArmies()<=1 ){
 			CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
 		}
-		
+
 		else{
 			System.out.println("1");
 			for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
@@ -214,11 +221,13 @@ public class Gameplay {
 		boolean cavalryRemoved = false;
 		boolean infantryRemoved = false;
 
-		for(int i=0;i<42;i++){
-			if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.currentPlayer)==0){
-				Deck.countriesAfterShuffle[i].getOccupyingPlayer().numReinforcements+=additionalReinforcements;
-			}
+		if(currentPlayer.compareTo(Deck.player1.playerName)==0){
+			Deck.player1.numReinforcements+= additionalReinforcements;
 		}
+		if(currentPlayer.compareTo(Deck.player2.playerName)==0){
+			Deck.player2.numReinforcements+= additionalReinforcements;
+		}
+
 		for(int i=0;i< TerritoryCard.territoryCardsShuffled.size();i++){
 			if(removedCardsCount <3){
 				if(TerritoryCard.territoryCardsShuffled.get(i).getPlayer().playerName.compareTo(CommandInput.currentPlayer)==0 && getInsigniaValue(input)==1 && TerritoryCard.territoryCardsShuffled.get(i).getCardName().compareToIgnoreCase("artillary")==0){
