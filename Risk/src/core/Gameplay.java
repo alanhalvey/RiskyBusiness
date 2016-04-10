@@ -161,9 +161,6 @@ public class Gameplay {
 		return null;
 	}
 
-
-
-
 	public static int Exchange(String currentPlayer, int currentPlayerTerritoryCards) {
 		Color playerColor;
 		if(currentPlayer.compareTo(CommandInput.player1)==0){

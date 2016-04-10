@@ -3,6 +3,7 @@ package core;
 import java.awt.Color;
 
 public class TurnSequence {
+
 	public static void ChangePlayers() {
 		if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
 			CommandInput.currentPlayer = CommandInput.player2;
@@ -12,6 +13,7 @@ public class TurnSequence {
 		}
 
 	}
+
 	public static void TurnSequencePreparations(){
 		DisplayInfo();
 		TerritoryCard.FillTerritoryCards();
@@ -61,9 +63,20 @@ public class TurnSequence {
 		while(Gameplay.reinforcementsLeft(CommandInput.currentPlayer)==true){
 			PlaceReinforcements();
 		}
+
 		Combat();
+
 		if(!(Data.Player1Wins || Data.Player2Wins)){
-			Fortify();
+			
+			int check = 0;
+
+			if(Deck.calculateTerritories(CommandInput.currentPlayer) == Deck.calculateArmies(CommandInput.currentPlayer)){
+				CommandInput.appendStringTo("You can not fortify as you do not have more than 1 army in any country.\n", Color.RED);
+				check=1;
+			}
+			else{
+				Fortify();
+			}
 			InsigniaExchange();
 			Data.alreadyExchanged = false;
 		}
@@ -161,22 +174,32 @@ public class TurnSequence {
 	}
 
 	public static void CombatAgain(){
-		int count = 0;
-		CommandInput.appendStringTo("Would you like to combat again? (Y/N)\n", Color.RED);
-		String choice = CommandInput.getCommand();
-		if(choice.compareToIgnoreCase("Y")==0){
-			Combat.combat(CommandInput.currentPlayer);
-			count++;
+
+		int check = 0;
+
+		if(Deck.calculateTerritories(CommandInput.currentPlayer) == Deck.calculateArmies(CommandInput.currentPlayer)){
+			CommandInput.appendStringTo("You can not combat as you do not have more than 1 army in any country.\n", Color.RED);
+			check=1;
 		}
-		else if (choice.compareToIgnoreCase("N")==0){
-			CommandInput.appendStringTo("You have skipped combat\n", Color.RED);
-		}
-		else{
-			CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
-			count++;
-		}
-		if(count>0 && !(Data.Player1Wins || Data.Player2Wins)){
-			CombatAgain();
+
+		if(check == 0){
+			int count = 0;
+			CommandInput.appendStringTo("Would you like to combat again? (Y/N)\n", Color.RED);
+			String choice = CommandInput.getCommand();
+			if(choice.compareToIgnoreCase("Y")==0){
+				Combat.combat(CommandInput.currentPlayer);
+				count++;
+			}
+			else if (choice.compareToIgnoreCase("N")==0){
+				CommandInput.appendStringTo("You have skipped combat\n", Color.RED);
+			}
+			else{
+				CommandInput.appendStringTo("Invalid input. Try again.\n", Color.RED);
+				count++;
+			}
+			if(count>0 && !(Data.Player1Wins || Data.Player2Wins)){
+				CombatAgain();
+			}
 		}
 	}
 
@@ -236,6 +259,7 @@ public class TurnSequence {
 			CommandInput.appendStringTo("Invalid input. Try again.", Color.red);
 		}
 	}
+
 	public static void DisplayWinner(String player) {
 		Color playerColor;
 		if(player.compareTo(CommandInput.getPlayer1())==0){
@@ -246,6 +270,5 @@ public class TurnSequence {
 		}
 		CommandInput.appendStringTo("Congratulations, "+player+ ", you have won the game!!!\n", playerColor);
 	}
+
 }
-
-

@@ -313,7 +313,18 @@ public class Deck {
 			}
 		}
 		return ret;
-		
+	}
+	
+	public static int calculateArmies(String player) {
+		int armies =0;
+		for(int i =0;i<42;i++){
+			if(player.compareTo(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.toString())==0){
+				
+				armies += Deck.countriesAfterShuffle[i].getPlayerArmies();
+				
+			}
+		}
+		return armies;
 	}
 	
 	public static int calculateTerritoryCards(String player){

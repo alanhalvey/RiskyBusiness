@@ -3,13 +3,13 @@ package core;
 import java.awt.Color;
 
 public class Combat {
+	
 	static int numP1Territories;
 	static int numP2Territories;
 	static int numN1Territories;
 	static int numN2Territories;
 	static int numN3Territories;
 	static int numN4Territories;
-
 
 	static int numberOfArmiesInAttackingCountry = 0;
 
@@ -31,6 +31,15 @@ public class Combat {
 
 	//Central point for combat function, calls 8 different sub functions.
 	public static void combat(String currentPlayer){
+		
+		int count = 0;
+		
+		if(Deck.calculateTerritories(CommandInput.currentPlayer) == Deck.calculateArmies(CommandInput.currentPlayer)){
+			CommandInput.appendStringTo("You can not combat as you do not have more than 1 army in any country.\n", Color.RED);
+			count=1;
+		}
+
+		if(count == 0){
 		SortingPlayersForCombat(currentPlayer);
 
 		PickAttackingCountry(currentPlayer, attackingPlayer, defendingPlayer);
@@ -43,7 +52,11 @@ public class Combat {
 
 		InternalCombatLogic(currentPlayer, attackingPlayer, defendingPlayer, numberOfUnitsToAttackWith, numberOfUnitsToDefendWith);
 		
+		}
+		
+		
 		CheckPlayerEliminated();
+		
 	}
 
 	public static void SortingPlayersForCombat(String currentPlayer){
@@ -73,7 +86,6 @@ public class Combat {
 			attackingPlayerColour = Color.YELLOW;
 		}
 	}
-
 
 	//Function gets player to pick which country he wishes to attack with
 	static void PickAttackingCountry(String currentPlayer, String attackingPlayer, String defendingPlayer){
@@ -460,8 +472,6 @@ public class Combat {
 		}
 	}
 
-
-
 	private static int getAttackingPlayerTerritoryNumber(String attackingPlayer){
 		int attackingPlayerTerritories = 0;
 		if(attackingPlayer==CommandInput.player1){
@@ -473,8 +483,6 @@ public class Combat {
 
 		return attackingPlayerTerritories;
 	}
-
-
 
 	static void ReassignCountriesArmies(String string) {
 		int armiesToPass = 0;
@@ -493,8 +501,6 @@ public class Combat {
 			}
 		}
 	}
-
-
 
 	private static void ReassignArmies(String name) {
 		int indexForReassignment = 0;
@@ -515,8 +521,6 @@ public class Combat {
 
 	}
 
-
-
 	//Deals with incorrect user input for attacking player
 	static void CheckAttackerIntegerErrorInput(String attackingPlayer, String defendingPlayer){
 		numberOfUnitsToAttackWith = -1234;
@@ -533,8 +537,6 @@ public class Combat {
 
 	}
 
-
-
 	//Deals with incorrect user input for defending player
 	static void CheckDefenderIntegerErrorInput(String attackingPlayer, String defendingPlayer){
 
@@ -550,8 +552,6 @@ public class Combat {
 		}
 
 	}
-
-
 
 	//Checks if a player has been eliminated
 	static void CheckPlayerEliminated(){
@@ -573,9 +573,5 @@ public class Combat {
 		}
 
 	}	
-
-
-
-
 
 }
