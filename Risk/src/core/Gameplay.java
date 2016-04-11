@@ -8,6 +8,7 @@ import java.awt.Color;
 
 public class Gameplay {
 
+	//Determines whether a player has reinforcements left or not. Returns the result of true or false.
 	public static boolean reinforcementsLeft(String player){
 		boolean result = true;
 		for(int k = 0;k<42;k++){
@@ -67,12 +68,14 @@ public class Gameplay {
 		}	
 	}
 
-	//calculates the reinforcements each player has to place
+	//calculates the reinforcements each player has left to place
 	static void calculateReinforcements() {
 		boolean alreadyAdded = false;
 		for(int i = 0;i<42;i++){
 			if(alreadyAdded == false){
 				if(Deck.countriesAfterShuffle[i].getOccupyingPlayer().playerName.compareTo(CommandInput.currentPlayer)==0){
+					//if the current player has armies he gets 3 armies to place. 
+					//This is mandatory every turn, as long as the player is still in the game.
 					if(Deck.calculateTerritories(CommandInput.currentPlayer) <=9 ){
 						if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
 							Deck.player1.numReinforcements += 3;
@@ -83,6 +86,8 @@ public class Gameplay {
 							alreadyAdded = true;
 						}
 					}
+					//calls calculate territories function. If the number of territories owned is greater 
+					//than 9 then the player gets the value of the number of territories he owns divided by 3
 					else if(Deck.calculateTerritories(CommandInput.currentPlayer) > 9){
 						if(CommandInput.currentPlayer.compareTo(CommandInput.getPlayer1())==0){
 							Deck.player1.numReinforcements+= Deck.calculateTerritories(CommandInput.currentPlayer) / 3;
@@ -136,17 +141,7 @@ public class Gameplay {
 		}*/
 	//}
 
-	public static void skip(){
-
-		if (CommandInput.currentPlayer.compareToIgnoreCase(CommandInput.player1) == 0){
-			CommandInput.currentPlayer= CommandInput.player2;
-		}
-		else {
-			CommandInput.currentPlayer = CommandInput.player1;
-		}
-
-	}
-
+	//Finds the country associated with the abbreviation from the user input
 	public static String setFromAbbreviation(String country) {
 		for(int i = 0;i<42;i++){
 			if(country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getAbbreviation())==0){
@@ -159,6 +154,7 @@ public class Gameplay {
 		return null;
 	}
 
+	//Takes a String and makes a country object from it.
 	public static Country setCountry(String country) {
 		for(int i =0;i<42;i++){
 			if (country.compareToIgnoreCase(Deck.countriesAfterShuffle[i].getName())==0){
@@ -168,6 +164,7 @@ public class Gameplay {
 		return null;
 	}
 
+	//Exchange function to allow exchange of territory/insignia cards
 	public static int Exchange(String currentPlayer, int currentPlayerTerritoryCards) {
 		Color playerColor;
 		if(currentPlayer.compareTo(CommandInput.player1)==0){
