@@ -103,7 +103,7 @@ public class Gameplay {
 		}
 	}
 
-	//Function allowing the fortification between territories for a player. Once per go.
+	//Function allowing the fortification between territories for a player. Once per go..
 public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 		
 		if(takeArmies.getPlayerArmies()<=1 || amountMoved > takeArmies.getPlayerArmies() ){
