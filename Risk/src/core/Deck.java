@@ -35,10 +35,12 @@ public class Deck {
 		}
 	}
 
+	//Shuffles the deck of territory cards
 	public void shuffle() {
 		Collections.shuffle(deck);
 	}	
 
+	//Returns a string specifying the number of cards left in the deck.
 	public String cardsLeft() {
 		return deck.size()+1 + " Cards left";
 	}
@@ -72,6 +74,7 @@ public class Deck {
 		u++;
 	}
 
+	//Assigns abbreviations to each country name.
 	private static void assignAbbreviations() {
 		for(int i=0;i<42;i++){
 			switch(countriesAfterShuffle[i].getName()){
@@ -215,6 +218,7 @@ public class Deck {
 		}
 	}
 
+	//Reassigns the countries to each player
 	private static void Reassign(String result) {
 		if(z==42){
 			z=0;
@@ -305,6 +309,7 @@ public class Deck {
 		}
 	}
 
+	//Calculates the number of territories owned by a player.
 	public static int calculateTerritories(String player) {
 		int ret =0;
 		for(int i =0;i<42;i++){
@@ -315,6 +320,7 @@ public class Deck {
 		return ret;
 	}
 	
+	//Calculates the number of armies owned by a player.
 	public static int calculateArmies(String player) {
 		int armies =0;
 		for(int i =0;i<42;i++){
@@ -327,6 +333,7 @@ public class Deck {
 		return armies;
 	}
 	
+	//Calculates the number of territory cards owned by a player. 
 	public static int calculateTerritoryCards(String player){
 		int tot = 0;
 		
