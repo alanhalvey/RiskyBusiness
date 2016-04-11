@@ -106,7 +106,7 @@ public class Gameplay {
 	//Function allowing the fortification between territories for a player. Once per go..
 public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
 		
-		if(takeArmies.getPlayerArmies()<=1 || amountMoved > takeArmies.getPlayerArmies() ){
+		if(takeArmies.getPlayerArmies()<=1 || amountMoved >= takeArmies.getPlayerArmies() ){
 			CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
 			TurnSequence.Fortify();
 		}
