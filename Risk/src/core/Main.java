@@ -17,7 +17,7 @@ public class Main {
 		CommandInput.run();
 		
 		TurnSequence.TurnSequencePreparations();
-		//TurnSequence.PlaceUnits();		
+		TurnSequence.PlaceUnits();		
 		
 		while(!(Data.Player1Wins || Data.Player2Wins)){
 			TurnSequence.TurnSequence();

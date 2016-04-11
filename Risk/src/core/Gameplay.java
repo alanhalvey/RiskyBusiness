@@ -104,42 +104,33 @@ public class Gameplay {
 	}
 
 	//Function allowing the fortification between territories for a player. Once per go.
-	public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
-		//if(takeArmies.getOccupyingPlayer().fortified==true && putArmies.getOccupyingPlayer().fortified == true){
-		if(takeArmies.getPlayerArmies()<=1 ){
+public static void Fortify(Country takeArmies, Country putArmies, int amountMoved){
+		
+		if(takeArmies.getPlayerArmies()<=1 || amountMoved > takeArmies.getPlayerArmies() ){
 			CommandInput.appendStringTo("You do not have enough armies to do this foritfy\n", Color.RED);
+			TurnSequence.Fortify();
 		}
 
 		else{
-			System.out.println("1");
-			for(int k=0; k<= Data.COUNTRY_NAMES.length-1;k++){
-				if(takeArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k])  == 0 || putArmies.getName().compareToIgnoreCase(Data.COUNTRY_NAMES[k]) == 0 ){
-					System.out.println("2");
 
-					for(int j =0; j<takeArmies.getAdjacent().length-1; j++){
-						System.out.println("3");
-						if(Map.arrayContains(takeArmies.getAdjacent(), k) && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0 && takeArmies.getOccupyingPlayer().fortified==true){
-							System.out.println("4");
 
-							takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
-							putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
-							CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.\n", Color.RED);
-							CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.\n", Color.RED);
-							takeArmies.getOccupyingPlayer().fortified=false;
-						}
-					}
-				}
-				else{
-					System.out.println("this is not a country");
-				}
+			if(Map.arrayContains(takeArmies.getAdjacent(), putArmies.getIndex()) && takeArmies.getOccupyingPlayer().playerName.compareTo(putArmies.getOccupyingPlayer().playerName)==0 && takeArmies.getOccupyingPlayer().fortified==true){
+				System.out.println("blahblahblahblah");
+
+				takeArmies.setPlayerArmies(takeArmies.getPlayerArmies()-amountMoved);
+				putArmies.setPlayerArmies(putArmies.getPlayerArmies()+amountMoved);
+				CommandInput.appendStringTo(takeArmies.getName() + " now has " + takeArmies.getPlayerArmies() + " units.\n", Color.RED);
+				CommandInput.appendStringTo(putArmies.getName() + " now has " + putArmies.getPlayerArmies() + " units.\n", Color.RED);
+				takeArmies.getOccupyingPlayer().fortified=false;
+				Screen.mainFrame.repaint();
+			}
+
+			else{
+				CommandInput.appendStringTo("This in an Invalid Entry, please ensure that both the countries you have entered are adjacent.\n",Color.BLACK);
+				TurnSequence.Fortify();
 			}
 		}
 	}
-	/*else{
-			CommandInput.appendStringTo("you have already used your fortify.\n", Color.RED);
-			TurnSequence.Fortify();
-		}*/
-	//}
 
 	//Finds the country associated with the abbreviation from the user input
 	public static String setFromAbbreviation(String country) {

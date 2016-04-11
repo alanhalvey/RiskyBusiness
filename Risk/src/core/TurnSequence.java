@@ -111,6 +111,7 @@ public class TurnSequence {
 				if(choice.compareToIgnoreCase("Y")==0){
 					currentPlayerTerritoryCards =Gameplay.Exchange(CommandInput.currentPlayer, currentPlayerTerritoryCards);
 					CommandInput.appendStringTo("You now have " + currentPlayerTerritoryCards + " territory cards left\n", Color.RED);
+					Screen.mainFrame.repaint();
 				}
 				else if(choice.compareToIgnoreCase("N")==0){
 					CommandInput.appendStringTo("You have skipped exchange of territory cards.\n", Color.RED);
@@ -166,8 +167,10 @@ public class TurnSequence {
 		String choice = CommandInput.getCommand();
 		if(choice.compareToIgnoreCase("Y")==0){
 			Combat.combat(CommandInput.currentPlayer);
+			Screen.mainFrame.repaint();
 			if(!(Data.Player1Wins || Data.Player2Wins)){
 				CombatAgain();
+				Screen.mainFrame.repaint();
 			}
 		}
 		else if (choice.compareToIgnoreCase("N")==0){
@@ -205,21 +208,57 @@ public class TurnSequence {
 			}
 			if(count>0 && !(Data.Player1Wins || Data.Player2Wins)){
 				CombatAgain();
+				Screen.mainFrame.repaint();
 			}
 		}
 	}
 
 	public static void Fortify() {
+
+		String takeArmies=" ";
+		String putArmies=" ";
+
 		CommandInput.appendStringTo("Would you like to Fortify? (Y/N)\n", Color.RED);
 		String choice = CommandInput.getCommand();
 
 		if(choice.compareToIgnoreCase("Y")==0){
 			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies from\n", Color.RED);
-			String takeArmies = CommandInput.getCommand();
-			CommandInput.appendStringTo(Gameplay.setFromAbbreviation(takeArmies)+"\n", CommandInput.currentPlayerColour);
+			do{
+				takeArmies = CommandInput.getCommand();
+				takeArmies = Gameplay.setFromAbbreviation(takeArmies);
+				if(takeArmies == null){
+					CommandInput.appendStringTo(CommandInput.currentPlayer+" This is not a country,  Enter country to fortify armies from\n", Color.RED);
+				}
+				
+			}while(takeArmies == null);
+
+			CommandInput.appendStringTo(takeArmies+"\n", CommandInput.currentPlayerColour);
+			Country takingFrom = Gameplay.setCountry(takeArmies);
+			if(takingFrom == null){
+				CommandInput.appendStringTo("This is not a country", Color.black);
+			}
+
+
+
+
 			CommandInput.appendStringTo(CommandInput.currentPlayer+" Enter country to fortify armies to\n", Color.RED);
-			String putArmies = CommandInput.getCommand();
-			CommandInput.appendStringTo(Gameplay.setFromAbbreviation(putArmies)+"\n", CommandInput.currentPlayerColour);
+			do{
+				putArmies = CommandInput.getCommand();
+				putArmies = Gameplay.setFromAbbreviation(putArmies);
+				if(putArmies == null){
+					CommandInput.appendStringTo(CommandInput.currentPlayer+" This is not a country,  Enter country to fortify armies to\n", Color.RED);
+				}
+			}while(putArmies == null);
+			CommandInput.appendStringTo(putArmies+"\n", CommandInput.currentPlayerColour);
+			Country puttingTo = Gameplay.setCountry(putArmies);
+
+			if(puttingTo == null){
+				CommandInput.appendStringTo("This is not a country", Color.black);
+			}
+		
+
+
+
 
 
 			String numberToMove = "temp";
@@ -240,24 +279,15 @@ public class TurnSequence {
 
 
 			CommandInput.appendStringTo( numToMove+ " armies to fortify\n", Color.RED);
-			takeArmies = Gameplay.setFromAbbreviation(takeArmies);
-			putArmies = Gameplay.setFromAbbreviation(putArmies);
+			
+			Gameplay.Fortify(takingFrom, puttingTo, numToMove );
+			Screen.mainFrame.repaint();
+			System.out.println("test");
 
-			if(putArmies!=null && takeArmies!=null){
-				System.out.println("test");
-				Country takingFrom = Gameplay.setCountry(takeArmies);
-				Country puttingTo = Gameplay.setCountry(putArmies);
-				System.out.println(takingFrom.getName() + puttingTo.getName());
-				Gameplay.Fortify(takingFrom, puttingTo, numToMove );
-				System.out.println("test");
-
-			}
-
-			else{
-				CommandInput.appendStringTo("You have entered invalid details, please try again.\n\n", Color.RED);
-				Fortify();
-			}
 		}
+
+
+
 		else if (choice.compareToIgnoreCase("N")==0){
 			CommandInput.appendStringTo("You have skipped Fortify.\n", Color.RED);
 		}
