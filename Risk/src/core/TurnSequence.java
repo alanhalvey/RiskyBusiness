@@ -9,7 +9,7 @@ package core;
 import java.awt.Color;
 
 public class TurnSequence {
-
+	//Method used to switch players at the end of a turn.
 	public static void ChangePlayers() {
 		if(CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
 			CommandInput.currentPlayer = CommandInput.player2;
@@ -19,13 +19,15 @@ public class TurnSequence {
 		}
 
 	}
-
+	
+	//Method to display information to the players and prepare territory cards for the game,.
 	public static void TurnSequencePreparations(){
 		DisplayInfo();
 		TerritoryCard.FillTerritoryCards();
 		TerritoryCard.shuffleTerrirtoryDeck();
 	}
-
+	
+	//Displays who will go first in the game
 	public static void DisplayInfo() {
 		boolean flag = true;
 
@@ -38,16 +40,13 @@ public class TurnSequence {
 			}	
 		}
 
-		//CommandInput.appendStringTo(CommandInput.player1 + " owns the following countries: \n" + Deck.player1Countries + "\n", Color.BLACK);
-		//CommandInput.appendStringTo(CommandInput.player2 + " owns the following countries: \n" + Deck.player2Countries + "\n", Color.BLACK);
-
 		CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		while(CommandInput.checkIfDieEqual == "YES"){
 			CommandInput.randomPlayerGenerator(CommandInput.player1, CommandInput.player2);
 		}
 
 	}
-
+	//Allows players to place up to 3 units at a time in a country
 	public static void PlaceUnits() {
 		while(Data.unitsLeft==true){
 			if(Data.PLAYER_1_ARMIES != 0 || Data.PLAYER_2_ARMIES != 0){
@@ -63,6 +62,7 @@ public class TurnSequence {
 
 	}
 
+	//The turn sequence of the game, with checks to see if a player has won.
 	public static void TurnSequence() {
 		Gameplay.calculateReinforcements();
 		System.out.println(Deck.countriesAfterShuffle[0].getName() + Deck.countriesAfterShuffle[0].getOccupyingPlayer().playerName + " " +Deck.countriesAfterShuffle[0].getOccupyingPlayer().numTerritories);
@@ -88,6 +88,7 @@ public class TurnSequence {
 		}
 	}
 
+	//Allows players to exchange territory cards and get reinforcements in return.
 	private static void InsigniaExchange() {
 		int counts[] = Gameplay.getCounts();
 		int artillary = counts[0];
@@ -136,6 +137,7 @@ public class TurnSequence {
 
 	}
 
+	//Counts the number of territory cards a player has.
 	public static int countCards(String currentPlayer) {
 		int count = 0;
 		for(int i=0;i<TerritoryCard.territoryCardsShuffled.size();i++){
@@ -146,6 +148,7 @@ public class TurnSequence {
 		return count;
 	}
 
+	//Allows players to place reinforcements in a country that they own.
 	public static void PlaceReinforcements() {
 		if(Gameplay.reinforcementsLeft(CommandInput.player1)==true && CommandInput.currentPlayer.compareTo(CommandInput.player1)==0){
 			Gameplay.placeReinforcements(CommandInput.currentPlayer);
@@ -162,6 +165,7 @@ public class TurnSequence {
 
 	}
 
+	//Allows players to attack neighbouring countries owned by other players
 	public static void Combat() {
 		CommandInput.appendStringTo("Would you like to combat? (Y/N)\n", Color.RED);
 		String choice = CommandInput.getCommand();
@@ -182,6 +186,7 @@ public class TurnSequence {
 		}
 	}
 
+	//allows players to combat again after a combat.
 	public static void CombatAgain(){
 
 		int check = 0;
@@ -213,6 +218,7 @@ public class TurnSequence {
 		}
 	}
 
+	//Allows countries to fortify armies between two neighbouring countries that they own.
 	public static void Fortify() {
 
 		String takeArmies=" ";
@@ -296,6 +302,7 @@ public class TurnSequence {
 		}
 	}
 
+	//Displays the winner of the game in the case that the other player has no occupied countries left.
 	public static void DisplayWinner(String player) {
 		Color playerColor;
 		if(player.compareTo(CommandInput.getPlayer1())==0){
