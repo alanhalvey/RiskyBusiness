@@ -136,8 +136,14 @@ public class RiskyBusiness implements Bot {
 		toAttackWith = toAttackWith.replaceAll("\\s", "");
 		toAttack = toAttack.replaceAll("\\s", "");
 
-
-		command = toAttackWith + " "+toAttack + " " + 3;
+		int id = getCountryID(toAttackWith);
+		int armiesLeftInCountryToAttackWith = board.getNumUnits(id);
+		if(armiesLeftInCountryToAttackWith == 1){
+			command = "Skip";
+		}
+		else if(armiesLeftInCountryToAttackWith > 1){
+			command = toAttackWith + " "+toAttack + " " + getUnitsToAttackWith(toAttackWith);
+		}
 		return(command);
 	}
 
@@ -187,4 +193,35 @@ public class RiskyBusiness implements Bot {
 
 	}
 
+	private int getCountryID(String countryName){
+		
+		int countryID = 0;
+		for(int i=0; i<42; i++){
+
+			if(countryName == GameData.COUNTRY_NAMES[i]){
+				countryID = i;
+			}
+		}
+		
+		return countryID;
+	}
+	
+	private int getUnitsToAttackWith(String toAttackWith) {
+
+		int id = getCountryID(toAttackWith);
+		int unitsToAttackWith = 0;
+		
+		if(board.getNumUnits(id)>3){
+			unitsToAttackWith = 3;
+		}
+		else if(board.getNumUnits(id)==3){
+			unitsToAttackWith = 2;
+		}
+		else{
+			unitsToAttackWith = 1;
+		}
+
+		
+		return 0;
+	}
 }
