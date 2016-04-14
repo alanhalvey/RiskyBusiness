@@ -1,4 +1,3 @@
-import java.util.Random;
 
 public class Board implements BoardAPI {
 	
@@ -11,12 +10,9 @@ public class Board implements BoardAPI {
 	
 	Board() {
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
-			 Random rand = new Random();
-
-			int randomNum = rand.nextInt((1000 - 200) + 1) + 200;
 			occupied[i] = false;
 			occupier[i] = 0;
-			numUnits[i] = randomNum;
+			numUnits[i] = 0;
 		}
 		return;
 	}
