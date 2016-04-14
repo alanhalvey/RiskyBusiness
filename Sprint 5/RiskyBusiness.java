@@ -71,23 +71,45 @@ public class RiskyBusiness implements Bot {
 
 	public String getBattle () {
 		String command = "";
-		int adj = 0;
 		//get adjacents;
+		int numCountriesOwned = 0;
 		for(int i=0;i<42;i++){
 			if(board.getOccupier(i)==player.getId()){
-				adj = i;
+				 numCountriesOwned++;
 			}
 		}
+		
+		int [][] owned = new int[numCountriesOwned][2];
+		int z = 0;
+		for(int i=0;i<42;i++){
+			if(board.getOccupier(i)==player.getId()){
+				owned[z][1] = board.getNumUnits(i);
+				owned[z][0] = i;
+				z++;
+			}
+		}
+		java.util.Arrays.sort(owned, new java.util.Comparator<int[]>() {
+			public int compare(int[] a, int[] b) {
+				return Integer.compare(a[1], b[1]);
+			}
+		});
+		
+		int bestToAttackWith = owned[owned.length-1][0];
+		
+		
+		
+		
+		
 		int count = 0;
 		for(int i=0;i<42;i++){
-			if(board.isAdjacent(adj, i) && board.getOccupier(i)!=1){
+			if(board.isAdjacent(bestToAttackWith, i) && board.getOccupier(i)!=player.getId()){
 				count++;
 			}
 		}
 		int [][] adjacents = new int[count][2];
-		int z=0;
+		z=0;
 		for(int i=0;i<42;i++){
-			if(board.isAdjacent(adj, i) && board.getOccupier(i)!=1){
+			if(board.isAdjacent(bestToAttackWith, i) && board.getOccupier(i)!=player.getId()){
 				adjacents[z][1] = board.getNumUnits(i);
 				adjacents[z][0] = i;
 				z++;
@@ -108,7 +130,7 @@ public class RiskyBusiness implements Bot {
 		int bestToAttack = adjacents[0][0];
 
 
-		String toAttackWith = GameData.COUNTRY_NAMES[adj];
+		String toAttackWith = GameData.COUNTRY_NAMES[bestToAttackWith];
 		String toAttack = GameData.COUNTRY_NAMES[bestToAttack];
 		System.out.println(toAttackWith  + " "+ toAttack);
 		toAttackWith = toAttackWith.replaceAll("\\s", "");
