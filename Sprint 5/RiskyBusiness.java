@@ -41,7 +41,7 @@ public class RiskyBusiness implements Bot {
 	public String getReinforcement () {
 
 
-	
+		getCountriesOwned();
 
 
 
@@ -254,6 +254,6 @@ public class RiskyBusiness implements Bot {
 		}
 
 		
-		return 0;
+		return unitsToAttackWith;
 	}
 }
