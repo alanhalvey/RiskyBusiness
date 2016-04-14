@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+
 // put your code here
+
+
 
 public class RiskyBusiness implements Bot {
 	// The public API of YourTeamName must not change
@@ -9,6 +13,10 @@ public class RiskyBusiness implements Bot {
 	
 	private BoardAPI board;
 	private PlayerAPI player;
+	
+	ArrayList<Integer> countryIDsOwned = new ArrayList<Integer>();
+	ArrayList<String> countryNamesOwned = new ArrayList<String>();
+
 	
 	RiskyBusiness (BoardAPI inBoard, PlayerAPI inPlayer) {
 		board = inBoard;	
@@ -24,10 +32,19 @@ public class RiskyBusiness implements Bot {
 		return(command);
 	}
 
+	static int i=0;
 	public String getReinforcement () {
+		
+		if(i==0){
+			getCountriesOwned();
+		}
+		i++;
+		
+		
 		String command = "";
 		// put your code here
-		command = GameData.COUNTRY_NAMES[(int)(Math.random() * GameData.NUM_COUNTRIES)];
+
+		command += countryNamesOwned.get((int) (Math.random() * 9));
 		command = command.replaceAll("\\s", "");
 		command += " 1";
 		return(command);
@@ -51,7 +68,10 @@ public class RiskyBusiness implements Bot {
 	public String getBattle () {
 		String command = "";
 		// put your code here
-		command = "skip";
+		
+		command += countryNamesOwned.get((int) (Math.random() * 9));
+		command += " " + GameData.COUNTRY_NAMES[(int)(Math.random() * GameData.NUM_COUNTRIES)] + " ";
+		command += "2";
 		return(command);
 	}
 
@@ -76,4 +96,21 @@ public class RiskyBusiness implements Bot {
 		return(command);
 	}
 
+	public void getCountriesOwned() {
+		
+		String command = "";
+
+		for(int i=0; i<42; i++){
+			
+			System.out.println("" + board.getOccupier(i));
+			if(player.getId() == (board.getOccupier(i))){
+				countryIDsOwned.add(i);
+				countryNamesOwned.add(GameData.COUNTRY_NAMES[i]);
+			}
+		}
+		
+		
+		System.out.println(countryNamesOwned + " - " + countryIDsOwned);
+		
+	}
 }
