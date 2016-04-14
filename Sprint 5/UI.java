@@ -26,7 +26,7 @@ public class UI {
 		frame.add(mapPanel, BorderLayout.NORTH);
 		frame.add(infoPanel, BorderLayout.CENTER);
 		frame.add(commandPanel,BorderLayout.SOUTH);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setVisible(true);
 		return;
 	}
