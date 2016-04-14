@@ -41,7 +41,7 @@ public class RiskyBusiness implements Bot {
 	public String getReinforcement () {
 
 
-		getCountriesOwned();
+	
 
 
 
@@ -52,6 +52,38 @@ public class RiskyBusiness implements Bot {
 		command = command.replaceAll("\\s", "");
 		command += " 1";
 		return(command);
+	}
+	
+	public String reinforcementChoice1(){
+		
+		String Choice = "";
+		int currentIndex = 0;
+		for(int i=0;i<42; i++){
+			
+			if(board.getOccupier(i)==player.getId()){
+				
+				switch(player.getCards().get(currentIndex).getCountryId()){
+				case 28:
+					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
+				case 29:
+					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
+				case 30:
+					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
+				case 31:
+					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
+				
+				}
+				currentIndex++;
+				
+			}
+			
+			
+			
+			
+		}
+
+
+		return Choice;
 	}
 
 	public String getPlacement (int forPlayer) {
