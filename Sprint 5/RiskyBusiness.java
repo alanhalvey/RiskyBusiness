@@ -138,6 +138,19 @@ public class RiskyBusiness implements Bot {
 				count++;
 			}
 		}
+		int k = 1;
+		
+		while(count==0){
+			bestToAttackWith = owned[owned.length-k][0];
+			for(int i=0;i<42;i++){
+				if(board.isAdjacent(bestToAttackWith, i) && board.getOccupier(i)!=player.getId()){
+					count++;
+				}
+			}
+			k++;
+
+		};
+		
 		int [][] adjacents = new int[count][2];
 		z=0;
 		for(int i=0;i<42;i++){
@@ -156,20 +169,15 @@ public class RiskyBusiness implements Bot {
 		});
 
 
-		for(int i = 0;i<adjacents.length;i++){
-			System.out.println(adjacents[i][0]);
-		}
+
 		int bestToAttack = adjacents[0][0];
-
-
+	
 		String toAttackWith = GameData.COUNTRY_NAMES[bestToAttackWith];
 		String toAttack = GameData.COUNTRY_NAMES[bestToAttack];
-		System.out.println(toAttackWith  + " "+ toAttack);
 		toAttackWith = toAttackWith.replaceAll("\\s", "");
 		toAttack = toAttack.replaceAll("\\s", "");
 
-		int id = getCountryID(toAttackWith);
-		int armiesLeftInCountryToAttackWith = board.getNumUnits(id);
+		int armiesLeftInCountryToAttackWith = board.getNumUnits(bestToAttackWith);
 		if(armiesLeftInCountryToAttackWith == 1){
 			command = "Skip";
 		}
@@ -213,7 +221,7 @@ public class RiskyBusiness implements Bot {
 
 		for(int i=0; i<42; i++){
 
-			System.out.println("" + board.getOccupier(i));
+			//System.out.println("" + board.getOccupier(i));
 			if(player.getId() == (board.getOccupier(i))){
 				countryIDsOwned.add(i);
 				countryNamesOwned.add(GameData.COUNTRY_NAMES[i]);
@@ -221,7 +229,7 @@ public class RiskyBusiness implements Bot {
 		}
 
 
-		System.out.println(countryNamesOwned + " - " + countryIDsOwned);
+		//System.out.println(countryNamesOwned + " - " + countryIDsOwned);
 
 	}
 
