@@ -1,3 +1,11 @@
+/*
+ * Team Name: RiskyBusiness
+ * 
+ * Alan Halvey - 14465722
+ * Alan Holmes - 14719591
+ * Greg Sloggett - 14522247
+ */
+
 import java.util.ArrayList;
 
 // put your code here
@@ -28,18 +36,14 @@ public class RiskyBusiness implements Bot {
 	public String getName () {
 		String command = "";
 		// put your code here
-		command = "BOT";
+		command = "";
 		return(command);
 	}
 
 	static int i=0;
 	public String getReinforcement () {
-		
-		if(i==0){
-			getCountriesOwned();
-		}
-		i++;
-		
+	
+		getCountriesOwned();
 		
 		String command = "";
 		// put your code here
@@ -69,8 +73,8 @@ public class RiskyBusiness implements Bot {
 		String command = "";
 		// put your code here
 		
-		command += countryNamesOwned.get((int) (Math.random() * 9));
-		command += " " + GameData.COUNTRY_NAMES[(int)(Math.random() * GameData.NUM_COUNTRIES)] + " ";
+		command += countryNamesOwned.get((int) (Math.random() * 9)) + " ";
+		command += GameData.COUNTRY_NAMES[(int)(Math.random() * GameData.NUM_COUNTRIES)] + " ";
 		command += "2";
 		return(command);
 	}
@@ -78,7 +82,14 @@ public class RiskyBusiness implements Bot {
 	public String getDefence (int countryId) {
 		String command = "";
 		// put your code here
-		command = "1";
+		
+		if(board.getNumUnits(countryId)>2){
+			command = "2";
+		}
+		else{
+			command = "1";
+		}
+		
 		return(command);
 	}
 
@@ -97,20 +108,14 @@ public class RiskyBusiness implements Bot {
 	}
 
 	public void getCountriesOwned() {
-		
 		String command = "";
 
-		for(int i=0; i<42; i++){
-			
-			System.out.println("" + board.getOccupier(i));
+		for(int i=0; i<42; i++){		
 			if(player.getId() == (board.getOccupier(i))){
 				countryIDsOwned.add(i);
 				countryNamesOwned.add(GameData.COUNTRY_NAMES[i]);
 			}
 		}
-		
-		
 		System.out.println(countryNamesOwned + " - " + countryIDsOwned);
-		
 	}
 }
