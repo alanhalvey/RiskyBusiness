@@ -20,6 +20,8 @@ public class RiskyBusiness implements Bot {
 
 	private BoardAPI board;
 	private PlayerAPI player;
+	private String Choice = " ";
+	private String Choice1 = " ";
 
 	ArrayList<Integer> countryIDsOwned = new ArrayList<Integer>();
 	ArrayList<String> countryNamesOwned = new ArrayList<String>();
@@ -37,53 +39,114 @@ public class RiskyBusiness implements Bot {
 		command = "BOT";
 		return(command);
 	}
-
 	public String getReinforcement () {
-
+		boolean switcher = false;
 
 		getCountriesOwned();
 
 
 
-		String command = "";
-		// put your code here
 
-		command += countryNamesOwned.get((int) (Math.random() * 9));
+		String command = "";
+
+		if(reinforcementChoice1() == true ){
+			command = Choice;
+		}
+		else if(reinforcementChoice2() == true ){
+			command = Choice1;
+
+		}
+		else{
+			command += countryNamesOwned.get((int) (Math.random() * countryNamesOwned.size()));
+		}
+		//command += reinforcementChoice1(); //countryNamesOwned.get((int) (Math.random() * 9));
 		command = command.replaceAll("\\s", "");
 		command += " 1";
 		return(command);
 	}
-	
-	public String reinforcementChoice1(){
-		
-		String Choice = "";
+
+	public Boolean reinforcementChoice1(){
+		boolean result = false;
+
 		int currentIndex = 0;
-		for(int i=0;i<42; i++){
-			
+		for(int i=0;i<GameData.NUM_COUNTRIES; i++){
+			System.out.println("1");
 			if(board.getOccupier(i)==player.getId()){
-				
-				switch(player.getCards().get(currentIndex).getCountryId()){
-				case 28:
-					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
-				case 29:
-					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
-				case 30:
-					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
-				case 31:
-					Choice = player.getCards().get(currentIndex).getCountryName() + " " + player.getNumUnits();
-				
+
+				switch(GameData.COUNTRY_NAMES[i]){
+
+
+				case "Brazil":
+					Choice = GameData.COUNTRY_NAMES[i];
+					result = true;
+					break;
+				case "Venezuela":
+					Choice = GameData.COUNTRY_NAMES[i];
+					result = true;
+					break;
+				case "Peru":
+					Choice = GameData.COUNTRY_NAMES[i];
+					result = true;
+					break;
+				case "Argentina":
+					Choice = GameData.COUNTRY_NAMES[i];
+					result = true;
+					break;
+				case "Central America":
+					Choice =  GameData.COUNTRY_NAMES[i];
+					result = true;
+					break;
+
 				}
-				currentIndex++;
-				
+
+
 			}
-			
-			
-			
-			
+
 		}
 
+		return result;
+	}
 
-		return Choice;
+
+	public Boolean reinforcementChoice2(){
+		boolean result = false;
+
+		int currentIndex = 0;
+		System.out.println("1"); 
+		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Siam")&& board.getOccupier(getCountryID("Siam"))==player.getId()&& result !=true){
+			Choice1 =  "Siam";
+			result = true;
+		}
+		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("E Australia")&& board.getOccupier(getCountryID("E Australia"))==player.getId()&&result!=true){
+			Choice1 =  "E Australia";
+			result = true;
+		}
+		/*
+		case "E Australia":
+			Choice1 =  GameData.COUNTRY_NAMES[i];
+			result = true;
+			break;
+		case "New Guinea":
+			Choice1 = GameData.COUNTRY_NAMES[i];
+			result = true;
+			break;
+		case "W Australia":
+			Choice1 = GameData.COUNTRY_NAMES[i];
+			result = true;
+			break;
+		case "Indonesia":
+			Choice1 = GameData.COUNTRY_NAMES[i];
+			result = true;
+			break;
+		 */
+
+
+
+
+
+
+
+		return result;
 	}
 
 	public String getPlacement (int forPlayer) {
@@ -107,10 +170,10 @@ public class RiskyBusiness implements Bot {
 		int numCountriesOwned = 0;
 		for(int i=0;i<42;i++){
 			if(board.getOccupier(i)==player.getId()){
-				 numCountriesOwned++;
+				numCountriesOwned++;
 			}
 		}
-		
+
 		int [][] owned = new int[numCountriesOwned][2];
 		int z = 0;
 		for(int i=0;i<42;i++){
@@ -125,13 +188,13 @@ public class RiskyBusiness implements Bot {
 				return Integer.compare(a[1], b[1]);
 			}
 		});
-		
+
 		int bestToAttackWith = owned[owned.length-1][0];
-		
-		
-		
-		
-		
+
+
+
+
+
 		int count = 0;
 		for(int i=0;i<42;i++){
 			if(board.isAdjacent(bestToAttackWith, i) && board.getOccupier(i)!=player.getId()){
@@ -139,7 +202,7 @@ public class RiskyBusiness implements Bot {
 			}
 		}
 		int k = 1;
-		
+
 		while(count==0){
 			bestToAttackWith = owned[owned.length-k][0];
 			for(int i=0;i<42;i++){
@@ -150,7 +213,7 @@ public class RiskyBusiness implements Bot {
 			k++;
 
 		};
-		
+
 		int [][] adjacents = new int[count][2];
 		z=0;
 		for(int i=0;i<42;i++){
@@ -161,6 +224,11 @@ public class RiskyBusiness implements Bot {
 			}
 		}
 
+		try {
+			Thread.sleep(10);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
 
 		java.util.Arrays.sort(adjacents, new java.util.Comparator<int[]>() {
 			public int compare(int[] a, int[] b) {
@@ -171,7 +239,7 @@ public class RiskyBusiness implements Bot {
 
 
 		int bestToAttack = adjacents[0][0];
-	
+
 		String toAttackWith = GameData.COUNTRY_NAMES[bestToAttackWith];
 		String toAttack = GameData.COUNTRY_NAMES[bestToAttack];
 		toAttackWith = toAttackWith.replaceAll("\\s", "");
@@ -182,7 +250,7 @@ public class RiskyBusiness implements Bot {
 			command = "Skip";
 		}
 		else if(armiesLeftInCountryToAttackWith > 1){
-			command = toAttackWith + " "+toAttack + " " + getUnitsToAttackWith(toAttackWith);
+			command = toAttackWith + " "+toAttack + " " + getUnitsToAttackWith(bestToAttackWith);
 		}
 		return(command);
 	}
@@ -210,9 +278,105 @@ public class RiskyBusiness implements Bot {
 
 	public String getFortify () {
 		String command = "";
-		// put code here
-		command = "skip";
+		int tempUnits = 0;
+		int tempAverage = 1000;
+		int tempEnemyAverage = 1000;
+		int currentBestFrom = -1;
+		//int goodChoices[] = new int[];
+		int count = 0;
+
+		for(int i=0;i<42;i++){
+			if(board.getNumUnits(i)>1 && board.getOccupier(i)==player.getId()){
+				if(board.getNumUnits(i)>tempUnits && neighbourAverage(i) < tempAverage && neighbourEnemyAverage(i)<tempEnemyAverage){
+					count++;
+				}
+			}
+		}
+		int goodChoices[] = new int[count];
+		count =0;
+		for(int i=0;i<42;i++){
+			if(board.getNumUnits(i)>1 && board.getOccupier(i)==player.getId()){
+				if(board.getNumUnits(i)>tempUnits && neighbourAverage(i) < tempAverage && neighbourEnemyAverage(i)<tempEnemyAverage){
+					tempUnits = board.getNumUnits(i);
+					currentBestFrom = i;
+					tempAverage = neighbourAverage(i);
+					goodChoices[count]=i;
+					count++;
+				}
+			}
+		}
+		if(count!=0){
+			currentBestFrom = goodChoices[(int)(Math.random() * goodChoices.length)];
+			System.out.println("current nest from "+GameData.COUNTRY_NAMES[currentBestFrom]);
+		}
+
+		int currentBestTo = -1;
+		if(currentBestFrom!=-1){
+			tempUnits = 1000;
+			for(int i=0;i<42;i++){
+
+				if(board.getNumUnits(i)<board.getNumUnits(currentBestFrom) && board.getOccupier(i)==player.getId() && board.isAdjacent(i, currentBestFrom)){
+					if(board.getNumUnits(i)<tempUnits){
+						tempUnits = board.getNumUnits(i);
+						currentBestTo = i;
+					}
+				}
+			}
+
+			// put code here
+			if(currentBestTo!=-1 && board.getNumUnits(currentBestFrom)>3){
+				String toFortifyFrom = GameData.COUNTRY_NAMES[currentBestFrom];
+				String toFortifyTo= GameData.COUNTRY_NAMES[currentBestTo];
+				toFortifyFrom = toFortifyFrom.replaceAll("\\s", "");
+				toFortifyTo = toFortifyTo.replaceAll("\\s", "");
+				command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom)/2)+1);
+			}
+			else{
+				command = "skip";
+			}
+		}
+		else{
+			command = "skip";
+		}
 		return(command);
+	}
+
+	private int neighbourEnemyAverage(int i) {
+		int temp[][] =  new int[10][2];
+		int tempMin = 1000;
+		int total = -1;
+		int average = -1;
+		System.out.println(GameData.ADJACENT[i].length);
+		for (int k=0;k<GameData.ADJACENT[i].length;k++){
+			if(board.getOccupier(GameData.ADJACENT[i][k])==player.getId()){
+				total = 0;
+				for(int z =0;z<GameData.ADJACENT[GameData.ADJACENT[i][k]].length;z++){
+					if(board.getOccupier(GameData.ADJACENT[GameData.ADJACENT[i][k]][z])!=player.getId()){
+						temp[z][0] = GameData.ADJACENT[GameData.ADJACENT[i][k]][z];
+						total += board.getNumUnits(GameData.ADJACENT[GameData.ADJACENT[i][k]][z]);
+					}
+				}
+				if(total/GameData.ADJACENT[GameData.ADJACENT[i][k]].length < tempMin){
+					tempMin = total/GameData.ADJACENT[GameData.ADJACENT[i][k]].length;
+				}
+			}
+
+		}
+		if(tempMin==0){
+			return 1000;
+		}
+		else{
+			return tempMin;
+		}
+	}
+
+	private int neighbourAverage(int i) {
+		int totalunitsneighbours=0;
+
+		for(int k=0;k<GameData.ADJACENT[i].length;k++){
+			totalunitsneighbours+=board.getNumUnits(k);
+		}
+		return totalunitsneighbours/GameData.ADJACENT[i].length;
 	}
 
 	public void getCountriesOwned() {
@@ -234,34 +398,34 @@ public class RiskyBusiness implements Bot {
 	}
 
 	private int getCountryID(String countryName){
-		
+
 		int countryID = 0;
 		for(int i=0; i<42; i++){
-
 			if(countryName == GameData.COUNTRY_NAMES[i]){
 				countryID = i;
 			}
 		}
-		
+
 		return countryID;
 	}
-	
-	private int getUnitsToAttackWith(String toAttackWith) {
 
-		int id = getCountryID(toAttackWith);
+	private int getUnitsToAttackWith(int i) {
+
+		//int id = getCountryID(toAttackWith);
 		int unitsToAttackWith = 0;
-		
-		if(board.getNumUnits(id)>3){
+
+		if(board.getNumUnits(i) > 3){
+			System.out.println(board.getNumUnits(i));
 			unitsToAttackWith = 3;
 		}
-		else if(board.getNumUnits(id)==3){
+		else if(board.getNumUnits(i)==3){
 			unitsToAttackWith = 2;
 		}
 		else{
 			unitsToAttackWith = 1;
 		}
 
-		
+
 		return unitsToAttackWith;
 	}
 }
