@@ -8,6 +8,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 // put your code here
 
@@ -48,7 +49,10 @@ public class RiskyBusiness implements Bot {
 
 
 		String command = "";
-
+		Random random = new Random();
+		int a = random.nextInt(1 - 0 + 1) + 1;
+		System.out.println(reinforcementChoice1() + " "+reinforcementChoice2());
+		System.out.println("a is " +a);
 		if(reinforcementChoice1() == true ){
 			command = Choice;
 		}
@@ -56,6 +60,7 @@ public class RiskyBusiness implements Bot {
 			command = Choice1;
 
 		}
+
 		else{
 			command += countryNamesOwned.get((int) (Math.random() * countryNamesOwned.size()));
 		}
@@ -70,7 +75,7 @@ public class RiskyBusiness implements Bot {
 
 		int currentIndex = 0;
 		for(int i=0;i<GameData.NUM_COUNTRIES; i++){
-			System.out.println("1");
+			//System.out.println("1");
 			if(board.getOccupier(i)==player.getId()){
 
 				switch(GameData.COUNTRY_NAMES[i]){
@@ -112,7 +117,7 @@ public class RiskyBusiness implements Bot {
 		boolean result = false;
 
 		int currentIndex = 0;
-		System.out.println("1"); 
+		//System.out.println("1"); 
 		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Siam")&& board.getOccupier(getCountryID("Siam"))==player.getId()&& result !=true){
 			Choice1 =  "Siam";
 			result = true;
@@ -166,6 +171,7 @@ public class RiskyBusiness implements Bot {
 
 	public String getBattle () {
 		String command = "";
+
 		//get adjacents;
 		int numCountriesOwned = 0;
 		for(int i=0;i<42;i++){
@@ -270,9 +276,9 @@ public class RiskyBusiness implements Bot {
 	}
 
 	public String getMoveIn (int attackCountryId) {
-		String command = "";
+		String command = (board.getNumUnits(attackCountryId)-1)+"";
 		// put your code here
-		command = "0";
+		
 		return(command);
 	}
 
@@ -287,7 +293,7 @@ public class RiskyBusiness implements Bot {
 
 		for(int i=0;i<42;i++){
 			if(board.getNumUnits(i)>1 && board.getOccupier(i)==player.getId()){
-				if(board.getNumUnits(i)>tempUnits && neighbourAverage(i) < tempAverage && neighbourEnemyAverage(i)<tempEnemyAverage){
+				if(board.getNumUnits(i)>tempUnits /*|| neighbourAverage(i) < tempAverage || neighbourEnemyAverage(i)<tempEnemyAverage*/){
 					count++;
 				}
 			}
@@ -296,7 +302,7 @@ public class RiskyBusiness implements Bot {
 		count =0;
 		for(int i=0;i<42;i++){
 			if(board.getNumUnits(i)>1 && board.getOccupier(i)==player.getId()){
-				if(board.getNumUnits(i)>tempUnits && neighbourAverage(i) < tempAverage && neighbourEnemyAverage(i)<tempEnemyAverage){
+				if(board.getNumUnits(i)>tempUnits /*&& neighbourAverage(i) < tempAverage  neighbourEnemyAverage(i)<tempEnemyAverage*/){
 					tempUnits = board.getNumUnits(i);
 					currentBestFrom = i;
 					tempAverage = neighbourAverage(i);
@@ -305,23 +311,52 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 		}
+		/*
 		if(count!=0){
 			currentBestFrom = goodChoices[(int)(Math.random() * goodChoices.length)];
-			System.out.println("current nest from "+GameData.COUNTRY_NAMES[currentBestFrom]);
+			//System.out.println("current nest from "+GameData.COUNTRY_NAMES[currentBestFrom]);
 		}
+		 */
 
 		int currentBestTo = -1;
 		if(currentBestFrom!=-1){
 			tempUnits = 1000;
+			//System.out.println("current best from " +GameData.COUNTRY_NAMES[currentBestFrom]);
+			int count2=0;
 			for(int i=0;i<42;i++){
-
-				if(board.getNumUnits(i)<board.getNumUnits(currentBestFrom) && board.getOccupier(i)==player.getId() && board.isAdjacent(i, currentBestFrom)){
+				if( board.getOccupier(i)==player.getId() && board.isAdjacent(i, currentBestFrom)){
 					if(board.getNumUnits(i)<tempUnits){
 						tempUnits = board.getNumUnits(i);
-						currentBestTo = i;
+						count2++;
 					}
 				}
 			}
+			int choices[] = new int[count2];
+			int k = 0;
+			tempUnits = 1000;
+			for(int i=0;i<42;i++){
+				if(board.getOccupier(i)==player.getId() && board.isAdjacent(i, currentBestFrom)){
+					if(board.getNumUnits(i)<tempUnits){
+						tempUnits = board.getNumUnits(i);
+						currentBestTo = i;
+						choices[k] = i;
+						k++;
+					}
+
+				}
+			}
+			//System.out.print("choices: ");
+			for(int i =0;i<choices.length;i++){
+				//System.out.print(GameData.COUNTRY_NAMES[choices[i]] +" ");
+				for(int z=0;z<GameData.ADJACENT[choices[i]].length;z++){
+					if(board.getOccupier(GameData.ADJACENT[choices[i]][z])!=player.getId()){
+						if(choices[i]!=0){
+							currentBestTo=choices[i];
+						}
+					}
+				}
+			}
+			//System.out.println();
 
 			// put code here
 			if(currentBestTo!=-1 && board.getNumUnits(currentBestFrom)>3){
@@ -346,7 +381,7 @@ public class RiskyBusiness implements Bot {
 		int tempMin = 1000;
 		int total = -1;
 		int average = -1;
-		System.out.println(GameData.ADJACENT[i].length);
+		//System.out.println(GameData.ADJACENT[i].length);
 		for (int k=0;k<GameData.ADJACENT[i].length;k++){
 			if(board.getOccupier(GameData.ADJACENT[i][k])==player.getId()){
 				total = 0;
@@ -415,7 +450,7 @@ public class RiskyBusiness implements Bot {
 		int unitsToAttackWith = 0;
 
 		if(board.getNumUnits(i) > 3){
-			System.out.println(board.getNumUnits(i));
+			//System.out.println(board.getNumUnits(i));
 			unitsToAttackWith = 3;
 		}
 		else if(board.getNumUnits(i)==3){
