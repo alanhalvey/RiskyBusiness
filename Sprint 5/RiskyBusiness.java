@@ -51,63 +51,57 @@ public class RiskyBusiness implements Bot {
 		String command = "";
 		Random random = new Random();
 		int a = random.nextInt(1 - 0 + 1) + 1;
-		System.out.println(reinforcementChoice1() + " "+reinforcementChoice2());
-		System.out.println("a is " +a);
+		//System.out.println(reinforcementChoice1() + " "+reinforcementChoice2());
+		//System.out.println("a is " +a);
+		
 		if(reinforcementChoice1() == true ){
-			command = Choice;
+			System.out.println("workdd");
+			command += Choice;
 		}
 		else if(reinforcementChoice2() == true ){
-			command = Choice1;
+			System.out.println("did it?");
+			command += Choice1;
 
 		}
 
-		else{
+		/*else{
 			command += countryNamesOwned.get((int) (Math.random() * countryNamesOwned.size()));
-		}
+		}*/
 		//command += reinforcementChoice1(); //countryNamesOwned.get((int) (Math.random() * 9));
 		command = command.replaceAll("\\s", "");
 		command += " 1";
-		return(command);
+		return command;
 	}
 
 	public Boolean reinforcementChoice1(){
 		boolean result = false;
 
-		int currentIndex = 0;
-		for(int i=0;i<GameData.NUM_COUNTRIES; i++){
-			//System.out.println("1");
-			if(board.getOccupier(i)==player.getId()){
-
-				switch(GameData.COUNTRY_NAMES[i]){
-
-
-				case "Brazil":
-					Choice = GameData.COUNTRY_NAMES[i];
-					result = true;
-					break;
-				case "Venezuela":
-					Choice = GameData.COUNTRY_NAMES[i];
-					result = true;
-					break;
-				case "Peru":
-					Choice = GameData.COUNTRY_NAMES[i];
-					result = true;
-					break;
-				case "Argentina":
-					Choice = GameData.COUNTRY_NAMES[i];
-					result = true;
-					break;
-				case "Central America":
-					Choice =  GameData.COUNTRY_NAMES[i];
-					result = true;
-					break;
-
-				}
-
-
-			}
-
+		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Central America")&& board.getOccupier(getCountryID("Central America"))==player.getId()&& result !=true){
+			System.out.println("Central America");
+			Choice1 =  "Central America 1";
+			result = true;
 		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Brazil")&& board.getOccupier(getCountryID("Brazil"))==player.getId()&&result!=true){
+			System.out.println("Brazil");
+			Choice1 =  "Brazil 1";
+			result = true;
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Venezuela")&& board.getOccupier(getCountryID("Venezuela"))==player.getId()&&result!=true){
+			System.out.println("Venezuela 1");
+			Choice1 =  "Venezuela 1";
+			result = true;
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Argentina")&& board.getOccupier(getCountryID("Argentina"))==player.getId()&&result!=true){
+			System.out.println("Argentina");
+			Choice1 =  "Argentina 1";
+			result = true;
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Peru")&& board.getOccupier(getCountryID("Peru"))==player.getId()&&result!=true){
+			System.out.println("Peru");
+			Choice1 =  "Peru 1";
+			result = true;
+		}
+
 
 		return result;
 	}
@@ -119,38 +113,41 @@ public class RiskyBusiness implements Bot {
 		int currentIndex = 0;
 		//System.out.println("1"); 
 		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Siam")&& board.getOccupier(getCountryID("Siam"))==player.getId()&& result !=true){
-			Choice1 =  "Siam";
+			System.out.println("Siam");
+			Choice1 =  "Siam 1";
 			result = true;
 		}
-		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("E Australia")&& board.getOccupier(getCountryID("E Australia"))==player.getId()&&result!=true){
-			Choice1 =  "E Australia";
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("E Australia")&& board.getOccupier(getCountryID("E Australia"))==player.getId()&&result!=true){
+			System.out.println("E Australia");
+			Choice1 =  "E Australia 1";
 			result = true;
 		}
-		/*
-		case "E Australia":
-			Choice1 =  GameData.COUNTRY_NAMES[i];
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("New Guinea")&& board.getOccupier(getCountryID("New Guinea"))==player.getId()&&result!=true){
+			System.out.println("New Guinea");
+			Choice1 =  "New Guinea 1";
 			result = true;
-			break;
-		case "New Guinea":
-			Choice1 = GameData.COUNTRY_NAMES[i];
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("W Australia")&& board.getOccupier(getCountryID("W Australia"))==player.getId()&&result!=true){
+			System.out.println("W Australia");
+			Choice1 =  "W Australia 1";
 			result = true;
-			break;
-		case "W Australia":
-			Choice1 = GameData.COUNTRY_NAMES[i];
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Indonesia")&& board.getOccupier(getCountryID("Indonesia"))==player.getId()&&result!=true){
+			System.out.println("Indonesia");
+			Choice1 =  "Indonesia 1";
 			result = true;
-			break;
-		case "Indonesia":
-			Choice1 = GameData.COUNTRY_NAMES[i];
-			result = true;
-			break;
-		 */
+		}
+		
 
 
-
-
-
-
-
+		return result;
+	}
+	
+	public Boolean reinforcementChoice3(){
+		boolean result = false;
+		
+		
+		
 		return result;
 	}
 
