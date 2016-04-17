@@ -172,7 +172,44 @@ public class RiskyBusiness implements Bot {
 	public String getCardExchange () {
 		String command = "";
 		// put your code here
-		command = "skip";
+		if(player.isForcedExchange()){
+			ArrayList<Card> a = player.getCards();
+			int in=0,cav=0,art = 0,wild=0;
+			for(int i=0;i<a.size();i++){
+				System.out.println("Cards: "+a.get(i).getInsigniaId() + " " + a.get(i).getInsigniaName());
+				if(a.get(i).getInsigniaId()==0){
+					in++;
+				}
+				if(a.get(i).getInsigniaId()==1){
+					cav++;
+				}
+				if(a.get(i).getInsigniaId()==2){
+					art++;
+				}
+				if(a.get(i).getInsigniaId()==3){
+					wild++;
+				}
+			}
+			if(in>=3){
+				command = "iii";
+			}
+			if(cav>=3){
+				command = "ccc";
+			}
+			if(art>=3){
+				command = "aaa";
+			}
+			if(art>0&&cav>0&&in>0){
+				command = "aic";
+			}
+			if(wild>=3){
+				command = "www";
+			}
+		}
+		else{
+			command = "skip";
+		}
+
 		return(command);
 	}
 
@@ -285,7 +322,7 @@ public class RiskyBusiness implements Bot {
 	public String getMoveIn (int attackCountryId) {
 		String command = (board.getNumUnits(attackCountryId)-1)+"";
 		// put your code here
-		
+
 		return(command);
 	}
 
@@ -470,4 +507,5 @@ public class RiskyBusiness implements Bot {
 
 		return unitsToAttackWith;
 	}
+
 }
