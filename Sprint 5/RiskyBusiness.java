@@ -21,8 +21,9 @@ public class RiskyBusiness implements Bot {
 
 	private BoardAPI board;
 	private PlayerAPI player;
-	private String Choice = " ";
-	private String Choice1 = " ";
+	private String Choice = "";
+	private String Choice1 = "";
+	private String Choice2 = "";
 
 	ArrayList<Integer> countryIDsOwned = new ArrayList<Integer>();
 	ArrayList<String> countryNamesOwned = new ArrayList<String>();
@@ -51,8 +52,7 @@ public class RiskyBusiness implements Bot {
 		String command = "";
 		Random random = new Random();
 		int a = random.nextInt(1 - 0 + 1) + 1;
-		//System.out.println(reinforcementChoice1() + " "+reinforcementChoice2());
-				//System.out.println("a is " +a);
+		
 				
 				if(reinforcementChoice1() == true ){
 					//System.out.println("workdd");
@@ -63,11 +63,10 @@ public class RiskyBusiness implements Bot {
 					command = Choice1;
 
 				}
+				if (reinforcementChoice3() == true){
+					command = Choice2;
+				}
 
-				/*else{
-					command += countryNamesOwned.get((int) (Math.random() * countryNamesOwned.size()));
-				}*/
-				//command += reinforcementChoice1(); //countryNamesOwned.get((int) (Math.random() * 9));
 				command = command.replaceAll("\\s", "");
 				command += " 1";
 				return command;
@@ -156,10 +155,45 @@ public class RiskyBusiness implements Bot {
 			public Boolean reinforcementChoice3(){
 				boolean result = false;
 				
+				if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Kamchatka")&& board.getOccupier(getCountryID("Kamchatka"))==player.getId()&& result !=true){
+					
+					Choice2 =  "Kamchatka";
+					System.out.println(Choice1);
+					result = true;
+				}
+				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Greenland")&& board.getOccupier(getCountryID("Greenland"))==player.getId()&&result!=true){
+					
+					Choice2 =  "Greenland";
+					System.out.println(Choice1);
+					result = true;
+				}
+				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Alaska")&& board.getOccupier(getCountryID("Alaska"))==player.getId()&&result!=true){
+					
+					Choice2 =  "Alaska";
+					System.out.println(Choice1);
+					result = true;
+				}
+				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Middle East")&& board.getOccupier(getCountryID("Middle East"))==player.getId()&&result!=true){
+					
+					Choice2 =  "Middle East";
+					System.out.println(Choice1);
+					result = true;
+				}
+				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("China")&& board.getOccupier(getCountryID("China"))==player.getId()&&result!=true){
+					
+					Choice2 =  "China";
+					System.out.println(Choice1);
+					result = true;
+				}
 				
-				
+
+
 				return result;
 			}
+				
+				
+			
+			
 	public String getPlacement (int forPlayer) {
 		String command = "";
 		// put your code here
