@@ -329,10 +329,10 @@ public class RiskyBusiness implements Bot {
 		toAttack = toAttack.replaceAll("\\s", "");
 
 		int armiesLeftInCountryToAttackWith = board.getNumUnits(bestToAttackWith);
-		if(armiesLeftInCountryToAttackWith == 1){
+		if((armiesLeftInCountryToAttackWith < 4) || (armiesLeftInCountryToAttackWith/2)<board.getNumUnits(bestToAttack)){
 			command = "Skip";
 		}
-		else if(armiesLeftInCountryToAttackWith > 1){
+		else if(armiesLeftInCountryToAttackWith >= 4){
 			command = toAttackWith + " "+toAttack + " " + getUnitsToAttackWith(bestToAttackWith);
 		}
 		return(command);
