@@ -63,7 +63,7 @@ public class RiskyBusiness implements Bot {
 					command = Choice1;
 
 				}
-				if (reinforcementChoice3() == true){
+				else if (reinforcementChoice3() == true){
 					command = Choice2;
 				}
 
@@ -205,7 +205,7 @@ public class RiskyBusiness implements Bot {
 	public String getCardExchange () {
 		String command = "";
 		// put your code here
-		if(player.isForcedExchange()){
+		if(player.getCards().size()>4){
 			ArrayList<Card> a = player.getCards();
 			int in=0,cav=0,art = 0,wild=0;
 			for(int i=0;i<a.size();i++){
@@ -232,23 +232,37 @@ public class RiskyBusiness implements Bot {
 			if(art>=3){
 				command = "aaa";
 			}
-			if(art>0&&cav>0&&in>0){
-				command = "aic";
-			}
 			if(wild>=3){
 				command = "www";
 			}
+			if(art>0&&cav>0&&in>0){
+				command = "aic";
+			}
+			if(art>0&&cav>0&&wild>0){
+				command = "acw";
+			}
+			if(art>0&&in>0&&wild>0){
+				command = "aiw";
+			}
+			if(cav>0&&in>0&&wild>0){
+				command = "ciw";
+			}
+			System.out.println("command is "+ command);
 		}
-		else{
+		else if (player.getCards().size()<5){
 			command = "skip";
 		}
-
+		System.out.println(player.getCards().size());
 		return(command);
 	}
 
 	public String getBattle () {
 		String command = "";
-
+		try {
+		    Thread.sleep(10);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
 		//get adjacents;
 		int numCountriesOwned = 0;
 		for(int i=0;i<42;i++){
@@ -353,7 +367,7 @@ public class RiskyBusiness implements Bot {
 	}
 
 	public String getMoveIn (int attackCountryId) {
-		String command = (board.getNumUnits(attackCountryId)-1)+"";
+		String command = ((int)(board.getNumUnits(attackCountryId)/1.5))+"";
 		// put your code here
 
 		return(command);
