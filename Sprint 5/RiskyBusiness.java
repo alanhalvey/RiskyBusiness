@@ -38,9 +38,11 @@ public class RiskyBusiness implements Bot {
 	public String getName () {
 		String command = "";
 		// put your code here
+		
 		command = "BOT";
 		return(command);
 	}
+
 	public String getReinforcement () {
 		boolean switcher = false;
 
@@ -72,7 +74,7 @@ public class RiskyBusiness implements Bot {
 				return command;
 			}
 
-			public Boolean reinforcementChoice1(){
+	public Boolean reinforcementChoice1(){
 				boolean result = false;
 
 				if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Central America")&& board.getOccupier(getCountryID("Central America"))==player.getId()&& result !=true){
@@ -110,8 +112,7 @@ public class RiskyBusiness implements Bot {
 				return result;
 			}
 
-
-			public Boolean reinforcementChoice2(){
+	public Boolean reinforcementChoice2(){
 				boolean result = false;
 
 				int currentIndex = 0;
@@ -152,7 +153,7 @@ public class RiskyBusiness implements Bot {
 				return result;
 			}
 			
-			public Boolean reinforcementChoice3(){
+	public Boolean reinforcementChoice3(){
 				boolean result = false;
 				
 				if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Kamchatka")&& board.getOccupier(getCountryID("Kamchatka"))==player.getId()&& result !=true){
@@ -190,10 +191,7 @@ public class RiskyBusiness implements Bot {
 
 				return result;
 			}
-				
-				
-			
-			
+						
 	public String getPlacement (int forPlayer) {
 		String command = "";
 		// put your code here
@@ -288,10 +286,6 @@ public class RiskyBusiness implements Bot {
 
 		int bestToAttackWith = owned[owned.length-1][0];
 
-
-
-
-
 		int count = 0;
 		for(int i=0;i<42;i++){
 			if(board.isAdjacent(bestToAttackWith, i) && board.getOccupier(i)!=player.getId()){
@@ -336,7 +330,7 @@ public class RiskyBusiness implements Bot {
 
 
 		int bestToAttack = adjacents[0][0];
-
+		
 		String toAttackWith = GameData.COUNTRY_NAMES[bestToAttackWith];
 		String toAttack = GameData.COUNTRY_NAMES[bestToAttack];
 		toAttackWith = toAttackWith.replaceAll("\\s", "");
@@ -367,12 +361,39 @@ public class RiskyBusiness implements Bot {
 	}
 
 	public String getMoveIn (int attackCountryId) {
-		String command = ((int)(board.getNumUnits(attackCountryId)/1.5))+"";
-		// put your code here
+
+		String command = ((int)(board.getNumUnits(attackCountryId)-1))+"";
+				
+	if(getNumberOfOpposingNeighbours(attackCountryId)==0){	
+		command = ((int)(board.getNumUnits(attackCountryId)-1))+"";
+	}
+	else if(getNumberOfOpposingNeighbours(attackCountryId)==1){	
+		command = ((int)(board.getNumUnits(attackCountryId))/2)+"";
+	}
+	else if(getNumberOfOpposingNeighbours(attackCountryId)==2){	
+		command = ((int)(board.getNumUnits(attackCountryId))/3)+"";
+	}
+	else if(getNumberOfOpposingNeighbours(attackCountryId)==3){	
+		command = ((int)(board.getNumUnits(attackCountryId))/4)+"";
+	}
+	else if(getNumberOfOpposingNeighbours(attackCountryId)==2){	
+		command = "0";
+	}
 
 		return(command);
 	}
 
+	private int getNumberOfOpposingNeighbours(int attackingCountryId){
+		int numberOfOpposingNeighbours=0;
+		
+		for(int k=0;k<GameData.ADJACENT[attackingCountryId].length;k++){
+			if(board.getOccupier(GameData.ADJACENT[attackingCountryId][k])!=player.getId()){
+				numberOfOpposingNeighbours++;
+			}
+		}
+		return numberOfOpposingNeighbours;
+	}
+	
 	public String getFortify () {
 		String command = "";
 		int tempUnits = 0;
@@ -504,8 +525,8 @@ public class RiskyBusiness implements Bot {
 		}
 		return totalunitsneighbours/GameData.ADJACENT[i].length;
 	}
-
-	public void getCountriesOwned() {
+	
+	private void getCountriesOwned() {
 
 		String command = "";
 
