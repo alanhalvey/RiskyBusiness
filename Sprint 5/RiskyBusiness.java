@@ -199,7 +199,7 @@ public class RiskyBusiness implements Bot {
 		boolean result = false;
 		
 		for(int i=0;i<GameData.NUM_COUNTRIES;i++){
-			if(board.getOccupier(i) == player.getId() && board.getNumUnits(i)<15){
+			if(board.getOccupier(i) == player.getId()){
 				Choice3 = GameData.COUNTRY_NAMES[i];
 				result = true;
 			}
