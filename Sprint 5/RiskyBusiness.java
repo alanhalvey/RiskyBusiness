@@ -39,7 +39,7 @@ public class RiskyBusiness implements Bot {
 	public String getName () {
 		String command = "";
 		// put your code here
-		
+
 		command = "BOT";
 		return(command);
 	}
@@ -55,160 +55,313 @@ public class RiskyBusiness implements Bot {
 		String command = "";
 		Random random = new Random();
 		int a = random.nextInt(1 - 0 + 1) + 1;
-		
-				
-				if(reinforcementChoice1() == true ){
-					//System.out.println("workdd");
-					command = Choice;
-				}
-				else if(reinforcementChoice2() == true ){
-					//System.out.println("did it?");
-					command = Choice1;
 
-				}
-				else if (reinforcementChoice3() == true){
-					command = Choice2;
-				}
-				else if (reinforcementChoice4() == true){
-					command = Choice3;
-				}
 
-				command = command.replaceAll("\\s", "");
-				command += " 1";
-				return command;
-			}
+		if(reinforcementChoice1() == true ){
+			//System.out.println("workdd");
+			command = Choice;
+		}
+		else if(reinforcementChoice2() == true ){
+			//System.out.println("did it?");
+			command = Choice1;
+
+		}
+		else if (reinforcementChoice3() == true){
+			command = Choice2;
+		}
+		else if (reinforcementChoice4() == true){
+			command = Choice3;
+		}
+
+		command = command.replaceAll("\\s", "");
+		command += " "+ player.getNumUnits();
+		return command;
+	}
 
 	public Boolean reinforcementChoice1(){
-				boolean result = false;
-				
-				if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Central America")&& board.getOccupier(getCountryID("Central America"))==player.getId()&&board.getNumUnits(7)<15 && result !=true ){
-					
-					Choice =  "Central America";
-					System.out.println(Choice);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Brazil")&& board.getOccupier(getCountryID("Brazil"))==player.getId()&& board.getNumUnits(34)<15 && result!=true){
-					
-					Choice =  "Brazil";
-					System.out.println(Choice);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Venezuela")&& board.getOccupier(getCountryID("Venezuela"))==player.getId()&& board.getNumUnits(32)<15 &&result!=true){
-					
-					Choice =  "Venezuela";
-					System.out.println(Choice);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Argentina")&& board.getOccupier(getCountryID("Argentina"))==player.getId()&& board.getNumUnits(35)< 15 &&result!=true){
-					
-					Choice =  "Argentina";
-					System.out.println(Choice);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Peru")&& board.getOccupier(getCountryID("Peru"))==player.getId()&& board.getNumUnits(33)<15 &&result!=true){
-				
-					Choice =  "Peru";
-					System.out.println(Choice);
-					result = true;
-				}
+		boolean result = false;
 
-
-				return result;
+		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Central America")&& board.getOccupier(getCountryID("Central America"))==player.getId()&& result !=true ){
+			if(board.getNumUnits(7)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(7, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
 			}
-
-	public Boolean reinforcementChoice2(){
-				boolean result = false;
-
-				int currentIndex = 0;
-				//System.out.println("1"); 
-				if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Siam")&& board.getOccupier(getCountryID("Siam"))==player.getId()&& board.getNumUnits(22)<15 && result !=true){
-					
-					Choice1 =  "Siam";
-					System.out.println(Choice1);
-					result = true;
+			else{
+				Choice =  "Central America";
+				System.out.println(Choice);
+				result = true;
+			}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Brazil")&& board.getOccupier(getCountryID("Brazil"))==player.getId() && result!=true){
+			if(board.getNumUnits(34)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(34, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
 				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("E Australia")&& board.getOccupier(getCountryID("E Australia"))==player.getId()&& board.getNumUnits(28)<15 &&result!=true){
-					
-					Choice1 =  "E Australia";
-					System.out.println(Choice1);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("New Guinea")&& board.getOccupier(getCountryID("New Guinea"))==player.getId() && board.getNumUnits(29)<15 && board.getNumUnits(33)<15 &&result!=true){
-					
-					Choice1 =  "New Guinea";
-					System.out.println(Choice1);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("W Australia")&& board.getOccupier(getCountryID("W Australia"))==player.getId()&& board.getNumUnits(30)<15 &&result!=true){
-					
-					Choice1 =  "W Australia";
-					System.out.println(Choice1);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Indonesia")&& board.getOccupier(getCountryID("Indonesia"))==player.getId() && board.getNumUnits(31)<15 &&result!=true){
-					
-					Choice1 =  "Indonesia";
-					System.out.println(Choice1);
-					result = true;
-				}
-				
-
-
-				return result;
+			}
+			else{
+			Choice =  "Brazil";
+			System.out.println(Choice);
+			result = true;
+			}
 			}
 			
-	public Boolean reinforcementChoice3(){
-				boolean result = false;
-				
-				if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Kamchatka")&& board.getOccupier(getCountryID("Kamchatka"))==player.getId() && board.getNumUnits(22)<15 && result !=true){
-					
-					Choice2 =  "Kamchatka";
-					System.out.println(Choice2);
-					result = true;
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Venezuela")&& board.getOccupier(getCountryID("Venezuela"))==player.getId() &&result!=true){
+			if(board.getNumUnits(32)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(32, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
 				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Greenland")&& board.getOccupier(getCountryID("Greenland"))==player.getId() && board.getNumUnits(4)<15 &&result!=true){
-					
-					Choice2 =  "Greenland";
-					System.out.println(Choice2);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Alaska")&& board.getOccupier(getCountryID("Alaska"))==player.getId() && board.getNumUnits(8)<15 &&result!=true){
-					
-					Choice2 =  "Alaska";
-					System.out.println(Choice2);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Middle East")&& board.getOccupier(getCountryID("Middle East"))==player.getId() && board.getNumUnits(18)<15 &&result!=true){
-					
-					Choice2 =  "Middle East";
-					System.out.println(Choice2);
-					result = true;
-				}
-				else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("China")&& board.getOccupier(getCountryID("China"))==player.getId() && board.getNumUnits(27)<15 &&result!=true){
-					
-					Choice2 =  "China";
-					System.out.println(Choice2);
-					result = true;
-				}
-				
-
-
-				return result;
 			}
+			else{
+			Choice =  "Venezuela";
+			System.out.println(Choice);
+			result = true;
+			}
+			}
+			
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Argentina")&& board.getOccupier(getCountryID("Argentina"))==player.getId()&&result!=true){
+			if(board.getNumUnits(35)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(35, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice =  "Argentina";
+			System.out.println(Choice);
+			result = true;
+			}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Peru")&& board.getOccupier(getCountryID("Peru"))==player.getId() &&result!=true){
+			if(board.getNumUnits(33)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(33, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice =  "Peru";
+			System.out.println(Choice);
+			result = true;
+			}
+		}
+
+
+		return result;
+	}
+
+	public Boolean reinforcementChoice2(){
+		boolean result = false;
+
+		int currentIndex = 0;
+		//System.out.println("1"); 
+		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Siam")&& board.getOccupier(getCountryID("Siam"))==player.getId()&&  result !=true){
+			if(board.getNumUnits(22)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(22, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice1 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice1 =  "Siam";
+			System.out.println(Choice1);
+			result = true;
+			}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("E Australia")&& board.getOccupier(getCountryID("E Australia"))==player.getId() &&result!=true){
+			if(board.getNumUnits(28)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(28, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice1 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice1 =  "E Australia";
+			System.out.println(Choice1);
+			result = true;
+			}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("New Guinea")&& board.getOccupier(getCountryID("New Guinea"))==player.getId() && board.getNumUnits(33)<15 &&result!=true){
+			if(board.getNumUnits(29)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(29, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice1 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice1 =  "New Guinea";
+			System.out.println(Choice1);
+			result = true;
+		}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("W Australia")&& board.getOccupier(getCountryID("W Australia"))==player.getId()&&result!=true){
+			if(board.getNumUnits(30)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(30, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice1 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice1 =  "W Australia";
+			System.out.println(Choice1);
+			result = true;
+			}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Indonesia")&& board.getOccupier(getCountryID("Indonesia"))==player.getId() &&result!=true){
+			if(board.getNumUnits(31)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(31, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice1 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice1 =  "Indonesia";
+			System.out.println(Choice1);
+			result = true;
+		}
+		}
+
+
+
+		return result;
+	}
+
+	public Boolean reinforcementChoice3(){
+		boolean result = false;
+
+		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Kamchatka")&& board.getOccupier(getCountryID("Kamchatka"))==player.getId() && result !=true){
+			if(board.getNumUnits(21)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(21, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice2 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice2 =  "Kamchatka";
+			System.out.println(Choice2);
+			result = true;
+		}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Greenland")&& board.getOccupier(getCountryID("Greenland"))==player.getId() &&result!=true){
+			if(board.getNumUnits(4)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(4, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice2 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice2 =  "Greenland";
+			System.out.println(Choice2);
+			result = true;
+		}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Alaska")&& board.getOccupier(getCountryID("Alaska"))==player.getId() &&result!=true){
+			if(board.getNumUnits(8)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(8, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice2 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice2 =  "Alaska";
+			System.out.println(Choice2);
+			result = true;
+		}
+		}
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Middle East")&& board.getOccupier(getCountryID("Middle East"))==player.getId() &&result!=true){
+			if(board.getNumUnits(18)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(18, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice2 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice2 =  "Middle East";
+			System.out.println(Choice2);
+			result = true;
+		}
+		}
+		
+		
+		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("China")&& board.getOccupier(getCountryID("China"))==player.getId()  &&result!=true){
+			if(board.getNumUnits(27)>15){
+				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
+					if(board.isAdjacent(27, i) && board.getOccupier(i)== player.getId()){
+						System.out.println("got to here");
+						Choice2 = GameData.COUNTRY_NAMES[i];
+						result = true;
+					}
+				}
+			}
+			else{
+			Choice2 =  "China";
+			System.out.println(Choice2);
+			result = true;
+		}
+		}
+
+
+		return result;
+	}
 	public boolean reinforcementChoice4(){
 		boolean result = false;
-		
+
 		for(int i=0;i<GameData.NUM_COUNTRIES;i++){
 			if(board.getOccupier(i) == player.getId()){
 				Choice3 = GameData.COUNTRY_NAMES[i];
 				result = true;
 			}
-			
+
 		}
-		
+
 		return result;
 	}
-						
+
 	public String getPlacement (int forPlayer) {
 		String command = "";
 		// put your code here
@@ -274,9 +427,9 @@ public class RiskyBusiness implements Bot {
 	public String getBattle () {
 		String command = "";
 		try {
-		    Thread.sleep(10);                 //1000 milliseconds is one second.
+			Thread.sleep(10);                 //1000 milliseconds is one second.
 		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
+			Thread.currentThread().interrupt();
 		}
 		//get adjacents;
 		int numCountriesOwned = 0;
@@ -347,7 +500,7 @@ public class RiskyBusiness implements Bot {
 
 
 		int bestToAttack = adjacents[0][0];
-		
+
 		String toAttackWith = GameData.COUNTRY_NAMES[bestToAttackWith];
 		String toAttack = GameData.COUNTRY_NAMES[bestToAttack];
 		toAttackWith = toAttackWith.replaceAll("\\s", "");
@@ -380,29 +533,29 @@ public class RiskyBusiness implements Bot {
 	public String getMoveIn (int attackCountryId) {
 
 		String command = ((int)(board.getNumUnits(attackCountryId)-1))+"";
-				
-	if(getNumberOfOpposingNeighbours(attackCountryId)==0){	
-		command = ((int)(board.getNumUnits(attackCountryId)-1))+"";
-	}
-	else if(getNumberOfOpposingNeighbours(attackCountryId)==1){	
-		command = ((int)(board.getNumUnits(attackCountryId))/2)+"";
-	}
-	else if(getNumberOfOpposingNeighbours(attackCountryId)==2){	
-		command = ((int)(board.getNumUnits(attackCountryId))/3)+"";
-	}
-	else if(getNumberOfOpposingNeighbours(attackCountryId)==3){	
-		command = ((int)(board.getNumUnits(attackCountryId))/4)+"";
-	}
-	else if(getNumberOfOpposingNeighbours(attackCountryId)==2){	
-		command = "0";
-	}
+
+		if(getNumberOfOpposingNeighbours(attackCountryId)==0){	
+			command = ((int)(board.getNumUnits(attackCountryId)-1))+"";
+		}
+		else if(getNumberOfOpposingNeighbours(attackCountryId)==1){	
+			command = ((int)(board.getNumUnits(attackCountryId))/2)+"";
+		}
+		else if(getNumberOfOpposingNeighbours(attackCountryId)==2){	
+			command = ((int)(board.getNumUnits(attackCountryId))/3)+"";
+		}
+		else if(getNumberOfOpposingNeighbours(attackCountryId)==3){	
+			command = ((int)(board.getNumUnits(attackCountryId))/4)+"";
+		}
+		else if(getNumberOfOpposingNeighbours(attackCountryId)==2){	
+			command = "0";
+		}
 
 		return(command);
 	}
 
 	private int getNumberOfOpposingNeighbours(int attackingCountryId){
 		int numberOfOpposingNeighbours=0;
-		
+
 		for(int k=0;k<GameData.ADJACENT[attackingCountryId].length;k++){
 			if(board.getOccupier(GameData.ADJACENT[attackingCountryId][k])!=player.getId()){
 				numberOfOpposingNeighbours++;
@@ -410,7 +563,7 @@ public class RiskyBusiness implements Bot {
 		}
 		return numberOfOpposingNeighbours;
 	}
-	
+
 	public String getFortify () {
 		String command = "";
 		int tempUnits = 0;
@@ -542,7 +695,7 @@ public class RiskyBusiness implements Bot {
 		}
 		return totalunitsneighbours/GameData.ADJACENT[i].length;
 	}
-	
+
 	private void getCountriesOwned() {
 
 		String command = "";
