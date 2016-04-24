@@ -27,6 +27,7 @@ public class RiskyBusiness implements Bot {
 	private String Choice3= "";
 	private String prevFortify = "";
 	private int changeReinforce = 0;
+	private int changeStuff = 0;
 
 	ArrayList<Integer> countryIDsOwned = new ArrayList<Integer>();
 	ArrayList<String> countryNamesOwned = new ArrayList<String>();
@@ -55,7 +56,6 @@ public class RiskyBusiness implements Bot {
 
 		getCountriesOwned();
 		System.out.println(countryNamesOwned);
-
 
 		String command = "";
 		Random random = new Random();
@@ -93,66 +93,172 @@ public class RiskyBusiness implements Bot {
 	private boolean reinforcementChoice7(){
 		boolean result = false;
 
-		
 		getCountriesOwned();
 		System.out.println(countryNamesOwned);
 		
 		getContinentsOwned();
 		System.out.println(continentNamesOwned);
 		
-		if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4)){
+		if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1) && continentIDsOwned.contains(5)){
 			
 			if(changeReinforce == 0){
-				
-				Choice = "Brazil";
-				
+				if(countryNamesOwned.contains("India")){
+					if(countryNamesOwned.contains("Siam")){
+						Choice = "Siam";
+					}
+					else{
+						Choice = "India";
+					}
+				}
+				else{
+					Choice = "Middle East";
+				}
 				changeReinforce++;
 			}
 			else if(changeReinforce == 1){
-				
-				Choice = "Greenland";
-				
+				String var1 = "Ukraine";
+				String var2 = "E Africa";
+				if(changeStuff==0){
+					Choice = var1;
+					changeStuff++;
+				}
+				else{
+					Choice = var2;
+					changeStuff=0;
+				}
 				changeReinforce++;
 			}
 			else if(changeReinforce == 2){
-				
-				Choice = "Alaska";	
-				
+				if(countryNamesOwned.contains("Kamchatka")){
+					Choice = "Kamchatka";
+				}
+				else{
+					Choice = "Alaska";
+				}
 				changeReinforce=0;
 			}
 			result=true;
 		}
-		else if(continentIDsOwned.contains(4) && countryNamesOwned.contains("CentralAmerica") && !continentNamesOwned.contains(0)){
+		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1)){
+			
+			if(changeReinforce == 0){
+				if(countryNamesOwned.contains("Middle East")){
+					Choice = "Middle East";
+				}
+				else{
+					Choice = "S Europe";
+				}
+				changeReinforce++;
+			}
+			else if(changeReinforce == 1){
+				Choice = "Ukraine";
+				changeReinforce++;
+			}
+			else if(changeReinforce == 2){
+				if(countryNamesOwned.contains("N Africa")){
+					Choice = "N Africa";
+				}
+				else{
+					Choice = "W Europe";	
+				}
+				changeReinforce=0;
+			}
+			result=true;
+		}
+		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4)){
+			if(changeReinforce == 0){
+				if(countryNamesOwned.contains("N Africa")){
+					Choice = "N Africa";
+				}
+				else{
+					Choice = "Brazil";
+				}
+				changeReinforce++;
+			}
+			else if(changeReinforce == 1){
+				if(countryNamesOwned.contains("Iceland")){
+					Choice = "Iceland";
+				}
+				else{
+					Choice = "Greenland";
+				}
+				changeReinforce++;
+			}
+			else if(changeReinforce == 2){
+				if(countryNamesOwned.contains("Kamchatka")){
+					Choice = "Kamchatka";
+				}
+				else{
+					Choice = "Alaska";	
+				}
+				changeReinforce=0;
+			}
+			result=true;
+		}
+		else if(continentIDsOwned.contains(4) && countryNamesOwned.contains("CentralAmerica")){
 			
 			if(changeReinforce==0){
-				Choice = "Brazil";
+				if(countryNamesOwned.contains("N Africa")){
+					Choice = "N Africa";
+				}
+				else{
+					Choice = "Brazil";
+				}
 				changeReinforce++;
 			}
 			else if(changeReinforce==1){
-				Choice = "CentralAmerica";
+				if(countryNamesOwned.contains("W United States") && countryNamesOwned.contains("E United States")){
+					String var1 = "W United States";
+					String var2 = "E United States";
+					if(changeStuff==0){
+						Choice = var1;
+						changeStuff++;
+					}
+					else{
+						Choice = var2;
+						changeStuff=0;
+					}
+				}
+				else{
+					Choice = "CentralAmerica";
+				}
+				
 				changeReinforce=0;
 			}
 			result=true;
 		}
-		else if(continentIDsOwned.contains(0) && !continentNamesOwned.contains(4)){
+		else if(continentIDsOwned.contains(0)){
 			if(changeReinforce==0){
-				Choice = "Central America";
+				if(countryNamesOwned.contains("Venezuela")){
+					Choice = "Venezuela";
+				}
+				else{
+					Choice = "Central America";
+				}
 				changeReinforce++;
 			}
 			else if(changeReinforce==1){
-				Choice = "Greenland";
+				if(countryNamesOwned.contains("Iceland")){
+					Choice = "Iceland";
+				}
+				else{
+					Choice = "Greenland";
+				}
 				changeReinforce++;
 			}
 			else if(changeReinforce==2){
-				Choice = "Alaska";
+				if(countryNamesOwned.contains("Kamchatka")){
+					Choice = "Kamchatka";
+				}
+				else{
+					Choice = "Alaska";
+				}
 				changeReinforce=0;
 			}
 			result=true;
 		}
 		
-		
 		return result;
-
 	}
 
 	private void getContinentsOwned(){
@@ -644,7 +750,14 @@ public class RiskyBusiness implements Bot {
 		String command = ((int)(board.getNumUnits(attackCountryId)-1))+"";
 
 		if(getNumberOfOpposingNeighbours(attackCountryId)==0){	
-			command = ((int)(board.getNumUnits(attackCountryId)-1))+"";
+			int var = 0;
+			if (player.getNumUnits()>10){
+				var = 3;
+			}
+			else{
+				var = 1;
+			}
+			command = ((int)(board.getNumUnits(attackCountryId)-var))+"";
 		}
 		else if(getNumberOfOpposingNeighbours(attackCountryId)==1){	
 			command = ((int)(board.getNumUnits(attackCountryId))/2)+"";
