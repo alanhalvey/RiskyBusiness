@@ -595,13 +595,28 @@ public class RiskyBusiness implements Bot {
 		return result;
 	}
 
-	public String getPlacement (int forPlayer) {
-		String command = "";
-		// put your code here
-		command = GameData.COUNTRY_NAMES[(int)(Math.random() * GameData.NUM_COUNTRIES)];
-		command = command.replaceAll("\\s", "");
-		return(command);
+
+public String getPlacement (int forPlayer) {
+	String command = "";
+
+	ArrayList<String> neutralcountryOwned = new ArrayList<String>();
+	
+	for(int i =0; i<GameData.NUM_COUNTRIES;i++){
+		if(board.getOccupier(i) == forPlayer){
+			neutralcountryOwned.add(GameData.COUNTRY_NAMES[i]);
+		}
+		
 	}
+	
+	command = neutralcountryOwned.get((int)(Math.random() * neutralcountryOwned.size()));
+	
+	
+	
+	
+	command = command.replaceAll("\\s", "");
+	
+	return(command);
+}
 
 	public String getCardExchange () {
 		String command = "";
