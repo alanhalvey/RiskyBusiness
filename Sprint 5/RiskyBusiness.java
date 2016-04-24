@@ -31,11 +31,11 @@ public class RiskyBusiness implements Bot {
 
 	ArrayList<Integer> countryIDsOwned = new ArrayList<Integer>();
 	ArrayList<String> countryNamesOwned = new ArrayList<String>();
-	
+
 	ArrayList<Integer> continentIDsOwned = new ArrayList<Integer>();
 	ArrayList<String> continentNamesOwned = new ArrayList<String>();
 
-	
+
 	RiskyBusiness (BoardAPI inBoard, PlayerAPI inPlayer) {
 		board = inBoard;	
 		player = inPlayer;
@@ -47,7 +47,7 @@ public class RiskyBusiness implements Bot {
 		String command = "";
 		// put your code here
 
-		command = "Risky Business";
+		command = "ALBOT HITLER";
 		return(command);
 	}
 
@@ -95,12 +95,18 @@ public class RiskyBusiness implements Bot {
 
 		getCountriesOwned();
 		System.out.println(countryNamesOwned);
-		
+
 		getContinentsOwned();
 		System.out.println(continentNamesOwned);
+
+		if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1) && continentIDsOwned.contains(5) && continentIDsOwned.contains(2)){
+			Choice = "Siam";
+			result = true;
+		}
 		
-		if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1) && continentIDsOwned.contains(5)){
-			
+		//if you own north america, south america, europe, and africa
+		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1) && continentIDsOwned.contains(5)){
+
 			if(changeReinforce == 0){
 				if(countryNamesOwned.contains("India")){
 					if(countryNamesOwned.contains("Siam")){
@@ -115,6 +121,7 @@ public class RiskyBusiness implements Bot {
 				}
 				changeReinforce++;
 			}
+
 			else if(changeReinforce == 1){
 				String var1 = "Ukraine";
 				String var2 = "E Africa";
@@ -130,7 +137,12 @@ public class RiskyBusiness implements Bot {
 			}
 			else if(changeReinforce == 2){
 				if(countryNamesOwned.contains("Kamchatka")){
-					Choice = "Kamchatka";
+					if(countryNamesOwned.contains("Mongolia")){
+						Choice = "Mongolia";
+					}
+					else{
+						Choice = "Kamchatka";
+					}
 				}
 				else{
 					Choice = "Alaska";
@@ -139,8 +151,10 @@ public class RiskyBusiness implements Bot {
 			}
 			result=true;
 		}
+		
+		//if you own north america, south america, and europe
 		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1)){
-			
+
 			if(changeReinforce == 0){
 				if(countryNamesOwned.contains("Middle East")){
 					Choice = "Middle East";
@@ -165,6 +179,8 @@ public class RiskyBusiness implements Bot {
 			}
 			result=true;
 		}
+		
+		//if you own north and south america
 		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4)){
 			if(changeReinforce == 0){
 				if(countryNamesOwned.contains("N Africa")){
@@ -195,8 +211,10 @@ public class RiskyBusiness implements Bot {
 			}
 			result=true;
 		}
+		
+		//if you own south america and central america (the country)
 		else if(continentIDsOwned.contains(4) && countryNamesOwned.contains("CentralAmerica")){
-			
+
 			if(changeReinforce==0){
 				if(countryNamesOwned.contains("N Africa")){
 					Choice = "N Africa";
@@ -222,11 +240,12 @@ public class RiskyBusiness implements Bot {
 				else{
 					Choice = "CentralAmerica";
 				}
-				
+
 				changeReinforce=0;
 			}
 			result=true;
 		}
+		//if you own north america
 		else if(continentIDsOwned.contains(0)){
 			if(changeReinforce==0){
 				if(countryNamesOwned.contains("Venezuela")){
@@ -257,15 +276,15 @@ public class RiskyBusiness implements Bot {
 			}
 			result=true;
 		}
-		
+
 		return result;
 	}
 
 	private void getContinentsOwned(){
-		
+
 		continentNamesOwned.clear();
 		continentIDsOwned.clear();
-		
+
 		if(countryIDsOwned.contains(0)&&countryIDsOwned.contains(1)&&countryIDsOwned.contains(2)&&countryIDsOwned.contains(3)&&countryIDsOwned.contains(4)&&countryIDsOwned.contains(5)&&countryIDsOwned.contains(6)&&countryIDsOwned.contains(7)&&countryIDsOwned.contains(8)){
 			continentNamesOwned.add("North America");
 			continentIDsOwned.add(0);
@@ -291,7 +310,7 @@ public class RiskyBusiness implements Bot {
 			continentIDsOwned.add(5);
 		}
 	}
-	
+
 	private boolean reinforcementChoice1(){
 		boolean result = false;
 
@@ -322,12 +341,12 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice =  "Brazil";
-			System.out.println(Choice);
-			result = true;
+				Choice =  "Brazil";
+				System.out.println(Choice);
+				result = true;
 			}
-			}
-			
+		}
+
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Venezuela")&& board.getOccupier(getCountryID("Venezuela"))==player.getId() &&result!=true){
 			if(board.getNumUnits(32)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
@@ -339,12 +358,12 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice =  "Venezuela";
-			System.out.println(Choice);
-			result = true;
+				Choice =  "Venezuela";
+				System.out.println(Choice);
+				result = true;
 			}
-			}
-			
+		}
+
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Argentina")&& board.getOccupier(getCountryID("Argentina"))==player.getId()&&result!=true){
 			if(board.getNumUnits(35)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
@@ -356,9 +375,9 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice =  "Argentina";
-			System.out.println(Choice);
-			result = true;
+				Choice =  "Argentina";
+				System.out.println(Choice);
+				result = true;
 			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Peru")&& board.getOccupier(getCountryID("Peru"))==player.getId() &&result!=true){
@@ -372,9 +391,9 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice =  "Peru";
-			System.out.println(Choice);
-			result = true;
+				Choice =  "Peru";
+				System.out.println(Choice);
+				result = true;
 			}
 		}
 
@@ -398,9 +417,9 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice1 =  "Siam";
-			System.out.println(Choice1);
-			result = true;
+				Choice1 =  "Siam";
+				System.out.println(Choice1);
+				result = true;
 			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("E Australia")&& board.getOccupier(getCountryID("E Australia"))==player.getId() &&result!=true){
@@ -414,9 +433,9 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice1 =  "E Australia";
-			System.out.println(Choice1);
-			result = true;
+				Choice1 =  "E Australia";
+				System.out.println(Choice1);
+				result = true;
 			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("New Guinea")&& board.getOccupier(getCountryID("New Guinea"))==player.getId() && board.getNumUnits(33)<15 &&result!=true){
@@ -430,10 +449,10 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice1 =  "New Guinea";
-			System.out.println(Choice1);
-			result = true;
-		}
+				Choice1 =  "New Guinea";
+				System.out.println(Choice1);
+				result = true;
+			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("W Australia")&& board.getOccupier(getCountryID("W Australia"))==player.getId()&&result!=true){
 			if(board.getNumUnits(30)>15){
@@ -446,9 +465,9 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice1 =  "W Australia";
-			System.out.println(Choice1);
-			result = true;
+				Choice1 =  "W Australia";
+				System.out.println(Choice1);
+				result = true;
 			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Indonesia")&& board.getOccupier(getCountryID("Indonesia"))==player.getId() &&result!=true){
@@ -462,10 +481,10 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice1 =  "Indonesia";
-			System.out.println(Choice1);
-			result = true;
-		}
+				Choice1 =  "Indonesia";
+				System.out.println(Choice1);
+				result = true;
+			}
 		}
 
 
@@ -487,10 +506,10 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice2 =  "Kamchatka";
-			System.out.println(Choice2);
-			result = true;
-		}
+				Choice2 =  "Kamchatka";
+				System.out.println(Choice2);
+				result = true;
+			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Greenland")&& board.getOccupier(getCountryID("Greenland"))==player.getId() &&result!=true){
 			if(board.getNumUnits(4)>15){
@@ -503,10 +522,10 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice2 =  "Greenland";
-			System.out.println(Choice2);
-			result = true;
-		}
+				Choice2 =  "Greenland";
+				System.out.println(Choice2);
+				result = true;
+			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Alaska")&& board.getOccupier(getCountryID("Alaska"))==player.getId() &&result!=true){
 			if(board.getNumUnits(8)>15){
@@ -519,10 +538,10 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice2 =  "Alaska";
-			System.out.println(Choice2);
-			result = true;
-		}
+				Choice2 =  "Alaska";
+				System.out.println(Choice2);
+				result = true;
+			}
 		}
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Middle East")&& board.getOccupier(getCountryID("Middle East"))==player.getId() &&result!=true){
 			if(board.getNumUnits(18)>15){
@@ -535,13 +554,13 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice2 =  "Middle East";
-			System.out.println(Choice2);
-			result = true;
+				Choice2 =  "Middle East";
+				System.out.println(Choice2);
+				result = true;
+			}
 		}
-		}
-		
-		
+
+
 		else if(Arrays.asList(GameData.COUNTRY_NAMES).contains("China")&& board.getOccupier(getCountryID("China"))==player.getId()  &&result!=true){
 			if(board.getNumUnits(27)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
@@ -553,10 +572,10 @@ public class RiskyBusiness implements Bot {
 				}
 			}
 			else{
-			Choice2 =  "China";
-			System.out.println(Choice2);
-			result = true;
-		}
+				Choice2 =  "China";
+				System.out.println(Choice2);
+				result = true;
+			}
 		}
 
 
@@ -869,7 +888,7 @@ public class RiskyBusiness implements Bot {
 				String toFortifyTo= GameData.COUNTRY_NAMES[currentBestTo];
 				toFortifyFrom = toFortifyFrom.replaceAll("\\s", "");
 				toFortifyTo = toFortifyTo.replaceAll("\\s", "");
-				
+
 				if(prevFortify==toFortifyTo){
 					command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom))/4);
 				}
@@ -938,7 +957,7 @@ public class RiskyBusiness implements Bot {
 
 		countryNamesOwned.clear();
 		countryIDsOwned.clear();
-		
+
 		String command = "";
 
 		for(int i=0; i<42; i++){
