@@ -25,10 +25,16 @@ public class RiskyBusiness implements Bot {
 	private String Choice1 = "";
 	private String Choice2 = "";
 	private String Choice3= "";
+	private String prevFortify = "";
+	private int changeReinforce = 0;
 
 	ArrayList<Integer> countryIDsOwned = new ArrayList<Integer>();
 	ArrayList<String> countryNamesOwned = new ArrayList<String>();
+	
+	ArrayList<Integer> continentIDsOwned = new ArrayList<Integer>();
+	ArrayList<String> continentNamesOwned = new ArrayList<String>();
 
+	
 	RiskyBusiness (BoardAPI inBoard, PlayerAPI inPlayer) {
 		board = inBoard;	
 		player = inPlayer;
@@ -40,7 +46,7 @@ public class RiskyBusiness implements Bot {
 		String command = "";
 		// put your code here
 
-		command = "BOT";
+		command = "Risky Business";
 		return(command);
 	}
 
@@ -48,16 +54,17 @@ public class RiskyBusiness implements Bot {
 		boolean switcher = false;
 
 		getCountriesOwned();
-
-
+		System.out.println(countryNamesOwned);
 
 
 		String command = "";
 		Random random = new Random();
 		int a = random.nextInt(1 - 0 + 1) + 1;
 
-
-		if(reinforcementChoice1() == true ){
+		if(reinforcementChoice7()==true){
+			command = Choice;
+		}
+		else if(reinforcementChoice1() == true ){
 			//System.out.println("workdd");
 			command = Choice;
 		}
@@ -74,11 +81,112 @@ public class RiskyBusiness implements Bot {
 		}
 
 		command = command.replaceAll("\\s", "");
-		command += " "+ player.getNumUnits();
+		if(player.getNumUnits()>3){
+			command += " " + 3;			
+		}
+		else{
+			command += " " + 1;
+		}
 		return command;
 	}
 
-	public Boolean reinforcementChoice1(){
+	private boolean reinforcementChoice7(){
+		boolean result = false;
+
+		
+		getCountriesOwned();
+		System.out.println(countryNamesOwned);
+		
+		getContinentsOwned();
+		System.out.println(continentNamesOwned);
+		
+		if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4)){
+			
+			if(changeReinforce == 0){
+				
+				Choice = "Brazil";
+				
+				changeReinforce++;
+			}
+			else if(changeReinforce == 1){
+				
+				Choice = "Greenland";
+				
+				changeReinforce++;
+			}
+			else if(changeReinforce == 2){
+				
+				Choice = "Alaska";	
+				
+				changeReinforce=0;
+			}
+			result=true;
+		}
+		else if(continentIDsOwned.contains(4) && countryNamesOwned.contains("CentralAmerica") && !continentNamesOwned.contains(0)){
+			
+			if(changeReinforce==0){
+				Choice = "Brazil";
+				changeReinforce++;
+			}
+			else if(changeReinforce==1){
+				Choice = "CentralAmerica";
+				changeReinforce=0;
+			}
+			result=true;
+		}
+		else if(continentIDsOwned.contains(0) && !continentNamesOwned.contains(4)){
+			if(changeReinforce==0){
+				Choice = "Central America";
+				changeReinforce++;
+			}
+			else if(changeReinforce==1){
+				Choice = "Greenland";
+				changeReinforce++;
+			}
+			else if(changeReinforce==2){
+				Choice = "Alaska";
+				changeReinforce=0;
+			}
+			result=true;
+		}
+		
+		
+		return result;
+
+	}
+
+	private void getContinentsOwned(){
+		
+		continentNamesOwned.clear();
+		continentIDsOwned.clear();
+		
+		if(countryIDsOwned.contains(0)&&countryIDsOwned.contains(1)&&countryIDsOwned.contains(2)&&countryIDsOwned.contains(3)&&countryIDsOwned.contains(4)&&countryIDsOwned.contains(5)&&countryIDsOwned.contains(6)&&countryIDsOwned.contains(7)&&countryIDsOwned.contains(8)){
+			continentNamesOwned.add("North America");
+			continentIDsOwned.add(0);
+		}
+		if(countryIDsOwned.contains(9)&&countryIDsOwned.contains(10)&&countryIDsOwned.contains(11)&&countryIDsOwned.contains(12)&&countryIDsOwned.contains(13)&&countryIDsOwned.contains(14)&&countryIDsOwned.contains(15)){
+			continentNamesOwned.add("Europe");
+			continentIDsOwned.add(1);
+		}
+		if(countryIDsOwned.contains(16)&&countryIDsOwned.contains(17)&&countryIDsOwned.contains(18)&&countryIDsOwned.contains(19)&&countryIDsOwned.contains(20)&&countryIDsOwned.contains(21)&&countryIDsOwned.contains(22)&&countryIDsOwned.contains(23)&&countryIDsOwned.contains(24)&&countryIDsOwned.contains(25)&&countryIDsOwned.contains(26)&&countryIDsOwned.contains(27)){
+			continentNamesOwned.add("Asia");
+			continentIDsOwned.add(2);
+		}
+		if(countryIDsOwned.contains(28)&&countryIDsOwned.contains(29)&&countryIDsOwned.contains(30)&&countryIDsOwned.contains(31)){
+			continentNamesOwned.add("Australia");
+			continentIDsOwned.add(3);
+		}
+		if(countryIDsOwned.contains(32)&&countryIDsOwned.contains(33)&&countryIDsOwned.contains(34)&&countryIDsOwned.contains(35)){
+			continentNamesOwned.add("South America");
+			continentIDsOwned.add(4);
+		}
+		if(countryIDsOwned.contains(36)&&countryIDsOwned.contains(37)&&countryIDsOwned.contains(38)&&countryIDsOwned.contains(39)&&countryIDsOwned.contains(40)&&countryIDsOwned.contains(41)){
+			continentNamesOwned.add("Africa");
+			continentIDsOwned.add(5);
+		}
+	}
+	
+	private boolean reinforcementChoice1(){
 		boolean result = false;
 
 		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Central America")&& board.getOccupier(getCountryID("Central America"))==player.getId()&& result !=true ){
@@ -168,7 +276,7 @@ public class RiskyBusiness implements Bot {
 		return result;
 	}
 
-	public Boolean reinforcementChoice2(){
+	private boolean reinforcementChoice2(){
 		boolean result = false;
 
 		int currentIndex = 0;
@@ -259,7 +367,7 @@ public class RiskyBusiness implements Bot {
 		return result;
 	}
 
-	public Boolean reinforcementChoice3(){
+	private boolean reinforcementChoice3(){
 		boolean result = false;
 
 		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Kamchatka")&& board.getOccupier(getCountryID("Kamchatka"))==player.getId() && result !=true){
@@ -348,7 +456,7 @@ public class RiskyBusiness implements Bot {
 
 		return result;
 	}
-	public boolean reinforcementChoice4(){
+	private boolean reinforcementChoice4(){
 		boolean result = false;
 
 		for(int i=0;i<GameData.NUM_COUNTRIES;i++){
@@ -507,10 +615,11 @@ public class RiskyBusiness implements Bot {
 		toAttack = toAttack.replaceAll("\\s", "");
 
 		int armiesLeftInCountryToAttackWith = board.getNumUnits(bestToAttackWith);
-		if((armiesLeftInCountryToAttackWith < 4) || (armiesLeftInCountryToAttackWith/2)<board.getNumUnits(bestToAttack)){
+		if((armiesLeftInCountryToAttackWith < 3) || ((armiesLeftInCountryToAttackWith/1.4)<board.getNumUnits(bestToAttack))){
+			System.out.println(" = " + armiesLeftInCountryToAttackWith/1.4);
 			command = "Skip";
 		}
-		else if(armiesLeftInCountryToAttackWith >= 4){
+		else if(armiesLeftInCountryToAttackWith >= 3){
 			command = toAttackWith + " "+toAttack + " " + getUnitsToAttackWith(bestToAttackWith);
 		}
 		return(command);
@@ -641,12 +750,28 @@ public class RiskyBusiness implements Bot {
 			//System.out.println();
 
 			// put code here
-			if(currentBestTo!=-1 && board.getNumUnits(currentBestFrom)>3){
+
+			if(currentBestTo!=-1 && getNumberOfOpposingNeighbours(currentBestFrom)==0){
+				String toFortifyFrom = GameData.COUNTRY_NAMES[currentBestFrom];
+				String toFortifyTo= GameData.COUNTRY_NAMES[currentBestTo];
+				toFortifyFrom = toFortifyFrom.replaceAll("\\s", "");
+				toFortifyTo = toFortifyTo.replaceAll("\\s", "");
+				
+				if(prevFortify==toFortifyTo){
+					command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom))/4);
+				}
+				else{
+					command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom))-1);
+				}
+				prevFortify=toFortifyFrom;
+			}
+			else if(currentBestTo!=-1 && board.getNumUnits(currentBestFrom)>3){
 				String toFortifyFrom = GameData.COUNTRY_NAMES[currentBestFrom];
 				String toFortifyTo= GameData.COUNTRY_NAMES[currentBestTo];
 				toFortifyFrom = toFortifyFrom.replaceAll("\\s", "");
 				toFortifyTo = toFortifyTo.replaceAll("\\s", "");
 				command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom)/2)+1);
+				prevFortify=toFortifyFrom;
 			}
 			else{
 				command = "skip";
@@ -698,6 +823,9 @@ public class RiskyBusiness implements Bot {
 
 	private void getCountriesOwned() {
 
+		countryNamesOwned.clear();
+		countryIDsOwned.clear();
+		
 		String command = "";
 
 		for(int i=0; i<42; i++){
