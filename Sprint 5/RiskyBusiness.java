@@ -9,7 +9,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 // put your code here
 
@@ -36,27 +35,27 @@ public class RiskyBusiness implements Bot {
 	ArrayList<Integer> continentIDsOwned = new ArrayList<Integer>();
 	ArrayList<String> continentNamesOwned = new ArrayList<String>();
 
-
 	RiskyBusiness (BoardAPI inBoard, PlayerAPI inPlayer) {
 		board = inBoard;	
 		player = inPlayer;
 		// put your code here
 		return;
 	}
-
+	
 	public String getName () {
 		String command = "";
 		// put your code here
-
+		
 		command = "ALBOT HITLER";
 		return(command);
 	}
 
 	public String getReinforcement () {
 		boolean switcher = false;
+
 		GameData.turncount++;
 		getCountriesOwned();
-		System.out.println(countryNamesOwned);
+		//System.out.println(countryNamesOwned);
 
 		String command = "";
 		Random random = new Random();
@@ -66,13 +65,12 @@ public class RiskyBusiness implements Bot {
 			command = Choice;
 		}
 		else if(reinforcementChoice1() == true ){
-			//System.out.println("workdd");
+			////System.out.println("workdd");
 			command = Choice;
 		}
 		else if(reinforcementChoice2() == true ){
-			//System.out.println("did it?");
+			////System.out.println("did it?");
 			command = Choice1;
-
 		}
 		else if (reinforcementChoice3() == true){
 			command = Choice2;
@@ -80,6 +78,7 @@ public class RiskyBusiness implements Bot {
 		else if (reinforcementChoice4() == true){
 			command = Choice3;
 		}
+		
 
 		command = command.replaceAll("\\s", "");
 		if(player.getNumUnits()>3){
@@ -95,13 +94,18 @@ public class RiskyBusiness implements Bot {
 		boolean result = false;
 
 		getCountriesOwned();
-		System.out.println(countryNamesOwned);
+		////System.out.println(countryNamesOwned);
 
 		getContinentsOwned();
-		System.out.println(continentNamesOwned);
+		////System.out.println(continentNamesOwned);
 
 		if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1) && continentIDsOwned.contains(5) && continentIDsOwned.contains(2)){
-			Choice = "Siam";
+			if(countryNamesOwned.contains("Indonesia")){
+				Choice = "Indonesia";
+			}
+			else{
+				Choice = "Siam";
+			}
 			result = true;
 		}
 
@@ -194,7 +198,27 @@ public class RiskyBusiness implements Bot {
 			}
 			else if(changeReinforce == 1){
 				if(countryNamesOwned.contains("Iceland")){
-					Choice = "Iceland";
+					if(countryNamesOwned.contains("Scandinavia") && countryNamesOwned.contains("Great Britain")){
+						if(countryNamesOwned.contains("N Europe")){
+							Choice = "N Europe";
+						}
+						else{
+							String var1 = "Scandinavia";
+							String var2 = "Great Britain";
+							if(changeStuff==0){
+								Choice = var1;
+								changeStuff++;
+							}
+							else{
+								Choice = var2;
+								changeStuff=0;
+							}
+					
+						}
+					}
+					else{
+						Choice = "Iceland";
+					}
 				}
 				else{
 					Choice = "Greenland";
@@ -214,7 +238,7 @@ public class RiskyBusiness implements Bot {
 		}
 
 		//if you own south america and central america (the country)
-		else if(continentIDsOwned.contains(4) && countryNamesOwned.contains("CentralAmerica")){
+		else if(continentIDsOwned.contains(4)){
 
 			if(changeReinforce==0){
 				if(countryNamesOwned.contains("N Africa")){
@@ -226,22 +250,68 @@ public class RiskyBusiness implements Bot {
 				changeReinforce++;
 			}
 			else if(changeReinforce==1){
-				if(countryNamesOwned.contains("W United States") && countryNamesOwned.contains("E United States")){
-					String var1 = "W United States";
-					String var2 = "E United States";
-					if(changeStuff==0){
-						Choice = var1;
-						changeStuff++;
+				if(countryNamesOwned.contains("Central America")){
+					if(countryNamesOwned.contains("W United States") && countryNamesOwned.contains("E United States")){
+						if(countryNamesOwned.contains("Quebec") && countryNamesOwned.contains("Ontario") && countryNamesOwned.contains("Alberta")){
+							String var1 = "Quebec";
+							String var2 = "Ontario";
+							String var3 = "Alberta";
+							if(changeStuff==0){
+								Choice = var3;
+								changeStuff++;
+							}
+							else if(changeStuff==1){
+								Choice = var2;
+								changeStuff++;
+							}
+							else if(changeStuff==2){
+								Choice = var1;
+								changeStuff=0;
+							}
+						}
+						else{
+							String var1 = "W United States";
+							String var2 = "E United States";
+							if(changeStuff==0){
+								Choice = var1;
+								changeStuff++;
+							}
+							else{
+								Choice = var2;
+								changeStuff=0;
+							}
+						}
 					}
 					else{
-						Choice = var2;
-						changeStuff=0;
+						Choice = "CentralAmerica";
 					}
 				}
 				else{
-					Choice = "CentralAmerica";
+					Choice = "Venezuela";
 				}
-
+				changeReinforce++;
+			}
+			else if(changeReinforce==2){
+				if(countryNamesOwned.contains("Central America")){
+					if(countryNamesOwned.contains("W United States") && countryNamesOwned.contains("E United States")){
+						String var1 = "W United States";
+						String var2 = "E United States";
+						if(changeStuff==0){
+							Choice = var1;
+							changeStuff++;
+						}
+						else{
+							Choice = var2;
+							changeStuff=0;
+						}
+					}
+					else{
+						Choice = "CentralAmerica";
+					}
+				}
+				else{
+					Choice = "Venezuela";
+				}
 				changeReinforce=0;
 			}
 			result=true;
@@ -319,7 +389,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(7)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(7, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						////System.out.println("got to here");
 						Choice = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -327,7 +397,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice =  "Central America";
-				System.out.println(Choice);
+				////System.out.println(Choice);
 				result = true;
 			}
 		}
@@ -335,7 +405,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(34)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(34, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						////System.out.println("got to here");
 						Choice = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -343,7 +413,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice =  "Brazil";
-				System.out.println(Choice);
+				////System.out.println(Choice);
 				result = true;
 			}
 		}
@@ -352,7 +422,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(32)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(32, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -360,7 +430,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice =  "Venezuela";
-				System.out.println(Choice);
+				//System.out.println(Choice);
 				result = true;
 			}
 		}
@@ -369,7 +439,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(35)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(35, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -377,7 +447,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice =  "Argentina";
-				System.out.println(Choice);
+				//System.out.println(Choice);
 				result = true;
 			}
 		}
@@ -385,7 +455,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(33)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(33, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -393,7 +463,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice =  "Peru";
-				System.out.println(Choice);
+				//System.out.println(Choice);
 				result = true;
 			}
 		}
@@ -406,12 +476,12 @@ public class RiskyBusiness implements Bot {
 		boolean result = false;
 
 		int currentIndex = 0;
-		//System.out.println("1"); 
+		////System.out.println("1"); 
 		if(Arrays.asList(GameData.COUNTRY_NAMES).contains("Siam")&& board.getOccupier(getCountryID("Siam"))==player.getId()&&  result !=true){
 			if(board.getNumUnits(22)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(22, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice1 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -419,7 +489,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice1 =  "Siam";
-				System.out.println(Choice1);
+				//System.out.println(Choice1);
 				result = true;
 			}
 		}
@@ -427,7 +497,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(28)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(28, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice1 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -435,7 +505,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice1 =  "E Australia";
-				System.out.println(Choice1);
+				//System.out.println(Choice1);
 				result = true;
 			}
 		}
@@ -443,7 +513,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(29)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(29, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice1 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -451,7 +521,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice1 =  "New Guinea";
-				System.out.println(Choice1);
+				//System.out.println(Choice1);
 				result = true;
 			}
 		}
@@ -459,7 +529,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(30)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(30, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice1 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -467,7 +537,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice1 =  "W Australia";
-				System.out.println(Choice1);
+				//System.out.println(Choice1);
 				result = true;
 			}
 		}
@@ -475,7 +545,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(31)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(31, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice1 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -483,7 +553,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice1 =  "Indonesia";
-				System.out.println(Choice1);
+				//System.out.println(Choice1);
 				result = true;
 			}
 		}
@@ -500,7 +570,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(21)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(21, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice2 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -508,7 +578,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice2 =  "Kamchatka";
-				System.out.println(Choice2);
+				//System.out.println(Choice2);
 				result = true;
 			}
 		}
@@ -516,7 +586,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(4)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(4, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice2 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -524,7 +594,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice2 =  "Greenland";
-				System.out.println(Choice2);
+				//System.out.println(Choice2);
 				result = true;
 			}
 		}
@@ -532,7 +602,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(8)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(8, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice2 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -540,7 +610,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice2 =  "Alaska";
-				System.out.println(Choice2);
+				//System.out.println(Choice2);
 				result = true;
 			}
 		}
@@ -548,7 +618,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(18)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(18, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice2 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -556,7 +626,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice2 =  "Middle East";
-				System.out.println(Choice2);
+				//System.out.println(Choice2);
 				result = true;
 			}
 		}
@@ -566,7 +636,7 @@ public class RiskyBusiness implements Bot {
 			if(board.getNumUnits(27)>15){
 				for (int i=0; i<GameData.NUM_COUNTRIES;i++) {
 					if(board.isAdjacent(27, i) && board.getOccupier(i)== player.getId()){
-						System.out.println("got to here");
+						//System.out.println("got to here");
 						Choice2 = GameData.COUNTRY_NAMES[i];
 						result = true;
 					}
@@ -574,7 +644,7 @@ public class RiskyBusiness implements Bot {
 			}
 			else{
 				Choice2 =  "China";
-				System.out.println(Choice2);
+				//System.out.println(Choice2);
 				result = true;
 			}
 		}
@@ -582,6 +652,7 @@ public class RiskyBusiness implements Bot {
 
 		return result;
 	}
+
 	private boolean reinforcementChoice4(){
 		boolean result = false;
 
@@ -595,7 +666,6 @@ public class RiskyBusiness implements Bot {
 
 		return result;
 	}
-
 
 	public String getPlacement (int forPlayer) {
 		String command = "";
@@ -645,13 +715,11 @@ public class RiskyBusiness implements Bot {
 
 		return(command);
 	}
-
-
-
+	
 	public boolean contains(final int[] array, final int key) {     
 		return Arrays.asList(array).contains(key);
 	}
-
+	
 	public String getCardExchange () {
 		String command = "";
 		// put your code here
@@ -659,7 +727,7 @@ public class RiskyBusiness implements Bot {
 			ArrayList<Card> a = player.getCards();
 			int in=0,cav=0,art = 0,wild=0;
 			for(int i=0;i<a.size();i++){
-				System.out.println("Cards: "+a.get(i).getInsigniaId() + " " + a.get(i).getInsigniaName());
+				//System.out.println("Cards: "+a.get(i).getInsigniaId() + " " + a.get(i).getInsigniaName());
 				if(a.get(i).getInsigniaId()==0){
 					in++;
 				}
@@ -697,12 +765,12 @@ public class RiskyBusiness implements Bot {
 			if(cav>0&&in>0&&wild>0){
 				command = "ciw";
 			}
-			System.out.println("command is "+ command);
+			//System.out.println("command is "+ command);
 		}
 		else if (player.getCards().size()<5){
 			command = "skip";
 		}
-		System.out.println(player.getCards().size());
+		//System.out.println(player.getCards().size());
 		return(command);
 	}
 
@@ -790,7 +858,7 @@ public class RiskyBusiness implements Bot {
 
 		int armiesLeftInCountryToAttackWith = board.getNumUnits(bestToAttackWith);
 		if((armiesLeftInCountryToAttackWith < 3) || ((armiesLeftInCountryToAttackWith/1.4)<board.getNumUnits(bestToAttack))){
-			System.out.println(" = " + armiesLeftInCountryToAttackWith/1.4);
+			//System.out.println(" = " + armiesLeftInCountryToAttackWith/1.4);
 			command = "Skip";
 		}
 		else if(armiesLeftInCountryToAttackWith >= 3){
@@ -886,14 +954,14 @@ public class RiskyBusiness implements Bot {
 		/*
 		if(count!=0){
 			currentBestFrom = goodChoices[(int)(Math.random() * goodChoices.length)];
-			//System.out.println("current nest from "+GameData.COUNTRY_NAMES[currentBestFrom]);
+			////System.out.println("current nest from "+GameData.COUNTRY_NAMES[currentBestFrom]);
 		}
 		 */
 
 		int currentBestTo = -1;
 		if(currentBestFrom!=-1){
 			tempUnits = 1000;
-			//System.out.println("current best from " +GameData.COUNTRY_NAMES[currentBestFrom]);
+			////System.out.println("current best from " +GameData.COUNTRY_NAMES[currentBestFrom]);
 			int count2=0;
 			for(int i=0;i<42;i++){
 				if( board.getOccupier(i)==player.getId() && board.isAdjacent(i, currentBestFrom)){
@@ -917,9 +985,9 @@ public class RiskyBusiness implements Bot {
 
 				}
 			}
-			//System.out.print("choices: ");
+			////System.out.print("choices: ");
 			for(int i =0;i<choices.length;i++){
-				//System.out.print(GameData.COUNTRY_NAMES[choices[i]] +" ");
+				////System.out.print(GameData.COUNTRY_NAMES[choices[i]] +" ");
 				for(int z=0;z<GameData.ADJACENT[choices[i]].length;z++){
 					if(board.getOccupier(GameData.ADJACENT[choices[i]][z])!=player.getId()){
 						if(choices[i]!=0){
@@ -928,7 +996,7 @@ public class RiskyBusiness implements Bot {
 					}
 				}
 			}
-			//System.out.println();
+			////System.out.println();
 
 			// put code here
 
@@ -946,16 +1014,14 @@ public class RiskyBusiness implements Bot {
 				}
 				prevFortify=toFortifyFrom;
 			}
-			
 			else if(currentBestTo!=-1 && board.getNumUnits(currentBestFrom)>3){
 				String toFortifyFrom = GameData.COUNTRY_NAMES[currentBestFrom];
 				String toFortifyTo= GameData.COUNTRY_NAMES[currentBestTo];
 				toFortifyFrom = toFortifyFrom.replaceAll("\\s", "");
 				toFortifyTo = toFortifyTo.replaceAll("\\s", "");
-				command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom)/2)+1);
+				command = toFortifyFrom + " "+ toFortifyTo + " "+((int)((board.getNumUnits(currentBestFrom))/1.3));
 				prevFortify=toFortifyFrom;
 			}
-			
 			else{
 				command = "skip";
 			}
@@ -971,7 +1037,7 @@ public class RiskyBusiness implements Bot {
 		int tempMin = 1000;
 		int total = -1;
 		int average = -1;
-		//System.out.println(GameData.ADJACENT[i].length);
+		////System.out.println(GameData.ADJACENT[i].length);
 		for (int k=0;k<GameData.ADJACENT[i].length;k++){
 			if(board.getOccupier(GameData.ADJACENT[i][k])==player.getId()){
 				total = 0;
@@ -1013,7 +1079,7 @@ public class RiskyBusiness implements Bot {
 
 		for(int i=0; i<42; i++){
 
-			//System.out.println("" + board.getOccupier(i));
+			////System.out.println("" + board.getOccupier(i));
 			if(player.getId() == (board.getOccupier(i))){
 				countryIDsOwned.add(i);
 				countryNamesOwned.add(GameData.COUNTRY_NAMES[i]);
@@ -1021,7 +1087,7 @@ public class RiskyBusiness implements Bot {
 		}
 
 
-		//System.out.println(countryNamesOwned + " - " + countryIDsOwned);
+		////System.out.println(countryNamesOwned + " - " + countryIDsOwned);
 
 	}
 
@@ -1043,7 +1109,7 @@ public class RiskyBusiness implements Bot {
 		int unitsToAttackWith = 0;
 
 		if(board.getNumUnits(i) > 3){
-			//System.out.println(board.getNumUnits(i));
+			////System.out.println(board.getNumUnits(i));
 			unitsToAttackWith = 3;
 		}
 		else if(board.getNumUnits(i)==3){
@@ -1056,5 +1122,5 @@ public class RiskyBusiness implements Bot {
 
 		return unitsToAttackWith;
 	}
-
+	
 }
