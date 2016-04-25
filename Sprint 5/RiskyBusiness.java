@@ -9,6 +9,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 // put your code here
 
@@ -53,7 +54,7 @@ public class RiskyBusiness implements Bot {
 
 	public String getReinforcement () {
 		boolean switcher = false;
-
+		GameData.turncount++;
 		getCountriesOwned();
 		System.out.println(countryNamesOwned);
 
@@ -103,7 +104,7 @@ public class RiskyBusiness implements Bot {
 			Choice = "Siam";
 			result = true;
 		}
-		
+
 		//if you own north america, south america, europe, and africa
 		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1) && continentIDsOwned.contains(5)){
 
@@ -151,7 +152,7 @@ public class RiskyBusiness implements Bot {
 			}
 			result=true;
 		}
-		
+
 		//if you own north america, south america, and europe
 		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4) && continentIDsOwned.contains(1)){
 
@@ -179,7 +180,7 @@ public class RiskyBusiness implements Bot {
 			}
 			result=true;
 		}
-		
+
 		//if you own north and south america
 		else if(continentIDsOwned.contains(0) && continentIDsOwned.contains(4)){
 			if(changeReinforce == 0){
@@ -211,7 +212,7 @@ public class RiskyBusiness implements Bot {
 			}
 			result=true;
 		}
-		
+
 		//if you own south america and central america (the country)
 		else if(continentIDsOwned.contains(4) && countryNamesOwned.contains("CentralAmerica")){
 
@@ -596,27 +597,60 @@ public class RiskyBusiness implements Bot {
 	}
 
 
-public String getPlacement (int forPlayer) {
-	String command = "";
+	public String getPlacement (int forPlayer) {
+		String command = "";
 
-	ArrayList<String> neutralcountryOwned = new ArrayList<String>();
-	
-	for(int i =0; i<GameData.NUM_COUNTRIES;i++){
-		if(board.getOccupier(i) == forPlayer){
-			neutralcountryOwned.add(GameData.COUNTRY_NAMES[i]);
+		ArrayList<String> neutralcountryOwned = new ArrayList<String>();
+		ArrayList<Integer> otherPlayerCountries = new ArrayList<Integer>();
+		int count =0;
+
+		for(int i =0;i<42;i++){
+			int occupier = board.getOccupier(i);
+			if(occupier!=player.getId() && occupier!= 2 && occupier != 3 && occupier != 4 && occupier != 5 ){
+				otherPlayerCountries.add(i);
+			}
 		}
-		
+		System.out.println(otherPlayerCountries.size());
+
+		for(int i =0; i<GameData.NUM_COUNTRIES;i++){
+			int current = board.getOccupier(i);
+			for(int g=0;g<GameData.ADJACENT[i].length;g++){
+				for(int k=0;k<countryIDsOwned.size();k++){
+					boolean alreadyChosen = false;
+					if(current == forPlayer && otherPlayerCountries.contains(GameData.ADJACENT[i][g]) && !(Arrays.asList(GameData.ADJACENT[i]).contains(countryIDsOwned.get(k)))) {
+						System.out.println("ggjdf");
+						neutralcountryOwned.add(GameData.COUNTRY_NAMES[i]);
+						alreadyChosen = true;
+					}
+					else if(current == forPlayer && otherPlayerCountries.contains(GameData.ADJACENT[i][g]) && alreadyChosen == false){
+						neutralcountryOwned.add(GameData.COUNTRY_NAMES[i]);
+						alreadyChosen = true;
+					}
+					else if (current == forPlayer && alreadyChosen ==false){
+						neutralcountryOwned.add(GameData.COUNTRY_NAMES[i]);
+					}
+				}
+
+			}
+		}
+
+		System.out.println(" neutrals owned " +neutralcountryOwned.size());
+		command = neutralcountryOwned.get((int)(Math.random() * neutralcountryOwned.size()));
+
+
+		System.out.println("\n\n\n\n\n\ncommand is "+command);
+		System.out.println("\n\n\n\n\n");
+
+		command = command.replaceAll("\\s", "");
+
+		return(command);
 	}
-	
-	command = neutralcountryOwned.get((int)(Math.random() * neutralcountryOwned.size()));
-	
-	
-	
-	
-	command = command.replaceAll("\\s", "");
-	
-	return(command);
-}
+
+
+
+	public boolean contains(final int[] array, final int key) {     
+		return Arrays.asList(array).contains(key);
+	}
 
 	public String getCardExchange () {
 		String command = "";
@@ -908,10 +942,11 @@ public String getPlacement (int forPlayer) {
 					command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom))/4);
 				}
 				else{
-					command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom))-1);
+					command = toFortifyFrom + " "+ toFortifyTo + " "+((int)((board.getNumUnits(currentBestFrom))/1.3));
 				}
 				prevFortify=toFortifyFrom;
 			}
+			
 			else if(currentBestTo!=-1 && board.getNumUnits(currentBestFrom)>3){
 				String toFortifyFrom = GameData.COUNTRY_NAMES[currentBestFrom];
 				String toFortifyTo= GameData.COUNTRY_NAMES[currentBestTo];
@@ -920,6 +955,7 @@ public String getPlacement (int forPlayer) {
 				command = toFortifyFrom + " "+ toFortifyTo + " "+((board.getNumUnits(currentBestFrom)/2)+1);
 				prevFortify=toFortifyFrom;
 			}
+			
 			else{
 				command = "skip";
 			}
